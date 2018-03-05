@@ -10,6 +10,7 @@ import java.util.Date;
 @Table(name="cheque")
 public class ChequeEntity {
     private long id;
+    private String name;
     private String content;
     private String comment;
     private Date date;
@@ -19,6 +20,11 @@ public class ChequeEntity {
     @Column(name = "id", nullable = false)
     public long getId() {
         return id;
+    }
+
+    @Column(name = "name")
+    public String getName() {
+        return name;
     }
 
     @Column(name = "content")
@@ -37,22 +43,27 @@ public class ChequeEntity {
         return date;
     }
 
-    ChequeEntity setId(long id) {
+    public ChequeEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    ChequeEntity setContent(String content) {
+    public ChequeEntity setName(String name) {
+        this.name= name;
+        return this;
+    }
+
+    public ChequeEntity setContent(String content) {
         this.content = content;
         return this;
     }
 
-    ChequeEntity setComment(String comment) {
+    public ChequeEntity setComment(String comment) {
         this.comment = comment;
         return this;
     }
 
-    ChequeEntity setDate(Date date) {
+    public ChequeEntity setDate(Date date) {
         this.date = date;
         return this;
     }

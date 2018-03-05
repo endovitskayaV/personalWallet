@@ -38,22 +38,22 @@ public class SpendingsLimitEntity {
         return date;
     }
 
-    SpendingsLimitEntity setId(long id) {
+    public SpendingsLimitEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    SpendingsLimitEntity setComment(String comment) {
+    public SpendingsLimitEntity setComment(String comment) {
         this.comment = comment;
         return this;
     }
 
-    SpendingsLimitEntity setMaxSum(long maxSum) {
+    public SpendingsLimitEntity setMaxSum(long maxSum) {
         this.maxSum = maxSum;
         return this;
     }
 
-    SpendingsLimitEntity setDate(Date date) {
+    public SpendingsLimitEntity setDate(Date date) {
         this.date = date;
         return this;
     }

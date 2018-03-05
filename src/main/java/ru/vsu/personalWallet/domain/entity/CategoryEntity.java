@@ -24,12 +24,12 @@ public class CategoryEntity {
         return name;
     }
 
-    CategoryEntity setId(long id) {
+    public CategoryEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    CategoryEntity setName(String name) {
+    public CategoryEntity setName(String name) {
         this.name = name;
         return this;
     }

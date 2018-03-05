@@ -54,32 +54,32 @@ public class TransactionEntity {
     }
 
 
-    private TransactionEntity setId(long id) {
+    public TransactionEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    TransactionEntity setOperationType(OperationType operationType) {
+    public TransactionEntity setOperationType(OperationType operationType) {
         this.operationType = operationType;
         return this;
     }
 
-    TransactionEntity setCategory(CategoryEntity category) {
+    public TransactionEntity setCategory(CategoryEntity category) {
         this.category = category;
         return this;
     }
 
-    TransactionEntity setDate(Date date) {
+    public TransactionEntity setDate(Date date) {
         this.date = date;
         return this;
     }
 
-    TransactionEntity setMoneyValue(long moneyValue) {
+    public TransactionEntity setMoneyValue(long moneyValue) {
         this.moneyValue = moneyValue;
         return this;
     }
 
-    TransactionEntity setComment(String comment) {
+    public TransactionEntity setComment(String comment) {
         this.comment = comment;
         return this;
     }
