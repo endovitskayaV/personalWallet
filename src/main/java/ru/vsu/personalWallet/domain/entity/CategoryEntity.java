@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.domain;
+package ru.vsu.personalWallet.domain.entity;
 
 
 import lombok.EqualsAndHashCode;
@@ -7,7 +7,8 @@ import javax.persistence.*;
 
 @Entity
 @EqualsAndHashCode
-public class Category {
+@Table(name = "category")
+public class CategoryEntity {
     private long id;
     private String name;
 
@@ -23,12 +24,12 @@ public class Category {
         return name;
     }
 
-    Category setId(long id) {
+    CategoryEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    Category setName(String name) {
+    CategoryEntity setName(String name) {
         this.name = name;
         return this;
     }

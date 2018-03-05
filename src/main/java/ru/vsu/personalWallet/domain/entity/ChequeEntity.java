@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.domain;
+package ru.vsu.personalWallet.domain.entity;
 
 import lombok.EqualsAndHashCode;
 
@@ -7,7 +7,8 @@ import java.util.Date;
 
 @Entity
 @EqualsAndHashCode
-public class Cheque {
+@Table(name="cheque")
+public class ChequeEntity {
     private long id;
     private String content;
     private String comment;
@@ -36,22 +37,22 @@ public class Cheque {
         return date;
     }
 
-    Cheque setId(long id) {
+    ChequeEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    Cheque setContent(String content) {
+    ChequeEntity setContent(String content) {
         this.content = content;
         return this;
     }
 
-    Cheque setComment(String comment) {
+    ChequeEntity setComment(String comment) {
         this.comment = comment;
         return this;
     }
 
-    Cheque setDate(Date date) {
+    ChequeEntity setDate(Date date) {
         this.date = date;
         return this;
     }

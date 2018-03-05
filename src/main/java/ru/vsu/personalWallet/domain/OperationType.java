@@ -1,5 +1,5 @@
 package ru.vsu.personalWallet.domain;
 
-enum OperationType {
+public enum OperationType {
     INCOME, OUTCOME
 }

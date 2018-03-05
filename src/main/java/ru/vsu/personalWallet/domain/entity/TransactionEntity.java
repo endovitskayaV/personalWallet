@@ -1,16 +1,18 @@
-package ru.vsu.personalWallet.domain;
+package ru.vsu.personalWallet.domain.entity;
 
 import lombok.EqualsAndHashCode;
+import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @EqualsAndHashCode
-public class Transaction {
+@Table(name="transaction")
+public class TransactionEntity {
     private long id;
     private OperationType operationType;
-    private Category category;
+    private CategoryEntity category;
     private Date date;
     private long moneyValue;
     private String comment;
@@ -32,7 +34,7 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-    public Category getCategory() {
+    public CategoryEntity getCategory() {
         return category;
     }
 
@@ -52,32 +54,32 @@ public class Transaction {
     }
 
 
-    private Transaction setId(long id) {
+    private TransactionEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    Transaction setOperationType(OperationType operationType) {
+    TransactionEntity setOperationType(OperationType operationType) {
         this.operationType = operationType;
         return this;
     }
 
-    Transaction setCategory(Category category) {
+    TransactionEntity setCategory(CategoryEntity category) {
         this.category = category;
         return this;
     }
 
-    Transaction setDate(Date date) {
+    TransactionEntity setDate(Date date) {
         this.date = date;
         return this;
     }
 
-    Transaction setMoneyValue(long moneyValue) {
+    TransactionEntity setMoneyValue(long moneyValue) {
         this.moneyValue = moneyValue;
         return this;
     }
 
-    Transaction setComment(String comment) {
+    TransactionEntity setComment(String comment) {
         this.comment = comment;
         return this;
     }

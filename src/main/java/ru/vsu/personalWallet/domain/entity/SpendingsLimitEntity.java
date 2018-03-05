@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.domain;
+package ru.vsu.personalWallet.domain.entity;
 
 
 import lombok.EqualsAndHashCode;
@@ -8,7 +8,8 @@ import java.util.Date;
 
 @Entity
 @EqualsAndHashCode
-public class SpendingsLimit {
+@Table(name="spendings_limit")
+public class SpendingsLimitEntity {
     private long id;
     private String comment;
     private long maxSum;
@@ -37,22 +38,22 @@ public class SpendingsLimit {
         return date;
     }
 
-    SpendingsLimit setId(long id) {
+    SpendingsLimitEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    SpendingsLimit setComment(String comment) {
+    SpendingsLimitEntity setComment(String comment) {
         this.comment = comment;
         return this;
     }
 
-    SpendingsLimit setMaxSum(long maxSum) {
+    SpendingsLimitEntity setMaxSum(long maxSum) {
         this.maxSum = maxSum;
         return this;
     }
 
-    SpendingsLimit setDate(Date date) {
+    SpendingsLimitEntity setDate(Date date) {
         this.date = date;
         return this;
     }

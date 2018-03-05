@@ -1,13 +1,15 @@
-package ru.vsu.personalWallet.domain;
+package ru.vsu.personalWallet.domain.entity;
 
 import lombok.EqualsAndHashCode;
+import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @EqualsAndHashCode
-public class Aim {
+@Table(name = "aim")
+public class AimEntity {
     private long id;
     private String name;
     private OperationType operationType;
@@ -49,32 +51,32 @@ public class Aim {
         return reminderSec;
     }
 
-    Aim setId(long id) {
+    public AimEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    Aim setName(String name) {
+    public AimEntity setName(String name) {
         this.name = name;
         return this;
     }
 
-    Aim setOperationType(OperationType operationType) {
+    public AimEntity setOperationType(OperationType operationType) {
         this.operationType = operationType;
         return this;
     }
 
-    Aim setDescription(String description) {
+    public AimEntity setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    Aim setReminderSec(long reminderSec) {
+    public AimEntity setReminderSec(long reminderSec) {
         this.reminderSec = reminderSec;
         return this;
     }
 
-    Aim setDate(Date date) {
+    public AimEntity setDate(Date date) {
         this.date = date;
         return this;
     }
