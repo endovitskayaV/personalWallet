@@ -7,6 +7,9 @@ import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CategoryService {
     private CategoryRepository categoryRepository;
@@ -20,6 +23,12 @@ public class CategoryService {
 
     public void save(CategoryDto categoryDto){
         categoryRepository.save(DtoToEntity.toEntity(categoryDto));
+    }
+
+    public List<CategoryDto> findAll(){
+        List<CategoryDto> categoryDtoList=new ArrayList<>();
+        categoryRepository.findAll().forEach(x->categoryDtoList.add(EntityToDto.toDto(x)));
+        return categoryDtoList;
     }
 
     public CategoryDto findById(long id){

@@ -14,7 +14,7 @@ import ru.vsu.personalWallet.service.TransactionService;
 import java.util.Date;
 import java.util.List;
 
-@RequestMapping("/transaction")
+@RequestMapping("/transactions")
 @Controller
 public class TransactionController {
     private TransactionService transactionService;
@@ -22,62 +22,72 @@ public class TransactionController {
 
     @Autowired
     TransactionController(TransactionService transactionService) {
-        this.transactionService =transactionService;
-        gson=new Gson();
+        this.transactionService = transactionService;
+        gson = new Gson();
     }
 
-    @RequestMapping(value="delete", method = RequestMethod.DELETE)
-    public boolean delete(long id){
-      transactionService.delete(id);
-      return true;
+    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
+    public boolean delete(long id) {
+        transactionService.delete(id);
+        return true;
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public boolean add(String transactionGson){
-        transactionService.save(gson.fromJson(transactionGson, TransactionDto.class));
+    public boolean add(TransactionDto transactionDto) {
+        transactionService.save(transactionDto);
         return true;
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public boolean edit(String transactionGson){
-        transactionService.save(gson.fromJson(transactionGson, TransactionDto.class));
-        return true;
-    }
-
-    @RequestMapping(value = "get", method = RequestMethod.POST)
-    public String getById(long id){
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public String edit(long id) {
         return gson.toJson(transactionService.findById(id));
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
-    public String getByDate(Date date){
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public boolean edit(TransactionDto transactionDto) {
+        transactionService.save(transactionDto);
+        return true;
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String getAll() {
+        return gson.toJson(transactionService.findAll());
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String getById(long id) {
+        return gson.toJson(transactionService.findById(id));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String getByDate(Date date) {
         return gson.toJson(transactionService.findByDate(date));
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
-    public String getByMoneyValue(long moneyValue){
+    @RequestMapping(method = RequestMethod.POST)
+    public String getByMoneyValue(long moneyValue) {
         return gson.toJson(transactionService.findByMoneyValue(moneyValue));
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
-    public String getByOperationType(OperationType operationType){
+    @RequestMapping(method = RequestMethod.POST)
+    public String getByOperationType(OperationType operationType) {
         return gson.toJson(transactionService.findByOperationType(operationType));
     }
+
     //POST
     //herokuapp.....com/transaction/get
     //query parameters:
     //    String comment, compulsory
     //returns:
-
-
     //{INCOME, OUTCOME }
-    @RequestMapping(value = "get", method = RequestMethod.POST)
-    public String getByComment(String comment){
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String getByComment(String comment) {
         return gson.toJson(transactionService.findByComment(comment));
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
-    public String getByCategoryName(String name){
+    @RequestMapping(method = RequestMethod.POST)
+    public String getByCategoryName(String name) {
         return gson.toJson(transactionService.findByCategoryName(name));
     }
 }

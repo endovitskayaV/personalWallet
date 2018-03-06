@@ -8,7 +8,9 @@ import ru.vsu.personalWallet.domain.repository.TransactionRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -25,6 +27,12 @@ public class TransactionService {
 
     public void save(TransactionDto transactionDto){
         transactionRepository.save(DtoToEntity.toEntity(transactionDto));
+    }
+
+    public List<TransactionDto> findAll(){
+        List<TransactionDto> transactionDtoList=new ArrayList<>();
+        transactionRepository.findAll().forEach(x->transactionDtoList.add(EntityToDto.toDto(x)));
+        return transactionDtoList;
     }
 
     public TransactionDto findById(long id){

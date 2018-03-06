@@ -10,7 +10,7 @@ import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.service.CategoryService;
 
 @Controller
-@RequestMapping("/category")
+@RequestMapping("/categories")
 public class CategoryController {
     private CategoryService categoryService;
     private Gson gson;
@@ -27,23 +27,33 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public boolean add(String categoryGson){
-        categoryService.save(gson.fromJson(categoryGson, CategoryDto.class));
+    public boolean add(CategoryDto categoryDto){
+        categoryService.save(categoryDto);
         return true;
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public boolean edit(String categoryGson){
-        categoryService.save(gson.fromJson(categoryGson, CategoryDto.class));
+    public boolean edit(CategoryDto categoryDto){
+        categoryService.save(categoryDto);
         return true;
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public String edit(long id){
+        return gson.toJson(categoryService.findById(id));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String getAll(){
+        return gson.toJson(categoryService.findAll());
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
     public String getById(long id){
         return gson.toJson(categoryService.findById(id));
     }
 
-    @RequestMapping(value = "get", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String getByName(String name){
         return gson.toJson(categoryService.findByName(name));
     }
