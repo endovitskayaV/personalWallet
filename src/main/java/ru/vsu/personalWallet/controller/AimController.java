@@ -1,5 +1,6 @@
 package ru.vsu.personalWallet.controller;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,13 @@ import ru.vsu.personalWallet.service.AimService;
 @Controller
 public class AimController {
     private AimService aimService;
-    private static String errorMsg;
+    private Gson gson;
 
     @Autowired
     AimController(AimService aimService) {
         this.aimService =aimService;
     }
 
-    //TODO: finish class
+
+
 }
