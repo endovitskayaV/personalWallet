@@ -29,10 +29,10 @@ public class AimService {
 
    public boolean add(AimDto aimDto){
         if (aimRepository.exists(aimDto.getId())) return false;
-        else save(aimDto);
+        else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;
    }
-    public boolean save(AimDto aimDto){
+    public boolean edit(AimDto aimDto){
         if (!aimRepository.exists(aimDto.getId())) return false;
         else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;

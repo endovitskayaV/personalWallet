@@ -35,7 +35,7 @@ public class AimController {
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
     public boolean edit(AimDto aimDto) {
-        return aimService.save(aimDto);
+        return aimService.edit(aimDto);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
