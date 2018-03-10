@@ -9,17 +9,16 @@ import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.service.AimService;
 
 import java.util.Date;
+import java.util.List;
 
 @RequestMapping("/aims")
 @RestController
 public class AimController {
     private AimService aimService;
-    private Gson gson;
 
     @Autowired
     AimController(AimService aimService) {
         this.aimService = aimService;
-        gson = new Gson();
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
@@ -40,32 +39,32 @@ public class AimController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public String edit(long id) {
-        return gson.toJson(aimService.findById(id));
+    public AimDto edit(long id) {
+        return aimService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getAll() {
-        return gson.toJson(aimService.findAll());
+    public List<AimDto> getAll() {
+        return  aimService.findAll();
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public String getById(long id) {
-        return gson.toJson(aimService.findById(id));
+    public AimDto getById(long id) {
+        return  aimService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})
-    public String getByName(String name) {
-        return gson.toJson(aimService.findByName(name));
+    public List<AimDto> getByName(String name) {
+        return  aimService.findByName(name);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"operationType"})
-    public String getByOperationType(OperationType operationType) {
-        return gson.toJson(aimService.findByOperationType(operationType));
+    public List<AimDto> getByOperationType(OperationType operationType) {
+        return  aimService.findByOperationType(operationType);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"date"})
-    public String getByDate(Date date) {
-        return gson.toJson(aimService.findByDate(date));
+    public List<AimDto> getByDate(Date date) {
+        return  aimService.findByDate(date);
     }
 }
