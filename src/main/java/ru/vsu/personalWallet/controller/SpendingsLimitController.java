@@ -50,19 +50,19 @@ public class  SpendingsLimitController {
         return gson.toJson(spendingsLimitService.findAll());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String getById(long id){
-        return gson.toJson( spendingsLimitService.findById(id));
-    }
-
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByMaxSum(long maxSum){
-        return gson.toJson( spendingsLimitService.findByMaxSum(maxSum));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByDate(Date date){
-        return gson.toJson( spendingsLimitService.findByDate(date));
-    }
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getById(long id){
+//        return gson.toJson( spendingsLimitService.findById(id));
+//    }
+//
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByMaxSum(long maxSum){
+//        return gson.toJson( spendingsLimitService.findByMaxSum(maxSum));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByDate(Date date){
+//        return gson.toJson( spendingsLimitService.findByDate(date));
+//    }
 }

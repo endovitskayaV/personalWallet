@@ -51,19 +51,19 @@ public class ChequeController {
         return gson.toJson(chequeService.findAll());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String getById(long id){
-        return gson.toJson( chequeService.findById(id));
-    }
-
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getName(String name){
-        return gson.toJson(chequeService.findByName(name));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByDate(Date date){
-        return gson.toJson( chequeService.findByDate(date));
-    }
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getById(long id){
+//        return gson.toJson( chequeService.findById(id));
+//    }
+//
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getName(String name){
+//        return gson.toJson(chequeService.findByName(name));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByDate(Date date){
+//        return gson.toJson( chequeService.findByDate(date));
+//    }
 }

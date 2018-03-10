@@ -5,9 +5,12 @@ import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.entity.AimEntity;
 
 import java.util.Date;
+import java.util.List;
 
 public interface AimRepository extends CrudRepository<AimEntity, Long> {
-    AimEntity findAimEntityByName(String name);
-    AimEntity findAimEntityByOperationType(OperationType operationType);
-    AimEntity findAimEntityByDate(Date date);
+    List<AimEntity> findAimEntitiesByName(String name);
+
+    List<AimEntity> findAimEntitiesByOperationType(OperationType operationType);
+
+    List<AimEntity> findAimEntitiesByDate(Date date);
 }

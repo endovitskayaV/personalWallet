@@ -21,12 +21,21 @@ public class AimService {
         this.aimRepository=aimRepository;
     }
 
-    public void delete(long aimId) {
-       aimRepository.delete(aimId);
-
+    public boolean delete(long aimId) {
+        if (!aimRepository.exists(aimId)) return false;
+        else aimRepository.delete(aimId);
+        return true;
     }
-    public void save(AimDto aimDto){
-       aimRepository.save(DtoToEntity.toEntity(aimDto));
+
+   public boolean add(AimDto aimDto){
+        if (aimRepository.exists(aimDto.getId())) return false;
+        else save(aimDto);
+        return true;
+   }
+    public boolean save(AimDto aimDto){
+        if (!aimRepository.exists(aimDto.getId())) return false;
+        else aimRepository.save(DtoToEntity.toEntity(aimDto));
+        return true;
     }
 
     public AimDto findById(long id){
@@ -39,15 +48,21 @@ public class AimService {
         return aimDtoList;
     }
 
-    public AimDto findByName(String name){
-        return EntityToDto.toDto(aimRepository.findAimEntityByName(name));
+    public List<AimDto> findByName(String name){
+        List<AimDto> aimDtoList=new ArrayList<>();
+        aimRepository.findAimEntitiesByName(name).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+        return aimDtoList;
     }
 
-    public AimDto findByOperationType(OperationType operationType){
-        return EntityToDto.toDto(aimRepository.findAimEntityByOperationType(operationType));
+    public List<AimDto> findByOperationType(OperationType operationType){
+        List<AimDto> aimDtoList=new ArrayList<>();
+        aimRepository.findAimEntitiesByOperationType(operationType).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+        return aimDtoList;
     }
 
-    public AimDto findByDate(Date date){
-        return EntityToDto.toDto(aimRepository.findAimEntityByDate(date));
+    public List<AimDto> findByDate(Date date){
+        List<AimDto> aimDtoList=new ArrayList<>();
+        aimRepository.findAimEntitiesByDate(date).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+        return aimDtoList;
     }
 }

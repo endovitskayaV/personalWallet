@@ -54,42 +54,42 @@ public class TransactionController {
         return gson.toJson(transactionService.findAll());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String getById(long id) {
-        return gson.toJson(transactionService.findById(id));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByDate(Date date) {
-        return gson.toJson(transactionService.findByDate(date));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByMoneyValue(long moneyValue) {
-        return gson.toJson(transactionService.findByMoneyValue(moneyValue));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByOperationType(OperationType operationType) {
-        return gson.toJson(transactionService.findByOperationType(operationType));
-    }
-
-    //POST
-    //herokuapp.....com/transaction/get
-    //query parameters:
-    //    String comment, compulsory
-    //returns:
-    //{INCOME, OUTCOME }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByComment(String comment) {
-        return gson.toJson(transactionService.findByComment(comment));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByCategoryName(String name) {
-        return gson.toJson(transactionService.findByCategoryName(name));
-    }
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getById(long id) {
+//        return gson.toJson(transactionService.findById(id));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByDate(Date date) {
+//        return gson.toJson(transactionService.findByDate(date));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByMoneyValue(long moneyValue) {
+//        return gson.toJson(transactionService.findByMoneyValue(moneyValue));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByOperationType(OperationType operationType) {
+//        return gson.toJson(transactionService.findByOperationType(operationType));
+//    }
+//
+//    //POST
+//    //herokuapp.....com/transaction/get
+//    //query parameters:
+//    //    String comment, compulsory
+//    //returns:
+//    //{INCOME, OUTCOME }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByComment(String comment) {
+//        return gson.toJson(transactionService.findByComment(comment));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByCategoryName(String name) {
+//        return gson.toJson(transactionService.findByCategoryName(name));
+//    }
 }
 
 

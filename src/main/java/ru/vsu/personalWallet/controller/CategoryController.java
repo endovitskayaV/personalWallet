@@ -48,13 +48,13 @@ public class CategoryController {
         return gson.toJson(categoryService.findAll());
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String getById(long id){
-        return gson.toJson(categoryService.findById(id));
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String getByName(String name){
-        return gson.toJson(categoryService.findByName(name));
-    }
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getById(long id){
+//        return gson.toJson(categoryService.findById(id));
+//    }
+//
+//    @RequestMapping(method = RequestMethod.POST)
+//    public String getByName(String name){
+//        return gson.toJson(categoryService.findByName(name));
+//    }
 }

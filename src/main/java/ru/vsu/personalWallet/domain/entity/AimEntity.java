@@ -20,7 +20,7 @@ public class AimEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", unique = true)
     public long getId() {
         return id;
     }
