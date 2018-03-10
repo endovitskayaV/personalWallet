@@ -50,7 +50,8 @@ public class AimController {
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
     public AimDto getById(long id) {
-        return  aimService.findById(id);
+        if(aimService.findById(id)==null) return null;
+        else return aimService.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})
