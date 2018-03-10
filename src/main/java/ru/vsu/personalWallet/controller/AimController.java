@@ -33,8 +33,9 @@ public class AimController {
         return aimService.add(aimDto);
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public boolean edit(AimDto aimDto) {
+    @RequestMapping(value = "edit", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public boolean edit(@RequestBody AimDto aimDto) {
         return aimService.edit(aimDto);
     }
 
