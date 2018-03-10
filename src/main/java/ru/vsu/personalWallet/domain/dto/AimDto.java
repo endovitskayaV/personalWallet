@@ -2,6 +2,7 @@ package ru.vsu.personalWallet.domain.dto;
 
 import ru.vsu.personalWallet.domain.OperationType;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class AimDto {
     private OperationType operationType;
     private String description;
     private long reminderSec;
-    private Date date;
+    private Timestamp date;
 
     public long getId() {
         return id;
@@ -58,11 +59,11 @@ public class AimDto {
         return this;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public AimDto setDate(Date date) {
+    public AimDto setDate(Timestamp date) {
         this.date = date;
         return this;
     }

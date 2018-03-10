@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -15,7 +16,7 @@ public class AimEntity {
     private OperationType operationType;
     private String description;
     private long reminderSec;
-    private Date date;
+    private Timestamp date;
 
 
     @Id
@@ -42,7 +43,7 @@ public class AimEntity {
     }
 
     @Column(name = "date", nullable = false)
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
@@ -76,7 +77,7 @@ public class AimEntity {
         return this;
     }
 
-    public AimEntity setDate(Date date) {
+    public AimEntity setDate(Timestamp date) {
         this.date = date;
         return this;
     }
