@@ -27,7 +27,7 @@ public class AimController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public boolean add(AimDto aimDto) {
+    public boolean add(@RequestBody AimDto aimDto) {
         return aimService.add(aimDto);
     }
 
