@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
-import ru.vsu.personalWallet.domain.dto.CategoryDto;
-import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.domain.repository.AimRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AimService {
@@ -31,6 +31,12 @@ public class AimService {
 
     public AimDto findById(long id){
         return EntityToDto.toDto(aimRepository.findOne(id));
+    }
+
+    public List<AimDto> findAll(){
+        List<AimDto> aimDtoList=new ArrayList<>();
+        aimRepository.findAll().forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+        return aimDtoList;
     }
 
     public AimDto findByName(String name){

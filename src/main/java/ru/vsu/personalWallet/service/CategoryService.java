@@ -2,7 +2,6 @@ package ru.vsu.personalWallet.service;
 
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.dto.CategoryDto;
-import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
