@@ -1,13 +1,16 @@
 package ru.vsu.personalWallet.controller;
 
 import com.google.gson.Gson;
+import com.sun.javaws.exceptions.ErrorCodeResponseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.service.AimService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +57,7 @@ public class AimController {
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
     public String getById(long id) {
         if (aimService.findById(id) == null)
-            return Integer.toString(HttpServletResponseWrapper.SC_NOT_FOUND);
+           return ResponseEntity.notFound().toString();
         else return gson.toJson(aimService.findById(id));
     }
 
