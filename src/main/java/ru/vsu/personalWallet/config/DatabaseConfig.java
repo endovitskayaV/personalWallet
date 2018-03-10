@@ -14,7 +14,6 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfig implements EnvironmentAware {
     private RelaxedPropertyResolver propertyResolver;
-    //ghjm
 
     @Override
     public void setEnvironment(Environment environment) {
