@@ -1,4 +1,4 @@
 package ru.vsu.personalWallet.controller;
 
-public class SpendingsLimitController {
+public class  SpendingsLimitController {
 }
