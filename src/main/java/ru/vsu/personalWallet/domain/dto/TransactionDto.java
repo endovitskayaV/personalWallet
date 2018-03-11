@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class TransactionDto {
     private String id;
     private OperationType operationType;
-    private CategoryDto category;
+    private String categoryId;
     private Timestamp creationDate;
     private long moneyValue;
     private String comment;
@@ -31,12 +31,12 @@ public class TransactionDto {
         return this;
     }
 
-    public CategoryDto getCategory() {
-        return category;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public TransactionDto setCategory(CategoryDto category) {
-        this.category = category;
+    public TransactionDto setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
         return this;
     }
 

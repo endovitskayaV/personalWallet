@@ -45,7 +45,7 @@ public class EntityToDto {
             return new SpendingsLimitDto()
                     .setId(spendingsLimitEntity.getId())
                     .setComment(spendingsLimitEntity.getComment())
-                    .setDate(spendingsLimitEntity.getDate())
+                    .setCreationDate(spendingsLimitEntity.getCreationDate())
                     .setMaxSum(spendingsLimitEntity.getMaxSum());
         }
         else return null;
@@ -56,7 +56,7 @@ public class EntityToDto {
             return new TransactionDto()
                     .setId(transactionEntity.getId())
                     .setOperationType(transactionEntity.getOperationType())
-                    .setCategory(toDto(transactionEntity.getCategory()))
+                    .setCategoryId(transactionEntity.getCategoryId())
                     .setCreationDate(transactionEntity.getCreationDate())
                     .setMoneyValue(transactionEntity.getMoneyValue())
                     .setComment(transactionEntity.getComment());

@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class TransactionEntity {
     private String id;
     private OperationType operationType;
-    private CategoryEntity category;
+    private String categoryId;
     private Timestamp creationDate;
     private long moneyValue;
     private String comment;
@@ -33,8 +33,8 @@ public class TransactionEntity {
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
-    public CategoryEntity getCategory() {
-        return category;
+    public String getCategoryId() {
+        return categoryId;
     }
 
     @Column(name = "creation_date", nullable = false)
@@ -63,8 +63,8 @@ public class TransactionEntity {
         return this;
     }
 
-    public TransactionEntity setCategory(CategoryEntity category) {
-        this.category = category;
+    public TransactionEntity setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
         return this;
     }
 

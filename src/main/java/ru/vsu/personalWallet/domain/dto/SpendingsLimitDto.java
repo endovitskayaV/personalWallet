@@ -1,23 +1,21 @@
 package ru.vsu.personalWallet.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
+@EqualsAndHashCode
 public class SpendingsLimitDto {
-    private long id;
+    private String id;
     private String comment;
     private long maxSum;
-    private Date date;
+    private Timestamp creationDate;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public SpendingsLimitDto setId(long id) {
+    public SpendingsLimitDto setId(String id) {
         this.id = id;
         return this;
     }
@@ -40,12 +38,12 @@ public class SpendingsLimitDto {
         return this;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public SpendingsLimitDto setDate(Date date) {
-        this.date = date;
+    public SpendingsLimitDto setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 }

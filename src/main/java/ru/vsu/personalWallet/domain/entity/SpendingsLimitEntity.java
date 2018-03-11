@@ -4,21 +4,20 @@ package ru.vsu.personalWallet.domain.entity;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @EqualsAndHashCode
 @Table(name="spendings_limit")
 public class SpendingsLimitEntity {
-    private long id;
+    private String id;
     private String comment;
     private long maxSum;
-    private Date date;
+    private Timestamp creationDate;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -33,12 +32,12 @@ public class SpendingsLimitEntity {
         return maxSum;
     }
 
-    @Column(name = "date", nullable = false)
-    public Date getDate() {
-        return date;
+    @Column(name = "creation_date", nullable = false)
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public SpendingsLimitEntity setId(long id) {
+    public SpendingsLimitEntity setId(String id) {
         this.id = id;
         return this;
     }
@@ -53,8 +52,8 @@ public class SpendingsLimitEntity {
         return this;
     }
 
-    public SpendingsLimitEntity setDate(Date date) {
-        this.date = date;
+    public SpendingsLimitEntity setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 }

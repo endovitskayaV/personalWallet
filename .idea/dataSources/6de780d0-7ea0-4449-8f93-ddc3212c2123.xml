@@ -63,8 +63,8 @@
     </role>
     <schema id="15" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2018-03-10.21:49:54.439</IntrospectionTimestamp>
-      <IntrospectionStateNumber>2371</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-03-11.21:17:11.500</IntrospectionTimestamp>
+      <IntrospectionStateNumber>2014</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -83,288 +83,270 @@
     <schema id="20" parent="2" name="information_schema">
       <ObjectId>12648</ObjectId>
     </schema>
-    <sequence id="21" parent="15" name="aim_id_seq">
-      <ObjectId>70750</ObjectId>
-      <StateNumber>2366</StateNumber>
+    <sequence id="21" parent="15" name="cheque_id_seq">
+      <ObjectId>69632</ObjectId>
+      <StateNumber>2011</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
       <CacheSize>1</CacheSize>
       <DataType>bigint</DataType>
     </sequence>
-    <sequence id="22" parent="15" name="category_id_seq">
-      <ObjectId>70761</ObjectId>
-      <StateNumber>2367</StateNumber>
+    <sequence id="22" parent="15" name="spendings_limit_id_seq">
+      <ObjectId>69643</ObjectId>
+      <StateNumber>2012</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
       <CacheSize>1</CacheSize>
       <DataType>bigint</DataType>
     </sequence>
-    <sequence id="23" parent="15" name="cheque_id_seq">
-      <ObjectId>70769</ObjectId>
-      <StateNumber>2368</StateNumber>
-      <SequenceIdentity>1</SequenceIdentity>
-      <BelongsToColumn>1</BelongsToColumn>
-      <CacheSize>1</CacheSize>
-      <DataType>bigint</DataType>
-    </sequence>
-    <sequence id="24" parent="15" name="spendings_limit_id_seq">
-      <ObjectId>70780</ObjectId>
-      <StateNumber>2369</StateNumber>
-      <SequenceIdentity>1</SequenceIdentity>
-      <BelongsToColumn>1</BelongsToColumn>
-      <CacheSize>1</CacheSize>
-      <DataType>bigint</DataType>
-    </sequence>
-    <sequence id="25" parent="15" name="transaction_id_seq">
-      <ObjectId>70788</ObjectId>
-      <StateNumber>2370</StateNumber>
-      <SequenceIdentity>1</SequenceIdentity>
-      <BelongsToColumn>1</BelongsToColumn>
-      <CacheSize>1</CacheSize>
-      <DataType>bigint</DataType>
-    </sequence>
-    <table id="26" parent="15" name="aim">
-      <ObjectId>70752</ObjectId>
-      <StateNumber>2366</StateNumber>
+    <table id="23" parent="15" name="aim">
+      <ObjectId>69616</ObjectId>
+      <StateNumber>2009</StateNumber>
     </table>
-    <table id="27" parent="15" name="category">
-      <ObjectId>70763</ObjectId>
-      <StateNumber>2371</StateNumber>
+    <table id="24" parent="15" name="category">
+      <ObjectId>69624</ObjectId>
+      <StateNumber>2014</StateNumber>
     </table>
-    <table id="28" parent="15" name="cheque">
-      <ObjectId>70771</ObjectId>
-      <StateNumber>2368</StateNumber>
+    <table id="25" parent="15" name="cheque">
+      <ObjectId>69634</ObjectId>
+      <StateNumber>2011</StateNumber>
     </table>
-    <table id="29" parent="15" name="spendings_limit">
-      <ObjectId>70782</ObjectId>
-      <StateNumber>2369</StateNumber>
+    <table id="26" parent="15" name="spendings_limit">
+      <ObjectId>69645</ObjectId>
+      <StateNumber>2012</StateNumber>
     </table>
-    <table id="30" parent="15" name="transaction">
-      <ObjectId>70790</ObjectId>
-      <StateNumber>2371</StateNumber>
+    <table id="27" parent="15" name="transaction">
+      <ObjectId>69651</ObjectId>
+      <StateNumber>2014</StateNumber>
     </table>
-    <column id="31" parent="26" name="id">
+    <column id="28" parent="23" name="id">
       <Position>1</Position>
-      <DataType>bigint|0</DataType>
+      <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2366</StateNumber>
-      <DefaultExpression>nextval(&apos;aim_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>20</TypeId>
-      <SequenceName>aim_id_seq</SequenceName>
+      <StateNumber>2009</StateNumber>
+      <TypeId>1043</TypeId>
     </column>
-    <column id="32" parent="26" name="date">
+    <column id="29" parent="23" name="creation_date">
       <Position>2</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2366</StateNumber>
+      <StateNumber>2009</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="33" parent="26" name="description">
+    <column id="30" parent="23" name="description">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2366</StateNumber>
+      <StateNumber>2009</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="34" parent="26" name="name">
+    <column id="31" parent="23" name="money_value">
       <Position>4</Position>
-      <DataType>varchar(255)|0</DataType>
-      <StateNumber>2366</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="35" parent="26" name="operation_type">
-      <Position>5</Position>
-      <DataType>varchar(255)|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2366</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <column id="36" parent="26" name="reminder_sec">
-      <Position>6</Position>
       <DataType>bigint|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2366</StateNumber>
+      <StateNumber>2009</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="37" parent="26" name="aim_pkey">
-      <ObjectId>70759</ObjectId>
+    <column id="32" parent="23" name="name">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+      <StateNumber>2009</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="33" parent="23" name="operation_type">
+      <Position>6</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2009</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="34" parent="23" name="period">
+      <Position>7</Position>
+      <DataType>timestamp|0</DataType>
+      <StateNumber>2009</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="35" parent="23" name="reminder_sec">
+      <Position>8</Position>
+      <DataType>bigint|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2009</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <index id="36" parent="23" name="aim_pkey">
+      <ObjectId>69622</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="38" parent="26" name="aim_pkey">
-      <ObjectId>70760</ObjectId>
+    <key id="37" parent="23" name="aim_pkey">
+      <ObjectId>69623</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>aim_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="39" parent="27" name="id">
+    <column id="38" parent="24" name="id">
       <Position>1</Position>
-      <DataType>bigint|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2367</StateNumber>
-      <DefaultExpression>nextval(&apos;category_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>20</TypeId>
-      <SequenceName>category_id_seq</SequenceName>
-    </column>
-    <column id="40" parent="27" name="name">
-      <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2367</StateNumber>
+      <NotNull>1</NotNull>
+      <StateNumber>2010</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="41" parent="27" name="category_pkey">
-      <ObjectId>70767</ObjectId>
+    <column id="39" parent="24" name="name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <StateNumber>2010</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="40" parent="24" name="category_pkey">
+      <ObjectId>69630</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="42" parent="27" name="category_pkey">
-      <ObjectId>70768</ObjectId>
+    <key id="41" parent="24" name="category_pkey">
+      <ObjectId>69631</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>category_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="43" parent="28" name="id">
+    <column id="42" parent="25" name="id">
       <Position>1</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2368</StateNumber>
+      <StateNumber>2011</StateNumber>
       <DefaultExpression>nextval(&apos;cheque_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>20</TypeId>
       <SequenceName>cheque_id_seq</SequenceName>
     </column>
-    <column id="44" parent="28" name="comment">
+    <column id="43" parent="25" name="comment">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2368</StateNumber>
+      <StateNumber>2011</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="45" parent="28" name="content">
+    <column id="44" parent="25" name="content">
       <Position>3</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2368</StateNumber>
+      <StateNumber>2011</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="46" parent="28" name="date">
+    <column id="45" parent="25" name="date">
       <Position>4</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2368</StateNumber>
+      <StateNumber>2011</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="47" parent="28" name="name">
+    <column id="46" parent="25" name="name">
       <Position>5</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2368</StateNumber>
+      <StateNumber>2011</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="48" parent="28" name="cheque_pkey">
-      <ObjectId>70778</ObjectId>
+    <index id="47" parent="25" name="cheque_pkey">
+      <ObjectId>69641</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="49" parent="28" name="cheque_pkey">
-      <ObjectId>70779</ObjectId>
+    <key id="48" parent="25" name="cheque_pkey">
+      <ObjectId>69642</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>cheque_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="50" parent="29" name="id">
+    <column id="49" parent="26" name="id">
       <Position>1</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2369</StateNumber>
+      <StateNumber>2012</StateNumber>
       <DefaultExpression>nextval(&apos;spendings_limit_id_seq&apos;::regclass)</DefaultExpression>
       <TypeId>20</TypeId>
       <SequenceName>spendings_limit_id_seq</SequenceName>
     </column>
-    <column id="51" parent="29" name="comment">
+    <column id="50" parent="26" name="comment">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2369</StateNumber>
+      <StateNumber>2012</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="52" parent="29" name="date">
+    <column id="51" parent="26" name="date">
       <Position>3</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2369</StateNumber>
+      <StateNumber>2012</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="53" parent="29" name="max_sum">
+    <column id="52" parent="26" name="max_sum">
       <Position>4</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2369</StateNumber>
+      <StateNumber>2012</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="54" parent="29" name="spendings_limit_pkey">
-      <ObjectId>70786</ObjectId>
+    <index id="53" parent="26" name="spendings_limit_pkey">
+      <ObjectId>69649</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="55" parent="29" name="spendings_limit_pkey">
-      <ObjectId>70787</ObjectId>
+    <key id="54" parent="26" name="spendings_limit_pkey">
+      <ObjectId>69650</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>spendings_limit_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="56" parent="30" name="id">
+    <column id="55" parent="27" name="id">
       <Position>1</Position>
-      <DataType>bigint|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2370</StateNumber>
-      <DefaultExpression>nextval(&apos;transaction_id_seq&apos;::regclass)</DefaultExpression>
-      <TypeId>20</TypeId>
-      <SequenceName>transaction_id_seq</SequenceName>
-    </column>
-    <column id="57" parent="30" name="comment">
-      <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
-      <StateNumber>2370</StateNumber>
+      <NotNull>1</NotNull>
+      <StateNumber>2013</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="58" parent="30" name="date">
+    <column id="56" parent="27" name="comment">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <StateNumber>2013</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="57" parent="27" name="creation_date">
       <Position>3</Position>
       <DataType>timestamp|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2370</StateNumber>
+      <StateNumber>2013</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="59" parent="30" name="money_value">
+    <column id="58" parent="27" name="money_value">
       <Position>4</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2370</StateNumber>
+      <StateNumber>2013</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="60" parent="30" name="operation_type">
+    <column id="59" parent="27" name="operation_type">
       <Position>5</Position>
       <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2370</StateNumber>
+      <StateNumber>2013</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="61" parent="30" name="category_id">
+    <column id="60" parent="27" name="category_id">
       <Position>6</Position>
-      <DataType>bigint|0</DataType>
+      <DataType>varchar(255)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2370</StateNumber>
-      <TypeId>20</TypeId>
+      <StateNumber>2013</StateNumber>
+      <TypeId>1043</TypeId>
     </column>
-    <index id="62" parent="30" name="transaction_pkey">
-      <ObjectId>70797</ObjectId>
+    <index id="61" parent="27" name="transaction_pkey">
+      <ObjectId>69657</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="63" parent="30" name="transaction_pkey">
-      <ObjectId>70798</ObjectId>
+    <key id="62" parent="27" name="transaction_pkey">
+      <ObjectId>69658</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>transaction_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="64" parent="30" name="fkgik7ruym8r1n4xngrclc6kiih">
-      <ObjectId>70799</ObjectId>
+    <foreign-key id="63" parent="27" name="fkgik7ruym8r1n4xngrclc6kiih">
+      <ObjectId>69659</ObjectId>
       <ColNames>category_id</ColNames>
-      <RefTableId>70763</RefTableId>
+      <RefTableId>69624</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>category</RefTableName>
       <RefKeyName>category_pkey</RefKeyName>

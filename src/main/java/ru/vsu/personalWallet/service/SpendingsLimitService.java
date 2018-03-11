@@ -1,14 +1,14 @@
 package ru.vsu.personalWallet.service;
 
 import org.springframework.stereotype.Service;
-import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.dto.SpendingsLimitDto;
+import ru.vsu.personalWallet.domain.entity.SpendingsLimitEntity;
 import ru.vsu.personalWallet.domain.repository.SpendingsLimitRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,13 +19,32 @@ public class SpendingsLimitService {
         this.spendingsLimitRepository = spendingsLimitRepository;
     }
 
-    public void delete(long aimId) {
-       spendingsLimitRepository.delete(aimId);
+    public boolean delete(String id) {
+       SpendingsLimitEntity spendingsLimitEntity =
+               spendingsLimitRepository.findSpendingsLimitEntityById(id);
+        if (spendingsLimitEntity == null) return false;
+        else spendingsLimitRepository.delete(spendingsLimitEntity);
+        return true;
+    }
 
+    public boolean add(SpendingsLimitDto spendingsLimitDto) {
+        if (spendingsLimitRepository.findSpendingsLimitEntityById(spendingsLimitDto.getId()) != null)
+            return false;
+        else spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
+        return true;
     }
-    public void save(SpendingsLimitDto spendingsLimitDto){
-       spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
+
+    public boolean edit(SpendingsLimitDto spendingsLimitDto) {
+        if (spendingsLimitRepository.findSpendingsLimitEntityById(spendingsLimitDto.getId()) == null)
+            return false;
+        else spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
+        return true;
     }
+
+    public SpendingsLimitDto findById(String id) {
+        return EntityToDto.toDto(spendingsLimitRepository.findSpendingsLimitEntityById(id));
+    }
+
 
     public SpendingsLimitDto findById(long id){
         return EntityToDto.toDto(spendingsLimitRepository.findOne(id));
@@ -37,12 +56,16 @@ public class SpendingsLimitService {
         return spendingsLimitDtoList;
     }
 
-    public SpendingsLimitDto findByMaxSum(long maxSum){
-        return EntityToDto.toDto(spendingsLimitRepository.findSpendingsLimitEntityByMaxSum(maxSum));
+    public List<SpendingsLimitDto> findByMaxSum(long maxSum){
+        List<SpendingsLimitDto> spendingsLimitDtoList=new ArrayList<>();
+        spendingsLimitRepository.findSpendingsLimitEntitiesByMaxSum(maxSum).forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
+        return spendingsLimitDtoList;
     }
 
-    public SpendingsLimitDto findByDate(Date date){
-        return EntityToDto.toDto(spendingsLimitRepository.findSpendingsLimitEntityByDate(date));
+    public List<SpendingsLimitDto> findByCreationDate(Timestamp creationDate){
+        List<SpendingsLimitDto> spendingsLimitDtoList=new ArrayList<>();
+        spendingsLimitRepository.findSpendingsLimitEntitiesByCreationDate(creationDate).forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
+        return spendingsLimitDtoList;
     }
 
 }

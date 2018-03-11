@@ -3,9 +3,13 @@ package ru.vsu.personalWallet.domain.repository;
 import org.springframework.data.repository.CrudRepository;
 import ru.vsu.personalWallet.domain.entity.SpendingsLimitEntity;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.List;
 
 public interface SpendingsLimitRepository extends CrudRepository<SpendingsLimitEntity, Long> {
-    SpendingsLimitEntity findSpendingsLimitEntityByMaxSum(long maxSum);
-    SpendingsLimitEntity findSpendingsLimitEntityByDate(Date date);
+    SpendingsLimitEntity findSpendingsLimitEntityById(String id);
+
+    List<SpendingsLimitEntity> findSpendingsLimitEntitiesByMaxSum(long maxSum);
+
+    List<SpendingsLimitEntity> findSpendingsLimitEntitiesByCreationDate(Timestamp creationDate);
 }

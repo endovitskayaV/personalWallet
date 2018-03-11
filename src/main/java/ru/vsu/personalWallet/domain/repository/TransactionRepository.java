@@ -20,5 +20,5 @@ public interface TransactionRepository extends CrudRepository<TransactionEntity,
 
     List<TransactionEntity> findTransactionEntityByComment(String comment);
 
-    List<TransactionEntity> findTransactionEntityByCategoryName(String name);
+    List<TransactionEntity> findTransactionEntityByCategoryId(String id);
 }

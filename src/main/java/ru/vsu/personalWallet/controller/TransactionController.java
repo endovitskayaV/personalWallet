@@ -98,9 +98,9 @@ public class TransactionController {
         return transactionService.findByComment(comment);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = {"categoryName"})
-    public List<TransactionDto> getByCategoryName(String categoryName) {
-        return transactionService.findByCategoryName(categoryName);
+    @RequestMapping(method = RequestMethod.GET, params = {"categoryId"})
+    public List<TransactionDto> getByCategoryId(String categoryName) {
+        return transactionService.findByCategoryId(categoryName);
     }
 }
 

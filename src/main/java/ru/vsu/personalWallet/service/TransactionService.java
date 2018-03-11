@@ -82,9 +82,9 @@ public class TransactionService {
         return transactionDtoList;
     }
 
-    public List<TransactionDto> findByCategoryName(String categoryName) {
+    public List<TransactionDto> findByCategoryId(String categoryId) {
         List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findTransactionEntityByCategoryName(categoryName)
+        transactionRepository.findTransactionEntityByCategoryId(categoryId)
                 .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
     }
