@@ -1,8 +1,5 @@
 package ru.vsu.personalWallet.controller;
 
-import com.google.gson.Gson;
-import com.sun.javaws.exceptions.ErrorCodeResponseException;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,8 +11,6 @@ import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.service.AimService;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpServletResponseWrapper;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -47,27 +42,10 @@ public class AimController {
         return aimService.edit(aimDto);
     }
 
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public AimDto edit(long id) {
-        return aimService.findById(id);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<AimDto> getAll() {
-        return aimService.findAll();
-    }
-
-
-    @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById1(long id) {
+    private ResponseEntity getAimDtoOrCode404(long id) {
         if (aimService.findById(id) == null) {
-//         return gson.toJson(ResponseEntity.status(HttpStatus.NOT_FOUND).
-//        return ResponseEntity.notFound().build();
-//        ResponseEntity.status(HttpStatus.NOT_FOUND).body(, HttpStatus.NOT_FOUND, )//ResponseEntity.notFound().build();
-//        throw new NotFoundException("bla");
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
-
             return new ResponseEntity<>(
                     new HttpResponse()
                             .setTimestamp(Instant.now().getEpochSecond())
@@ -77,14 +55,27 @@ public class AimController {
                             .setPath("/aims"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
-        }
-        else return new ResponseEntity<>(aimService.findById(id), HttpStatus.OK);
+        } else return new ResponseEntity<>(aimService.findById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = {"id"})
+    public ResponseEntity getById(long id) {
+        return getAimDtoOrCode404(id);
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.GET)
+    public ResponseEntity edit(long id) {
+        return getAimDtoOrCode404(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<AimDto> getAll() {
+        return aimService.findAll();
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})
-    public String getByName(String name) {
-        //return  gson.toJson(aimService.findByName(name));
-        return Integer.toString(HttpServletResponseWrapper.SC_NOT_FOUND);
+    public List<AimDto> getByName(String name) {
+        return aimService.findByName(name);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"operationType"})
