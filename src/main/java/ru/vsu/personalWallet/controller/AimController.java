@@ -2,16 +2,21 @@ package ru.vsu.personalWallet.controller;
 
 import com.google.gson.Gson;
 import com.sun.javaws.exceptions.ErrorCodeResponseException;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.vsu.personalWallet.HttpResponse.HttpResponse;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.service.AimService;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -19,12 +24,10 @@ import java.util.List;
 @RestController
 public class AimController {
     private AimService aimService;
-    private Gson gson;
 
     @Autowired
     AimController(AimService aimService) {
         this.aimService = aimService;
-        gson = new Gson();
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
@@ -54,11 +57,28 @@ public class AimController {
         return aimService.findAll();
     }
 
+
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public String getById(long id) {
-        if (aimService.findById(id) == null)
-           return ResponseEntity.notFound().toString();
-        else return gson.toJson(aimService.findById(id));
+    public ResponseEntity getById1(long id) {
+        if (aimService.findById(id) == null) {
+//         return gson.toJson(ResponseEntity.status(HttpStatus.NOT_FOUND).
+//        return ResponseEntity.notFound().build();
+//        ResponseEntity.status(HttpStatus.NOT_FOUND).body(, HttpStatus.NOT_FOUND, )//ResponseEntity.notFound().build();
+//        throw new NotFoundException("bla");
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Aim with id=" + id + " not found")
+                            .setPath("/aims"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        }
+        else return new ResponseEntity<>(aimService.findById(id), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})
