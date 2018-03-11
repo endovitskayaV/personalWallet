@@ -3,22 +3,22 @@ package ru.vsu.personalWallet.domain.entity;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @EqualsAndHashCode
 @Table(name="cheque")
 public class ChequeEntity {
-    private long id;
+    private String id;
     private String name;
     private String content;
     private String comment;
-    private Date date;
+    private Timestamp creationDate;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -38,12 +38,12 @@ public class ChequeEntity {
     }
 
 
-    @Column(name = "date", nullable = false)
-    public Date getDate() {
-        return date;
+    @Column(name = "creation_date", nullable = false)
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public ChequeEntity setId(long id) {
+    public ChequeEntity setId(String id) {
         this.id = id;
         return this;
     }
@@ -63,8 +63,8 @@ public class ChequeEntity {
         return this;
     }
 
-    public ChequeEntity setDate(Date date) {
-        this.date = date;
+    public ChequeEntity setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 }

@@ -1,24 +1,22 @@
 package ru.vsu.personalWallet.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
+@EqualsAndHashCode
 public class ChequeDto {
-    private long id;
+    private String id;
     private String name;
     private String content;
     private String comment;
-    private Date date;
+    private Timestamp creationDate;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public ChequeDto setId(long id) {
+    public ChequeDto setId(String id) {
         this.id = id;
         return this;
     }
@@ -50,12 +48,12 @@ public class ChequeDto {
         return this;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public ChequeDto setDate(Date date) {
-        this.date = date;
+    public ChequeDto setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 }

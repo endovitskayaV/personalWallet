@@ -35,7 +35,7 @@ public class EntityToDto {
                     .setName(chequeEntity.getName())
                     .setContent(chequeEntity.getContent())
                     .setComment(chequeEntity.getComment())
-                    .setDate(chequeEntity.getDate());
+                    .setCreationDate(chequeEntity.getCreationDate());
         }
         else return null;
     }
