@@ -37,7 +37,7 @@ public class TransactionEntity {
         return category;
     }
 
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     public Timestamp getCreationDate() {
         return creationDate;
     }

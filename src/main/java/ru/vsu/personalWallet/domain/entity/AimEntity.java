@@ -32,7 +32,7 @@ public class AimEntity {
         return name;
     }
 
-    @Column(name = "moneyValue")
+    @Column(name = "money_value")
     public long getMoneyValue() {
         return moneyValue;
     }
@@ -52,7 +52,7 @@ public class AimEntity {
         return description;
     }
 
-    @Column(name = "creationDate", nullable = false)
+    @Column(name = "creation_date", nullable = false)
     public Timestamp getCreationDate() {
         return creationDate;
     }
