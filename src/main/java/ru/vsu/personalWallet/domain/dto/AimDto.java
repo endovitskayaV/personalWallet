@@ -1,23 +1,26 @@
 package ru.vsu.personalWallet.domain.dto;
 
+import lombok.EqualsAndHashCode;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
+@EqualsAndHashCode
 public class AimDto {
-    private long id;
+    private String id;
     private String name;
+    private long moneyValue;
+    private Timestamp period;
     private OperationType operationType;
     private String description;
     private long reminderSec;
-    private Timestamp date;
+    private Timestamp creationDate;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public AimDto setId(long id) {
+    public AimDto setId(String id) {
         this.id = id;
         return this;
     }
@@ -26,8 +29,26 @@ public class AimDto {
         return name;
     }
 
+    public long getMoneyValue() {
+        return moneyValue;
+    }
+
+    public Timestamp getPeriod() {
+        return period;
+    }
+
     public AimDto setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public AimDto setMoneyValue(long moneyValue) {
+        this.moneyValue = moneyValue;
+        return this;
+    }
+
+    public AimDto setPeriod(Timestamp period) {
+        this.period = period;
         return this;
     }
 
@@ -58,30 +79,13 @@ public class AimDto {
         return this;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public AimDto setDate(Timestamp date) {
-        this.date = date;
+    public AimDto setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AimDto aimDto = (AimDto) o;
-        return id == aimDto.id &&
-                reminderSec == aimDto.reminderSec &&
-                Objects.equals(name, aimDto.name) &&
-                operationType == aimDto.operationType &&
-                Objects.equals(description, aimDto.description) &&
-                Objects.equals(date, aimDto.date);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, operationType, description, reminderSec, date);
-    }
 }

@@ -1,26 +1,23 @@
 package ru.vsu.personalWallet.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import ru.vsu.personalWallet.domain.OperationType;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 public class TransactionDto {
-    private long id;
+    private String id;
     private OperationType operationType;
     private CategoryDto category;
-    private Date date;
+    private Timestamp creationDate;
     private long moneyValue;
     private String comment;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public TransactionDto setId(long id) {
+    public TransactionDto setId(String id) {
         this.id = id;
         return this;
     }
@@ -43,12 +40,12 @@ public class TransactionDto {
         return this;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
-    public TransactionDto setDate(Date date) {
-        this.date = date;
+    public TransactionDto setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 

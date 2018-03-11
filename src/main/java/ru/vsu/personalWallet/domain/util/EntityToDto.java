@@ -6,12 +6,15 @@ import ru.vsu.personalWallet.domain.entity.*;
 public class EntityToDto {
     public static AimDto toDto(AimEntity aimEntity){
         if (aimEntity!=null){
-            return new AimDto().setId(aimEntity.getId())
+            return new AimDto()
+                    .setId(aimEntity.getId())
                     .setName(aimEntity.getName())
+                    .setMoneyValue(aimEntity.getMoneyValue())
+                    .setPeriod(aimEntity.getPeriod())
                     .setOperationType(aimEntity.getOperationType())
                     .setDescription(aimEntity.getDescription())
                     .setReminderSec(aimEntity.getReminderSec())
-                    .setDate(aimEntity.getDate());
+                    .setCreationDate(aimEntity.getCreationDate());
         }
         else return null;
     }
@@ -54,7 +57,7 @@ public class EntityToDto {
                     .setId(transactionEntity.getId())
                     .setOperationType(transactionEntity.getOperationType())
                     .setCategory(toDto(transactionEntity.getCategory()))
-                    .setDate(transactionEntity.getDate())
+                    .setCreationDate(transactionEntity.getCreationDate())
                     .setMoneyValue(transactionEntity.getMoneyValue())
                     .setComment(transactionEntity.getComment());
         }

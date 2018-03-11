@@ -10,18 +10,19 @@ import java.sql.Timestamp;
 @EqualsAndHashCode
 @Table(name = "aim")
 public class AimEntity {
-    private long id;
+    private String id;
     private String name;
+    private long moneyValue;
+    private Timestamp period;
     private OperationType operationType;
     private String description;
     private long reminderSec;
-    private Timestamp date;
+    private Timestamp creationDate;
 
 
     @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -31,6 +32,15 @@ public class AimEntity {
         return name;
     }
 
+    @Column(name = "moneyValue")
+    public long getMoneyValue() {
+        return moneyValue;
+    }
+
+    @Column(name = "period")
+    public Timestamp getPeriod() {
+        return period;
+    }
     @Enumerated(EnumType.STRING)
     @Column(name = "operation_type", nullable = false)
     public OperationType getOperationType() {
@@ -42,9 +52,9 @@ public class AimEntity {
         return description;
     }
 
-    @Column(name = "date", nullable = false)
-    public Timestamp getDate() {
-        return date;
+    @Column(name = "creationDate", nullable = false)
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
     @Column(name = "reminder_sec", nullable = false)
@@ -52,13 +62,24 @@ public class AimEntity {
         return reminderSec;
     }
 
-    public AimEntity setId(long id) {
+
+    public AimEntity setId(String id) {
         this.id = id;
         return this;
     }
 
     public AimEntity setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public AimEntity setMoneyValue(long moneyValue) {
+        this.moneyValue = moneyValue;
+        return this;
+    }
+
+    public AimEntity setPeriod(Timestamp period) {
+        this.period = period;
         return this;
     }
 
@@ -77,8 +98,8 @@ public class AimEntity {
         return this;
     }
 
-    public AimEntity setDate(Timestamp date) {
-        this.date = date;
+    public AimEntity setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 }

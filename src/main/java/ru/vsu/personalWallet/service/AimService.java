@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
+import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.repository.AimRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
@@ -18,51 +19,67 @@ public class AimService {
 
     @Autowired
     public AimService(AimRepository aimRepository) {
-        this.aimRepository=aimRepository;
+        this.aimRepository = aimRepository;
     }
 
-    public boolean delete(long aimId) {
-        if (!aimRepository.exists(aimId)) return false;
-        else aimRepository.delete(aimId);
+    public boolean delete(String id) {
+        AimEntity aimEntity = aimRepository.findAimEntityById(id);
+        if (aimEntity == null) return false;
+        else aimRepository.delete(aimEntity);
         return true;
     }
 
-   public boolean add(AimDto aimDto){
-        if (aimRepository.exists(aimDto.getId())) return false;
-        else aimRepository.save(DtoToEntity.toEntity(aimDto));
-        return true;
-   }
-    public boolean edit(AimDto aimDto){
-        if (!aimRepository.exists(aimDto.getId())) return false;
+    public boolean add(AimDto aimDto) {
+        AimEntity aimEntity = aimRepository.findAimEntityById(aimDto.getId());
+        if (aimEntity != null) return false;
         else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;
     }
 
-    public AimDto findById(long id){
-        return EntityToDto.toDto(aimRepository.findOne(id));
+    public boolean edit(AimDto aimDto) {
+        AimEntity aimEntity = aimRepository.findAimEntityById(aimDto.getId());
+        if (aimEntity == null) return false;
+        else aimRepository.save(DtoToEntity.toEntity(aimDto));
+        return true;
     }
 
-    public List<AimDto> findAll(){
-        List<AimDto> aimDtoList=new ArrayList<>();
-        aimRepository.findAll().forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+    public AimDto findById(String id) {
+        return EntityToDto.toDto(aimRepository.findAimEntityById(id));
+    }
+
+    public List<AimDto> findAll() {
+        List<AimDto> aimDtoList = new ArrayList<>();
+        aimRepository.findAll().forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
     }
 
-    public List<AimDto> findByName(String name){
-        List<AimDto> aimDtoList=new ArrayList<>();
-        aimRepository.findAimEntitiesByName(name).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+    public List<AimDto> findByName(String name) {
+        List<AimDto> aimDtoList = new ArrayList<>();
+        aimRepository.findAimEntitiesByName(name).forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
     }
 
-    public List<AimDto> findByOperationType(OperationType operationType){
-        List<AimDto> aimDtoList=new ArrayList<>();
-        aimRepository.findAimEntitiesByOperationType(operationType).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+    public List<AimDto> findByOperationType(OperationType operationType) {
+        List<AimDto> aimDtoList = new ArrayList<>();
+        aimRepository.findAimEntitiesByOperationType(operationType).forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
     }
 
-    public List<AimDto> findByDate(Timestamp date){
-        List<AimDto> aimDtoList=new ArrayList<>();
-        aimRepository.findAimEntitiesByDate(date).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
+    public List<AimDto> findByCreationDate(Timestamp creationDate) {
+        List<AimDto> aimDtoList = new ArrayList<>();
+        aimRepository.findAimEntitiesByCreationDate(creationDate).forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
+        return aimDtoList;
+    }
+
+    public List<AimDto> findByPeriod(Timestamp period) {
+        List<AimDto> aimDtoList = new ArrayList<>();
+        aimRepository.findAimEntitiesByPeriod(period).forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
+        return aimDtoList;
+    }
+
+    public List<AimDto> findByMoneyValue(long moneyValue) {
+        List<AimDto> aimDtoList = new ArrayList<>();
+        aimRepository.findAimEntitiesByMoneyValue(moneyValue).forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
     }
 }

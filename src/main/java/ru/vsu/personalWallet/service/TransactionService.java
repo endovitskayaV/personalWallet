@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.TransactionDto;
+import ru.vsu.personalWallet.domain.entity.TransactionEntity;
 import ru.vsu.personalWallet.domain.repository.TransactionRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,44 +19,75 @@ public class TransactionService {
 
     @Autowired
     public TransactionService(TransactionRepository transactionRepository) {
-        this.transactionRepository=transactionRepository;
+        this.transactionRepository = transactionRepository;
     }
 
-    public void delete(long aimId) {
-        transactionRepository.delete(aimId);
+    public boolean delete(String id) {
+        TransactionEntity transactionEntity=transactionRepository.findTransactionEntityById(id);
+        if (transactionEntity==null) return false;
+        else transactionRepository.delete(transactionEntity);
+        return true;
     }
 
-    public void save(TransactionDto transactionDto){
-        transactionRepository.save(DtoToEntity.toEntity(transactionDto));
+    public boolean add(TransactionDto transactionDto) {
+        TransactionEntity transactionEntity=
+                transactionRepository.findTransactionEntityById(transactionDto.getId());
+        if (transactionEntity!=null) return false;
+        else transactionRepository.save(DtoToEntity.toEntity(transactionDto));
+        return true;
     }
 
-    public List<TransactionDto> findAll(){
-        List<TransactionDto> transactionDtoList=new ArrayList<>();
-        transactionRepository.findAll().forEach(x->transactionDtoList.add(EntityToDto.toDto(x)));
+    public boolean edit(TransactionDto transactionDto) {
+        TransactionEntity transactionEntity=
+                transactionRepository.findTransactionEntityById(transactionDto.getId());
+        if (transactionEntity==null) return false;
+        else transactionRepository.save(DtoToEntity.toEntity(transactionDto));
+        return true;
+
+    }
+
+    public List<TransactionDto> findAll() {
+        List<TransactionDto> transactionDtoList = new ArrayList<>();
+        transactionRepository.findAll().forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
     }
 
-    public TransactionDto findById(long id){
-        return EntityToDto.toDto(transactionRepository.findOne(id));
+    public TransactionDto findById(String id) {
+        return EntityToDto.toDto(transactionRepository.findTransactionEntityById(id));
     }
 
-    public TransactionDto findByOperationType(OperationType operationType){
-        return EntityToDto.toDto(transactionRepository.findTransactionEntityByOperationType(operationType));
+    public List<TransactionDto> findByOperationType(OperationType operationType) {
+        List<TransactionDto> transactionDtoList = new ArrayList<>();
+        transactionRepository.findTransactionEntityByOperationType(operationType)
+                .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
+        return transactionDtoList;
     }
 
-    public TransactionDto findByDate(Date date){
-        return EntityToDto.toDto(transactionRepository.findTransactionEntityByDate(date));
+    public List<TransactionDto> findByCreationDate(Timestamp creationDate) {
+        List<TransactionDto> transactionDtoList = new ArrayList<>();
+        transactionRepository.findTransactionEntityByCreationDate(creationDate)
+                .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
+        return transactionDtoList;
     }
 
-    public TransactionDto findByMoneyValue(long moneyValue){
-        return EntityToDto.toDto(transactionRepository.findTransactionEntityByMoneyValue(moneyValue));
+    public List<TransactionDto> findByMoneyValue(long moneyValue) {
+        List<TransactionDto> transactionDtoList = new ArrayList<>();
+        transactionRepository.findTransactionEntityByMoneyValue(moneyValue)
+                .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
+        return transactionDtoList;
     }
 
-    public TransactionDto findByComment(String comment){
-        return EntityToDto.toDto(transactionRepository.findTransactionEntityByComment(comment));
+    public List<TransactionDto> findByComment(String comment) {
+        List<TransactionDto> transactionDtoList = new ArrayList<>();
+        transactionRepository.findTransactionEntityByComment(comment)
+                .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
+        return transactionDtoList;
     }
 
-    public TransactionDto findByCategoryName(String categoryName){
-        return EntityToDto.toDto(transactionRepository.findTransactionEntityByCategoryName(categoryName));
+    public List<TransactionDto> findByCategoryName(String categoryName) {
+        List<TransactionDto> transactionDtoList = new ArrayList<>();
+        transactionRepository.findTransactionEntityByCategoryName(categoryName)
+                .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
+        return transactionDtoList;
     }
 }

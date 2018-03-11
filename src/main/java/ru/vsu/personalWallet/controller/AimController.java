@@ -26,7 +26,7 @@ public class AimController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(long id) {
+    public boolean delete(String id) {
         return aimService.delete(id);
     }
 
@@ -42,7 +42,7 @@ public class AimController {
         return aimService.edit(aimDto);
     }
 
-    private ResponseEntity getAimDtoOrCode404(long id) {
+    private ResponseEntity getAimDtoOrCode404(String id) {
         if (aimService.findById(id) == null) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
@@ -58,13 +58,14 @@ public class AimController {
         } else return new ResponseEntity<>(aimService.findById(id), HttpStatus.OK);
     }
 
+
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(long id) {
+    public ResponseEntity getById(String id) {
         return getAimDtoOrCode404(id);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public ResponseEntity edit(long id) {
+    public ResponseEntity edit(String id) {
         return getAimDtoOrCode404(id);
     }
 
@@ -83,8 +84,18 @@ public class AimController {
         return aimService.findByOperationType(operationType);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = {"date"})
+    @RequestMapping(method = RequestMethod.GET, params = {"creationDate"})
     public List<AimDto> getByDate(Timestamp date) {
-        return aimService.findByDate(date);
+        return aimService.findByCreationDate(date);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = {"period"})
+    public List<AimDto> getByPeriod(Timestamp period) {
+        return aimService.findByPeriod(period);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = {"moneyValue"})
+    public List<AimDto> getByMoneyValue(long moneyValue) {
+        return aimService.findByMoneyValue(moneyValue);
     }
 }

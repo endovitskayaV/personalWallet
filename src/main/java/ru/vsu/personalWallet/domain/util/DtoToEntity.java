@@ -10,10 +10,12 @@ public class DtoToEntity {
             return new AimEntity()
                     .setId(aimDto.getId())
                     .setName(aimDto.getName())
+                    .setMoneyValue(aimDto.getMoneyValue())
+                    .setPeriod(aimDto.getPeriod())
                     .setOperationType(aimDto.getOperationType())
                     .setDescription(aimDto.getDescription())
                     .setReminderSec(aimDto.getReminderSec())
-                    .setDate(aimDto.getDate());
+                    .setCreationDate(aimDto.getCreationDate());
         }
         else return null;
     }
@@ -56,7 +58,7 @@ public class DtoToEntity {
                     .setId(transactionDto.getId())
                     .setOperationType(transactionDto.getOperationType())
                     .setCategory(toEntity(transactionDto.getCategory()))
-                    .setDate(transactionDto.getDate())
+                    .setCreationDate(transactionDto.getCreationDate())
                     .setMoneyValue(transactionDto.getMoneyValue())
                     .setComment(transactionDto.getComment());
         }

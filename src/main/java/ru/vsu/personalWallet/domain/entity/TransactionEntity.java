@@ -4,24 +4,23 @@ import lombok.EqualsAndHashCode;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Entity
 @EqualsAndHashCode
 @Table(name="transaction")
 public class TransactionEntity {
-    private long id;
+    private String id;
     private OperationType operationType;
     private CategoryEntity category;
-    private Date date;
+    private Timestamp creationDate;
     private long moneyValue;
     private String comment;
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -38,9 +37,9 @@ public class TransactionEntity {
         return category;
     }
 
-    @Column(name = "date", nullable = false)
-    public Date getDate() {
-        return date;
+    @Column(name = "creationDate", nullable = false)
+    public Timestamp getCreationDate() {
+        return creationDate;
     }
 
     @Column(name = "money_value", nullable = false)
@@ -54,7 +53,7 @@ public class TransactionEntity {
     }
 
 
-    public TransactionEntity setId(long id) {
+    public TransactionEntity setId(String id) {
         this.id = id;
         return this;
     }
@@ -69,8 +68,8 @@ public class TransactionEntity {
         return this;
     }
 
-    public TransactionEntity setDate(Date date) {
-        this.date = date;
+    public TransactionEntity setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
         return this;
     }
 
