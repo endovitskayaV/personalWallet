@@ -3,7 +3,6 @@ package ru.vsu.personalWallet.domain.dto;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Objects;
 
 public class AimDto {
@@ -83,7 +82,6 @@ public class AimDto {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, name, operationType, description, reminderSec, date);
     }
 }

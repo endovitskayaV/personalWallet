@@ -5,7 +5,6 @@ import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @EqualsAndHashCode

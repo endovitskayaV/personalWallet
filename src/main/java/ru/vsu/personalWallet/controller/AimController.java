@@ -11,8 +11,8 @@ import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.service.AimService;
 
+import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/aims")
@@ -84,7 +84,7 @@ public class AimController {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"date"})
-    public List<AimDto> getByDate(Date date) {
+    public List<AimDto> getByDate(Timestamp date) {
         return aimService.findByDate(date);
     }
 }

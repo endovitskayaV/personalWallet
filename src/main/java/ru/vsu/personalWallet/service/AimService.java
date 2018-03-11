@@ -8,8 +8,8 @@ import ru.vsu.personalWallet.domain.repository.AimRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -60,7 +60,7 @@ public class AimService {
         return aimDtoList;
     }
 
-    public List<AimDto> findByDate(Date date){
+    public List<AimDto> findByDate(Timestamp date){
         List<AimDto> aimDtoList=new ArrayList<>();
         aimRepository.findAimEntitiesByDate(date).forEach(x->aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
