@@ -9,13 +9,12 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @Table(name = "category")
 public class CategoryEntity {
-    private long id;
+    private String id;
     private String name;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -24,7 +23,7 @@ public class CategoryEntity {
         return name;
     }
 
-    public CategoryEntity setId(long id) {
+    public CategoryEntity setId(String id) {
         this.id = id;
         return this;
     }

@@ -30,15 +30,13 @@ public class AimService {
     }
 
     public boolean add(AimDto aimDto) {
-        AimEntity aimEntity = aimRepository.findAimEntityById(aimDto.getId());
-        if (aimEntity != null) return false;
+        if (aimRepository.findAimEntityById(aimDto.getId()) != null) return false;
         else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;
     }
 
     public boolean edit(AimDto aimDto) {
-        AimEntity aimEntity = aimRepository.findAimEntityById(aimDto.getId());
-        if (aimEntity == null) return false;
+        if (aimRepository.findAimEntityById(aimDto.getId()) == null) return false;
         else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;
     }

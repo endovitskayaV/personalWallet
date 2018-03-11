@@ -23,24 +23,22 @@ public class TransactionService {
     }
 
     public boolean delete(String id) {
-        TransactionEntity transactionEntity=transactionRepository.findTransactionEntityById(id);
-        if (transactionEntity==null) return false;
+        TransactionEntity transactionEntity = transactionRepository.findTransactionEntityById(id);
+        if (transactionEntity == null) return false;
         else transactionRepository.delete(transactionEntity);
         return true;
     }
 
     public boolean add(TransactionDto transactionDto) {
-        TransactionEntity transactionEntity=
-                transactionRepository.findTransactionEntityById(transactionDto.getId());
-        if (transactionEntity!=null) return false;
+        if (transactionRepository.findTransactionEntityById(transactionDto.getId()) != null)
+            return false;
         else transactionRepository.save(DtoToEntity.toEntity(transactionDto));
         return true;
     }
 
     public boolean edit(TransactionDto transactionDto) {
-        TransactionEntity transactionEntity=
-                transactionRepository.findTransactionEntityById(transactionDto.getId());
-        if (transactionEntity==null) return false;
+        if (transactionRepository.findTransactionEntityById(transactionDto.getId()) == null)
+            return false;
         else transactionRepository.save(DtoToEntity.toEntity(transactionDto));
         return true;
 

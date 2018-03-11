@@ -6,14 +6,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 public class CategoryDto {
-    private long id;
+    private String id;
     private String name;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public CategoryDto setId(long id) {
+    public CategoryDto setId(String id) {
         this.id = id;
         return this;
     }
