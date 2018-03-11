@@ -31,7 +31,7 @@ public class TransactionEntity {
         return operationType;
     }
 
-    @ManyToOne
+   // @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     public String getCategoryId() {
         return categoryId;
