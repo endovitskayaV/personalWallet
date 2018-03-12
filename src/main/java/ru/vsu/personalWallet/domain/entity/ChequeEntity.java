@@ -16,7 +16,6 @@ public class ChequeEntity {
     private Timestamp creationDate;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public String getId() {
         return id;
