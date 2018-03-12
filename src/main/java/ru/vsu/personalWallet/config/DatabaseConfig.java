@@ -24,9 +24,6 @@ public class DatabaseConfig implements EnvironmentAware {
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource(){
-        String url = propertyResolver.getProperty("SPRING_DATASOURCE_URL");
-        String username = propertyResolver.getProperty("SPRING_DATASOURCE_USERNAME");
-        String passwd = propertyResolver.getProperty("SPRING_DATASOURCE_PASSWORD");
         return DataSourceBuilder.create()
                 .url(propertyResolver.getProperty("SPRING_DATASOURCE_URL"))
                 .username(propertyResolver.getProperty("SPRING_DATASOURCE_USERNAME"))

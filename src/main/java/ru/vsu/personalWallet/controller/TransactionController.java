@@ -30,8 +30,7 @@ public class TransactionController {
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
     public boolean delete(String id) {
-        transactionService.delete(id);
-        return true;
+        return transactionService.delete(id);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST,

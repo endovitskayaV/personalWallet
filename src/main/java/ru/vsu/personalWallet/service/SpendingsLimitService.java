@@ -45,11 +45,6 @@ public class SpendingsLimitService {
         return EntityToDto.toDto(spendingsLimitRepository.findSpendingsLimitEntityById(id));
     }
 
-
-    public SpendingsLimitDto findById(long id){
-        return EntityToDto.toDto(spendingsLimitRepository.findOne(id));
-    }
-
     public List<SpendingsLimitDto> findAll(){
         List<SpendingsLimitDto> spendingsLimitDtoList=new ArrayList<>();
         spendingsLimitRepository.findAll().forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));

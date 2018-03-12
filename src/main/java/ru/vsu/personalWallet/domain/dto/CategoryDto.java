@@ -1,10 +1,6 @@
 package ru.vsu.personalWallet.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 public class CategoryDto {
     private String id;

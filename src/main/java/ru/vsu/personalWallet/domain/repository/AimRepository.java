@@ -5,7 +5,6 @@ import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.entity.AimEntity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 public interface AimRepository extends CrudRepository<AimEntity, Long> {

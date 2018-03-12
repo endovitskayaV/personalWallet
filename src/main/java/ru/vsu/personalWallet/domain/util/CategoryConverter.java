@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.entity.CategoryEntity;
 import ru.vsu.personalWallet.domain.repository.CategoryRepository;
-import ru.vsu.personalWallet.domain.repository.TransactionRepository;
 
 @Service
 public class CategoryConverter {

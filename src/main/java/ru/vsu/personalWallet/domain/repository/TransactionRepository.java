@@ -5,9 +5,7 @@ import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.entity.TransactionEntity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {
     TransactionEntity findTransactionEntityById(String id);

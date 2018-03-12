@@ -2,7 +2,6 @@ package ru.vsu.personalWallet.service;
 
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.dto.ChequeDto;
-import ru.vsu.personalWallet.domain.dto.SpendingsLimitDto;
 import ru.vsu.personalWallet.domain.entity.ChequeEntity;
 import ru.vsu.personalWallet.domain.repository.ChequeRepository;
 import ru.vsu.personalWallet.domain.util.DtoToEntity;
@@ -10,7 +9,6 @@ import ru.vsu.personalWallet.domain.util.EntityToDto;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
