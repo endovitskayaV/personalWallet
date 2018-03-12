@@ -57,7 +57,7 @@ public class DtoToEntity {
             return new TransactionEntity()
                     .setId(transactionDto.getId())
                     .setOperationType(transactionDto.getOperationType())
-                    .setCategoryId(transactionDto.getCategoryId())
+                    .setCategory(CategoryConverter.dtoToEntity(transactionDto.getCategoryId()))
                     .setCreationDate(transactionDto.getCreationDate())
                     .setMoneyValue(transactionDto.getMoneyValue())
                     .setComment(transactionDto.getComment());

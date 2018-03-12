@@ -1,5 +1,6 @@
 package ru.vsu.personalWallet.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,6 +10,7 @@ public class CategoryDto {
     private String id;
     private String name;
 
+    @JsonValue
     public String getId() {
         return id;
     }
