@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Table(name="cheque")
 public class ChequeEntity {
     private String id;
-    private String userId;
+    private UserEntity user;
     private String name;
     private String content;
     private String comment;
@@ -22,9 +22,9 @@ public class ChequeEntity {
         return id;
     }
 
-    @Column(name = "user_id", nullable = false)
-    public String getUserId() {
-        return userId;
+    @ManyToOne
+    public UserEntity getUser() {
+        return user;
     }
 
     @Column(name = "name")
@@ -53,8 +53,8 @@ public class ChequeEntity {
         return this;
     }
 
-    public ChequeEntity setUserId(String userId) {
-        this.userId = userId;
+    public ChequeEntity setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 

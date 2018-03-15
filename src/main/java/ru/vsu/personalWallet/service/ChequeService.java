@@ -65,7 +65,7 @@ public class ChequeService {
         if (chequeDto != null) {
             return new ChequeEntity()
                     .setId(chequeDto.getId())
-                    .setUserId(chequeRepository.findOne(chequeDto.getId()).getUserId())
+                    .setUser(chequeRepository.findOne(chequeDto.getId()).getUser())
                     .setName(chequeDto.getName())
                     .setContent(chequeDto.getContent())
                     .setComment(chequeDto.getComment())

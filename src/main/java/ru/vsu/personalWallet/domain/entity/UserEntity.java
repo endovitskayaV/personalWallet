@@ -1,11 +1,15 @@
 package ru.vsu.personalWallet.domain.entity;
 
 import lombok.EqualsAndHashCode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Collection;
 
 @Entity
 @EqualsAndHashCode
@@ -14,6 +18,8 @@ public class UserEntity {
     private String id;
     private String email;
     private String password;
+
+    public UserEntity(){}
 
     @Id
     @Column(name = "id", nullable = false, unique = true)

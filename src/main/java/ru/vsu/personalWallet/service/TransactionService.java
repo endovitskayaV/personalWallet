@@ -101,7 +101,7 @@ public class TransactionService {
         if (transactionDto != null) {
             return new TransactionEntity()
                     .setId(transactionDto.getId())
-                    .setUserId(transactionRepository.findOne(transactionDto.getId()).getUserId())
+                    .setUser(transactionRepository.findOne(transactionDto.getId()).getUser())
                     .setOperationType(transactionDto.getOperationType())
                     .setCategory(categoryRepository.findOne(transactionDto.getCategoryId()))
                     .setCreationDate(transactionDto.getCreationDate())

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Table(name="transaction")
 public class TransactionEntity {
     private String id;
-    private String userId;
+    private UserEntity user;
     private OperationType operationType;
     private CategoryEntity category;
     private Timestamp creationDate;
@@ -25,9 +25,9 @@ public class TransactionEntity {
         return id;
     }
 
-    @Column(name = "user_id", nullable = false)
-    public String getUserId() {
-        return userId;
+    @ManyToOne
+    public UserEntity getUser() {
+        return user;
     }
 
     @Enumerated(value = EnumType.STRING)
@@ -63,8 +63,8 @@ public class TransactionEntity {
         return this;
     }
 
-    public TransactionEntity setUserId(String userId) {
-        this.userId = userId;
+    public TransactionEntity setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
     public TransactionEntity setOperationType(OperationType operationType) {

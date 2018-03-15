@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Table(name="spendings_limit")
 public class SpendingsLimitEntity {
     private String id;
-    private String userId;
+    private UserEntity user;
     private String comment;
     private long maxSum;
     private Timestamp creationDate;
@@ -22,9 +22,9 @@ public class SpendingsLimitEntity {
         return id;
     }
 
-    @Column(name = "user_id", nullable = false)
-    public String getUserId() {
-        return userId;
+    @ManyToOne
+    public UserEntity getUser() {
+        return user;
     }
 
     @Column(name = "comment")
@@ -48,8 +48,8 @@ public class SpendingsLimitEntity {
         return this;
     }
 
-    public SpendingsLimitEntity setUserId(String userId) {
-        this.userId = userId;
+    public SpendingsLimitEntity setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 

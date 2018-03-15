@@ -67,7 +67,7 @@ public class SpendingsLimitService {
         if (spendingsLimitDto != null) {
             return new SpendingsLimitEntity()
                     .setId(spendingsLimitDto.getId())
-                    .setUserId(spendingsLimitRepository.findOne(spendingsLimitDto.getId()).getUserId())
+                    .setUser(spendingsLimitRepository.findOne(spendingsLimitDto.getId()).getUser())
                     .setComment(spendingsLimitDto.getComment())
                     .setCreationDate(spendingsLimitDto.getCreationDate())
                     .setMaxSum(spendingsLimitDto.getMaxSum());

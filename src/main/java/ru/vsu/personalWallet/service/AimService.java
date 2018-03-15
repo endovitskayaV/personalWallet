@@ -84,7 +84,7 @@ public class AimService {
         if (aimDto != null) {
             return new AimEntity()
                     .setId(aimDto.getId())
-                    .setUserId(aimRepository.findOne(aimDto.getId()).getUserId())
+                    .setUser(aimRepository.findOne(aimDto.getId()).getUser())
                     .setName(aimDto.getName())
                     .setMoneyValue(aimDto.getMoneyValue())
                     .setPeriod(aimDto.getPeriod())

@@ -1,10 +1,6 @@
 package ru.vsu.personalWallet.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.domain.entity.UserEntity;
@@ -17,19 +13,13 @@ import java.util.List;
 //@Component("userDetailsService")
 
 @Service
-public class UserService {  //implements UserDetailsService{
+public class UserService {
     private UserRepository userRepository;
 
     @Autowired
     public UserService(UserRepository userRepository){
         this.userRepository=userRepository;
     }
-
-//    @Override
-//    public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
-//       userRepository.findUserEntityByEmail(email);
-//       return  new Permiss
-//    }
 
     public boolean delete(String id) {
        UserEntity userEntity = userRepository.findOne(id);

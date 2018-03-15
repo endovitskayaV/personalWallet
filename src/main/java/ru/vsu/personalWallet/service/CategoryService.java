@@ -62,7 +62,7 @@ public class CategoryService {
         if (categoryDto != null) {
             return new CategoryEntity()
                     .setId(categoryDto.getId())
-                    .setUserId(categoryRepository.findOne(categoryDto.getId()).getUserId())
+                    .setUser(categoryRepository.findOne(categoryDto.getId()).getUser())
                     .setName(categoryDto.getName());
         } else return null;
     }
