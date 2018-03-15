@@ -20,29 +20,28 @@ public class SpendingsLimitService {
     }
 
     public boolean delete(String id) {
-       SpendingsLimitEntity spendingsLimitEntity =
-               spendingsLimitRepository.findSpendingsLimitEntityById(id);
+       SpendingsLimitEntity spendingsLimitEntity = spendingsLimitRepository.findOne(id);
         if (spendingsLimitEntity == null) return false;
         else spendingsLimitRepository.delete(spendingsLimitEntity);
         return true;
     }
 
     public boolean add(SpendingsLimitDto spendingsLimitDto) {
-        if (spendingsLimitRepository.findSpendingsLimitEntityById(spendingsLimitDto.getId()) != null)
+        if (spendingsLimitRepository.findOne(spendingsLimitDto.getId()) != null)
             return false;
         else spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
         return true;
     }
 
     public boolean edit(SpendingsLimitDto spendingsLimitDto) {
-        if (spendingsLimitRepository.findSpendingsLimitEntityById(spendingsLimitDto.getId()) == null)
+        if (spendingsLimitRepository.findOne(spendingsLimitDto.getId()) == null)
             return false;
         else spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
         return true;
     }
 
     public SpendingsLimitDto findById(String id) {
-        return EntityToDto.toDto(spendingsLimitRepository.findSpendingsLimitEntityById(id));
+        return EntityToDto.toDto(spendingsLimitRepository.findOne(id));
     }
 
     public List<SpendingsLimitDto> findAll(){
@@ -53,13 +52,15 @@ public class SpendingsLimitService {
 
     public List<SpendingsLimitDto> findByMaxSum(long maxSum){
         List<SpendingsLimitDto> spendingsLimitDtoList=new ArrayList<>();
-        spendingsLimitRepository.findSpendingsLimitEntitiesByMaxSum(maxSum).forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
+        spendingsLimitRepository.findSpendingsLimitEntitiesByMaxSum(maxSum)
+                .forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
         return spendingsLimitDtoList;
     }
 
     public List<SpendingsLimitDto> findByCreationDate(Timestamp creationDate){
         List<SpendingsLimitDto> spendingsLimitDtoList=new ArrayList<>();
-        spendingsLimitRepository.findSpendingsLimitEntitiesByCreationDate(creationDate).forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
+        spendingsLimitRepository.findSpendingsLimitEntitiesByCreationDate(creationDate)
+                .forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
         return spendingsLimitDtoList;
     }
 

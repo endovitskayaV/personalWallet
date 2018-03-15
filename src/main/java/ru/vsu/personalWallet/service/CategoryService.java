@@ -18,20 +18,20 @@ public class CategoryService {
     }
 
     public boolean delete(String id) {
-        CategoryEntity categoryEntity = categoryRepository.findCategoryEntityById(id);
+        CategoryEntity categoryEntity = categoryRepository.findOne(id);
         if (categoryEntity == null) return false;
         else categoryRepository.delete(categoryEntity);
         return true;
     }
 
     public boolean add(CategoryDto categoryDto) {
-        if (categoryRepository.findCategoryEntityById(categoryDto.getId()) != null) return false;
+        if (categoryRepository.findOne(categoryDto.getId()) != null) return false;
         else categoryRepository.save(DtoToEntity.toEntity(categoryDto));
         return true;
     }
 
     public boolean edit(CategoryDto categoryDto) {
-        if (categoryRepository.findCategoryEntityById(categoryDto.getId())== null) return false;
+        if (categoryRepository.findOne(categoryDto.getId())== null) return false;
         else categoryRepository.save(DtoToEntity.toEntity(categoryDto));
         return true;
     }
@@ -42,7 +42,7 @@ public class CategoryService {
     }
 
     public CategoryDto findById(String id){
-        return EntityToDto.toDto(categoryRepository.findCategoryEntityById(id));
+        return EntityToDto.toDto(categoryRepository.findOne(id));
     }
 
     public List<CategoryDto> findByName(String name){

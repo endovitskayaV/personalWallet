@@ -7,9 +7,7 @@ import ru.vsu.personalWallet.domain.entity.AimEntity;
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface AimRepository extends CrudRepository<AimEntity, Long> {
-    AimEntity findAimEntityById(String id);
-
+public interface AimRepository extends CrudRepository<AimEntity, String> {
     List<AimEntity> findAimEntitiesByName(String name);
 
     List<AimEntity> findAimEntitiesByMoneyValue(long moneyValue);

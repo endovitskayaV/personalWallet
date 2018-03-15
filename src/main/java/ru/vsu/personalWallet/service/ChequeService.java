@@ -20,26 +20,26 @@ public class ChequeService {
     }
 
     public boolean delete(String id) {
-        ChequeEntity chequeEntity = chequeRepository.findChequeEntityById(id);
+        ChequeEntity chequeEntity = chequeRepository.findOne(id);
         if (chequeEntity == null) return false;
         else chequeRepository.delete(chequeEntity);
         return true;
     }
 
     public boolean add(ChequeDto chequeDto) {
-        if (chequeRepository.findChequeEntityById(chequeDto.getId()) != null) return false;
+        if (chequeRepository.findOne(chequeDto.getId()) != null) return false;
         else chequeRepository.save(DtoToEntity.toEntity(chequeDto));
         return true;
     }
 
     public boolean edit(ChequeDto chequeDto) {
-        if (chequeRepository.findChequeEntityById(chequeDto.getId()) == null) return false;
+        if (chequeRepository.findOne(chequeDto.getId()) == null) return false;
         else chequeRepository.save(DtoToEntity.toEntity(chequeDto));
         return true;
     }
 
     public ChequeDto findById(String id) {
-        return EntityToDto.toDto(chequeRepository.findChequeEntityById(id));
+        return EntityToDto.toDto(chequeRepository.findOne(id));
     }
 
     public List<ChequeDto> findAll() {

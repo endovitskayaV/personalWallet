@@ -23,26 +23,26 @@ public class AimService {
     }
 
     public boolean delete(String id) {
-        AimEntity aimEntity = aimRepository.findAimEntityById(id);
+        AimEntity aimEntity = aimRepository.findOne(id);
         if (aimEntity == null) return false;
         else aimRepository.delete(aimEntity);
         return true;
     }
 
     public boolean add(AimDto aimDto) {
-        if (aimRepository.findAimEntityById(aimDto.getId()) != null) return false;
+        if (aimRepository.findOne(aimDto.getId()) != null) return false;
         else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;
     }
 
     public boolean edit(AimDto aimDto) {
-        if (aimRepository.findAimEntityById(aimDto.getId()) == null) return false;
+        if (aimRepository.findOne(aimDto.getId()) == null) return false;
         else aimRepository.save(DtoToEntity.toEntity(aimDto));
         return true;
     }
 
     public AimDto findById(String id) {
-        return EntityToDto.toDto(aimRepository.findAimEntityById(id));
+        return EntityToDto.toDto(aimRepository.findOne(id));
     }
 
     public List<AimDto> findAll() {

@@ -25,7 +25,8 @@ public class TransactionEntity {
     }
 
 
-    @Enumerated(EnumType.STRING)
+
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "operation_type", nullable = false)
     public OperationType getOperationType() {
         return operationType;
