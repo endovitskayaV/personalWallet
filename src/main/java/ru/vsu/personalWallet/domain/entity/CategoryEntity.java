@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "category")
 public class CategoryEntity {
     private String id;
+    private String userId;
     private String name;
 
     @Id
@@ -18,6 +19,12 @@ public class CategoryEntity {
         return id;
     }
 
+    @Column(name = "user_id", nullable = false)
+    public String getUserId() {
+        return userId;
+    }
+
+
     @Column(name = "name")
     public String getName() {
         return name;
@@ -25,6 +32,11 @@ public class CategoryEntity {
 
     public CategoryEntity setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public CategoryEntity setUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 

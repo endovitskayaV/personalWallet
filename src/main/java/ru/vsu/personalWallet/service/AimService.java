@@ -6,7 +6,6 @@ import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.repository.AimRepository;
-import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
 import java.sql.Timestamp;
@@ -31,13 +30,13 @@ public class AimService {
 
     public boolean add(AimDto aimDto) {
         if (aimRepository.findOne(aimDto.getId()) != null) return false;
-        else aimRepository.save(DtoToEntity.toEntity(aimDto));
+        else aimRepository.save(toEntity(aimDto));
         return true;
     }
 
     public boolean edit(AimDto aimDto) {
         if (aimRepository.findOne(aimDto.getId()) == null) return false;
-        else aimRepository.save(DtoToEntity.toEntity(aimDto));
+        else aimRepository.save(toEntity(aimDto));
         return true;
     }
 
@@ -79,5 +78,20 @@ public class AimService {
         List<AimDto> aimDtoList = new ArrayList<>();
         aimRepository.findAimEntitiesByMoneyValue(moneyValue).forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
+    }
+
+    private AimEntity toEntity(AimDto aimDto) {
+        if (aimDto != null) {
+            return new AimEntity()
+                    .setId(aimDto.getId())
+                    .setUserId(aimRepository.findOne(aimDto.getId()).getUserId())
+                    .setName(aimDto.getName())
+                    .setMoneyValue(aimDto.getMoneyValue())
+                    .setPeriod(aimDto.getPeriod())
+                    .setOperationType(aimDto.getOperationType())
+                    .setDescription(aimDto.getDescription())
+                    .setReminderSec(aimDto.getReminderSec())
+                    .setCreationDate(aimDto.getCreationDate());
+        } else return null;
     }
 }

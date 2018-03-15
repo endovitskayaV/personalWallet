@@ -63,4 +63,14 @@ public class EntityToDto {
         }
         else return null;
     }
+
+    public static UserDto toDto(UserEntity userEntity){
+        if (userEntity!=null){
+            return new UserDto()
+                    .setId(userEntity.getId())
+                    .setEmail(userEntity.getEmail())
+                    .setPassword(userEntity.getPassword());
+        }
+        else return null;
+    }
 }

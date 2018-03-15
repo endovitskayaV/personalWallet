@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.dto.ChequeDto;
 import ru.vsu.personalWallet.domain.entity.ChequeEntity;
 import ru.vsu.personalWallet.domain.repository.ChequeRepository;
-import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
 import java.sql.Timestamp;
@@ -28,13 +27,13 @@ public class ChequeService {
 
     public boolean add(ChequeDto chequeDto) {
         if (chequeRepository.findOne(chequeDto.getId()) != null) return false;
-        else chequeRepository.save(DtoToEntity.toEntity(chequeDto));
+        else chequeRepository.save(toEntity(chequeDto));
         return true;
     }
 
     public boolean edit(ChequeDto chequeDto) {
         if (chequeRepository.findOne(chequeDto.getId()) == null) return false;
-        else chequeRepository.save(DtoToEntity.toEntity(chequeDto));
+        else chequeRepository.save(toEntity(chequeDto));
         return true;
     }
 
@@ -60,5 +59,17 @@ public class ChequeService {
         chequeRepository.findChequeEntitiesByCreationDate(creationDate)
                 .forEach(x -> categoryDtoList.add(EntityToDto.toDto(x)));
         return categoryDtoList;
+    }
+
+    private ChequeEntity toEntity(ChequeDto chequeDto) {
+        if (chequeDto != null) {
+            return new ChequeEntity()
+                    .setId(chequeDto.getId())
+                    .setUserId(chequeRepository.findOne(chequeDto.getId()).getUserId())
+                    .setName(chequeDto.getName())
+                    .setContent(chequeDto.getContent())
+                    .setComment(chequeDto.getComment())
+                    .setCreationDate(chequeDto.getCreationDate());
+        } else return null;
     }
 }

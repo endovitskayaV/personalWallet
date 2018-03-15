@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Table(name = "aim")
 public class AimEntity {
     private String id;
+    private String userId;
     private String name;
     private long moneyValue;
     private Timestamp period;
@@ -26,6 +27,10 @@ public class AimEntity {
         return id;
     }
 
+    @Column(name = "user_id", nullable = false)
+    public String getUserId() {
+        return userId;
+    }
 
     @Column(name = "name")
     public String getName() {
@@ -65,6 +70,11 @@ public class AimEntity {
 
     public AimEntity setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public AimEntity setUserId(String userId) {
+        this.userId = userId;
         return this;
     }
 

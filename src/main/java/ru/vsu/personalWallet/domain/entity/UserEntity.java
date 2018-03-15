@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @EqualsAndHashCode
-@Table(name = "user")
+@Table(name = "user_info")
 public class UserEntity {
     private String id;
     private String email;
@@ -17,11 +17,11 @@ public class UserEntity {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
-    String getId() {
+    public String getId() {
         return id;
     }
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     public String getEmail() {
         return email;
     }
@@ -31,7 +31,7 @@ public class UserEntity {
         return password;
     }
 
-    UserEntity setId(String id) {
+    public UserEntity setId(String id) {
         this.id = id;
         return this;
     }

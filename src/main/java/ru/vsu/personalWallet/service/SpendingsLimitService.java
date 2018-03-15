@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.dto.SpendingsLimitDto;
 import ru.vsu.personalWallet.domain.entity.SpendingsLimitEntity;
 import ru.vsu.personalWallet.domain.repository.SpendingsLimitRepository;
-import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
 import java.sql.Timestamp;
@@ -29,14 +28,14 @@ public class SpendingsLimitService {
     public boolean add(SpendingsLimitDto spendingsLimitDto) {
         if (spendingsLimitRepository.findOne(spendingsLimitDto.getId()) != null)
             return false;
-        else spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
+        else spendingsLimitRepository.save(toEntity(spendingsLimitDto));
         return true;
     }
 
     public boolean edit(SpendingsLimitDto spendingsLimitDto) {
         if (spendingsLimitRepository.findOne(spendingsLimitDto.getId()) == null)
             return false;
-        else spendingsLimitRepository.save(DtoToEntity.toEntity(spendingsLimitDto));
+        else spendingsLimitRepository.save(toEntity(spendingsLimitDto));
         return true;
     }
 
@@ -62,6 +61,17 @@ public class SpendingsLimitService {
         spendingsLimitRepository.findSpendingsLimitEntitiesByCreationDate(creationDate)
                 .forEach(x->spendingsLimitDtoList.add(EntityToDto.toDto(x)));
         return spendingsLimitDtoList;
+    }
+
+    private SpendingsLimitEntity toEntity(SpendingsLimitDto spendingsLimitDto) {
+        if (spendingsLimitDto != null) {
+            return new SpendingsLimitEntity()
+                    .setId(spendingsLimitDto.getId())
+                    .setUserId(spendingsLimitRepository.findOne(spendingsLimitDto.getId()).getUserId())
+                    .setComment(spendingsLimitDto.getComment())
+                    .setCreationDate(spendingsLimitDto.getCreationDate())
+                    .setMaxSum(spendingsLimitDto.getMaxSum());
+        } else return null;
     }
 
 }

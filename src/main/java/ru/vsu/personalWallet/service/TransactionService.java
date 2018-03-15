@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.domain.entity.TransactionEntity;
+import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.repository.TransactionRepository;
-import ru.vsu.personalWallet.domain.util.DtoToEntity;
 import ru.vsu.personalWallet.domain.util.EntityToDto;
 
 import java.sql.Timestamp;
@@ -16,10 +16,14 @@ import java.util.List;
 @Service
 public class TransactionService {
     private TransactionRepository transactionRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository,
+                              CategoryRepository categoryRepository) {
         this.transactionRepository = transactionRepository;
+        this.categoryRepository=categoryRepository;
+
     }
 
     public boolean delete(String id) {
@@ -32,14 +36,14 @@ public class TransactionService {
     public boolean add(TransactionDto transactionDto) {
         if (transactionRepository.findOne(transactionDto.getId()) != null)
             return false;
-        else transactionRepository.save(DtoToEntity.toEntity(transactionDto));
+        else transactionRepository.save(toEntity(transactionDto));
         return true;
     }
 
     public boolean edit(TransactionDto transactionDto) {
         if (transactionRepository.findOne(transactionDto.getId()) == null)
             return false;
-        else transactionRepository.save(DtoToEntity.toEntity(transactionDto));
+        else transactionRepository.save(toEntity(transactionDto));
         return true;
 
     }
@@ -52,6 +56,10 @@ public class TransactionService {
 
     public TransactionDto findById(String id) {
         return EntityToDto.toDto(transactionRepository.findOne(id));
+    }
+
+    public TransactionEntity findEntityById(String id) {
+        return transactionRepository.findOne(id);
     }
 
     public List<TransactionDto> findByOperationType(OperationType operationType) {
@@ -87,5 +95,18 @@ public class TransactionService {
         transactionRepository.findTransactionEntityByCategoryId(categoryId)
                 .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
+    }
+
+    private TransactionEntity toEntity(TransactionDto transactionDto) {
+        if (transactionDto != null) {
+            return new TransactionEntity()
+                    .setId(transactionDto.getId())
+                    .setUserId(transactionRepository.findOne(transactionDto.getId()).getUserId())
+                    .setOperationType(transactionDto.getOperationType())
+                    .setCategory(categoryRepository.findOne(transactionDto.getCategoryId()))
+                    .setCreationDate(transactionDto.getCreationDate())
+                    .setMoneyValue(transactionDto.getMoneyValue())
+                    .setComment(transactionDto.getComment());
+        } else return null;
     }
 }
