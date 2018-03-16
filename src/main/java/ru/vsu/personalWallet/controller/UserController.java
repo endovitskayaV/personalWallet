@@ -27,6 +27,7 @@ public class UserController {
         return userService.delete(id);
     }
 
+
     @RequestMapping(value = "add", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public boolean add(@RequestBody UserDto userDto) {
@@ -55,18 +56,18 @@ public class UserController {
         } else return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(String id) {
-        return getUserDtoOrCode404(id);
-    }
+//    @RequestMapping(method = RequestMethod.GET, params = {"id"})
+//    public ResponseEntity getById(String id) {
+//        return getUserDtoOrCode404(id);
+//    }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public ResponseEntity edit(String id) {
         return getUserDtoOrCode404(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<UserDto> getAll() {
-        return userService.findAll();
-    }
+//    @RequestMapping(method = RequestMethod.GET)
+//    public List<UserDto> getAll() {
+//        return userService.findAll();
+//    }
 }

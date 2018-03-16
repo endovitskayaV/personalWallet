@@ -18,8 +18,8 @@ public class UserEntity {
     private String id;
     private String email;
     private String password;
+    private String token;
 
-    public UserEntity(){}
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -37,6 +37,11 @@ public class UserEntity {
         return password;
     }
 
+    @Column(name = "token")
+    public String getToken() {
+        return password;
+    }
+
     public UserEntity setId(String id) {
         this.id = id;
         return this;
@@ -49,6 +54,11 @@ public class UserEntity {
 
     public UserEntity setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public UserEntity setToken(String token) {
+        this.token = token;
         return this;
     }
 }

@@ -20,16 +20,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableTransactionManagement
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
+  //  @Autowired
     private UserDetailsService userDetailsService;
-    @Autowired
+   // @Autowired
     private AuthenticationEntryPoint authenticationEntryPoint;
 
+    @Autowired
+    public WebSecurityConfig(UserDetailsService userDetailsService,
+                             AuthenticationEntryPoint authenticationEntryPoint){
+        this.userDetailsService=userDetailsService;
+        this.authenticationEntryPoint=authenticationEntryPoint;
+    }
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder
-                .userDetailsService(userDetailsService);
+        authenticationManagerBuilder.userDetailsService(userDetailsService);
     }
 
     @Bean
@@ -48,22 +53,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf()
-                .disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/userapi/get/**", "/userapi/delete/**", "/userapi/edit/**").authenticated()
-                .anyRequest().permitAll();
 
-        // Custom JWT based authentication
+        httpSecurity
+                 .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/users/add", "/login").permitAll()
+                .anyRequest().authenticated()
+                .and()
+              //  .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+               // .and()
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+             //   .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService()), UsernamePasswordAuthenticationFilter.class)
+
+//        httpSecurity
+//                .csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+////                .and()
+////                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//                .and()
+//               // .addFilterAfter(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
+//                .authorizeRequests()
+//                .antMatchers("/categories/**")
+//        .authenticated()
+//        .and().authorizeRequests().antMatchers("/cheques/**").not().authenticated();//, "/categories/**","/cheques/**", "/spendingsLimits/**",
+//                      //  "/transactions/**", "/users/delete/**", "/users/edit/**", "/logout/**")
+//               ;// .authenticated();//.anyRequest().permitAll();
+
+//        // Custom JWT based authentication
 //        httpSecurity
 //                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-//
+
 }
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.HttpResponse.HttpResponse;
 import ru.vsu.personalWallet.domain.OperationType;
@@ -69,9 +70,10 @@ public class AimController {
         return getAimDtoOrCode404(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<AimDto> getAll() {
-        return aimService.findAll();
+
+    @RequestMapping(method = RequestMethod.GET, params = {"userId"})
+    public List<AimDto> getAll(String userId) {
+        return aimService.findAllByUserId(userId);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})

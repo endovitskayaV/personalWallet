@@ -11,50 +11,59 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityService {
-    @Autowired
+   // @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
+    //@Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
+    //@Autowired
     private TokenUtils tokenUtils;
 
-    public String findLoggedInEmail() {
-        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (userDetails instanceof UserDetails) {
-            return ((UserDetails) userDetails).getUsername();
-        }
-        return null;
+    @Autowired
+    public SecurityService(AuthenticationManager authenticationManager,
+                           UserDetailsService userDetailsService,
+                           TokenUtils tokenUtils){
+        this.authenticationManager=authenticationManager;
+        this.userDetailsService=userDetailsService;
+        this.tokenUtils=tokenUtils;
     }
+
+//    public String findLoggedInEmail() {
+//        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (userDetails instanceof UserDetails) {
+//            return ((UserDetails) userDetails).getUsername();
+//        }
+//        return null;
+//    }
 
     public void logout(){
         SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+        //TODO: delete token from db
     }
 
-    public String login(String email, String password) throws Exception {
-        UserDetails userDetails;
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(email, password);
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-
-        if (authentication.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            userDetails = userDetailsService.loadUserByUsername(email);
-            String token = this.tokenUtils.generateToken(userDetails);
-            return token;
-        }
-        return null;
+    public String login(String email, String password) {   //throws Exception {
+//        UsernamePasswordAuthenticationToken authenticationToken =
+//                new UsernamePasswordAuthenticationToken(email, password);
+//        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+//        if (authentication.isAuthenticated()) {
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+//            return this.tokenUtils.generateToken(userDetails);
+//            //TODO: save token to db
+//        }
+//        return null;
+        return "";
     }
 
-    public String refresh(String token) throws Exception {
-        String username = this.tokenUtils.getUsernameFromToken(token);
-        SpringSecurityUser user = (SpringSecurityUser) this.userDetailsService.loadUserByUsername(username);
-        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
-            String refreshedToken = this.tokenUtils.refreshToken(token);
-            return refreshedToken;
-        } else {
-            throw new Exception("Unable to refresh token");
-        }
-    }
+//    public String refresh(String token) throws Exception {
+//        String username = this.tokenUtils.getUsernameFromToken(token);
+//        SpringSecurityUser user = (SpringSecurityUser) this.userDetailsService.loadUserByUsername(username);
+//        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordReset())) {
+//            String refreshedToken = this.tokenUtils.refreshToken(token);
+//            return refreshedToken;
+//        } else {
+//            throw new Exception("Unable to refresh token");
+//        }
+//    }
 }

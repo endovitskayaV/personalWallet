@@ -29,7 +29,7 @@ public class AccessController {
     }
 
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity getById(@RequestBody UserDto userDto) {
         try {
             String token = securityService.login(userDto.getEmail(), userDto.getPassword());
@@ -41,7 +41,7 @@ public class AccessController {
             return new ResponseEntity<>(
                     new HttpResponse()
                             .setTimestamp(Instant.now().getEpochSecond())
-                            .setStatus(403) //?
+                            .setStatus(400)
                             .setError("Bad request")
                             .setMessage("Wrong email or password")
                             .setPath("/login"),
@@ -51,7 +51,7 @@ public class AccessController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)//, params = {"email", "password"})
-    public ResponseEntity<?> logout() {
+    public ResponseEntity logout() {
         try {
             securityService.logout();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -61,28 +61,28 @@ public class AccessController {
             return new ResponseEntity<>(
                     new HttpResponse()
                             .setTimestamp(Instant.now().getEpochSecond())
-                            .setStatus(403) //?
+                            .setStatus(400) //?
                             .setError("Bad request")
                             .setMessage( e.getMessage())
-                            .setPath("/login"),
+                            .setPath("/logout"),
                     httpHeader,
                     HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<?> authenticationRequest(HttpServletRequest request) {
-        try {
-            String token = request.getHeader(TokenUtils.tokenHeader);
-            String newToken = securityService.refresh(token);
-            return ResponseEntity.ok(newToken);
-        } catch (Exception e) {
-            return new ResponseEntity<Object>(
-                    e.getMessage(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-    }
-
+//    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
+//    public ResponseEntity<?> authenticationRequest(HttpServletRequest request) {
+//        try {
+//            String token = request.getHeader(TokenUtils.TOKEN_HEADER);
+//            String newToken = securityService.refresh(token);
+//            return ResponseEntity.ok(newToken);
+//        } catch (Exception e) {
+//            return new ResponseEntity<Object>(
+//                    e.getMessage(),
+//                    HttpStatus.BAD_REQUEST
+//            );
+//        }
+//    }
+//
 
 }

@@ -44,9 +44,10 @@ public class AimService {
         return EntityToDto.toDto(aimRepository.findOne(id));
     }
 
-    public List<AimDto> findAll() {
+    public List<AimDto> findAllByUserId(String userId) {
         List<AimDto> aimDtoList = new ArrayList<>();
-        aimRepository.findAll().forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
+        aimRepository.findAllByUserId(userId)
+                .forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
         return aimDtoList;
     }
 
