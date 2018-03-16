@@ -9,7 +9,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.config.JwtTokenUtil;
-import ru.vsu.personalWallet.model.AuthToken;
+//import ru.vsu.personalWallet.model.AuthToken;
 import ru.vsu.personalWallet.model.LoginUser;
 import ru.vsu.personalWallet.model.User;
 import ru.vsu.personalWallet.service.UserService;
@@ -40,7 +40,7 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final User user = userService.findOne(loginUser.getUsername());
         final String token = jwtTokenUtil.generateToken(user);
-        return ResponseEntity.ok(new AuthToken(token));
+        return ResponseEntity.ok(token);//(new AuthToken(token));
     }
 
 }

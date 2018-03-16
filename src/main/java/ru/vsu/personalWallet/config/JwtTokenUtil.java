@@ -14,11 +14,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.function.Function;
 
-import static ru.vsu.personalWallet.model.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
-import static ru.vsu.personalWallet.model.Constants.SIGNING_KEY;
 @Component
 public class JwtTokenUtil implements Serializable {
-
+    private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
+    private static final String SIGNING_KEY = "evv98V";
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
@@ -55,7 +54,7 @@ public class JwtTokenUtil implements Serializable {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("http://devglan.com")
+                .setIssuer("evv")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
