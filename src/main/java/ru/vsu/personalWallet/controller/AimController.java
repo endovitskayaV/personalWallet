@@ -16,14 +16,16 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
+import static ru.vsu.personalWallet.model.Constant.USER_ID_HEADER;
 @RequestMapping("/aims")
 @RestController
 public class AimController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public boolean getAll() {
-        return true;//aimService.findAllByUserId(userId);
+    public String getAll(@RequestHeader(USER_ID_HEADER) String userId) {
+        return userId;
+       // return true;//aimService.findAllByUserId(userId);
     }
 
 
