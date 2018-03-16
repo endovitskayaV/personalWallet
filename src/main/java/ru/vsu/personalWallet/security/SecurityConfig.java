@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception
     {
+        http.csrf().disable();
         //Implementing Token based authentication in this filter
         final TokenAuthenticationFilter tokenFilter = new TokenAuthenticationFilter();
         http.addFilterBefore(tokenFilter, BasicAuthenticationFilter.class);
