@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.config;
+package ru.vsu.personalWallet.jwt;
 
 
 import io.jsonwebtoken.Claims;
@@ -7,7 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import ru.vsu.personalWallet.model.User;
+import ru.vsu.personalWallet.domain.entity.User;
 
 import java.io.Serializable;
 import java.util.Arrays;

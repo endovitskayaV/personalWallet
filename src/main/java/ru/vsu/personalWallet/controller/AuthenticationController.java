@@ -8,10 +8,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.config.JwtTokenUtil;
+import ru.vsu.personalWallet.jwt.JwtTokenUtil;
 //import ru.vsu.personalWallet.model.AuthToken;
-import ru.vsu.personalWallet.model.LoginUser;
-import ru.vsu.personalWallet.model.User;
+import ru.vsu.personalWallet.domain.dto.LoginUser;
+import ru.vsu.personalWallet.domain.entity.User;
 import ru.vsu.personalWallet.service.UserService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

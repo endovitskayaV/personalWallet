@@ -1,22 +1,12 @@
 package ru.vsu.personalWallet.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 //import ru.vsu.personalWallet.HttpResponse.HttpResponse;
 //import ru.vsu.personalWallet.domain.OperationType;
 //import ru.vsu.personalWallet.domain.dto.AimDto;
 //import ru.vsu.personalWallet.service.AimService;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.List;
-
-import static ru.vsu.personalWallet.model.Constant.USER_ID_HEADER;
+import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 @RequestMapping("/aims")
 @RestController
 public class AimController {

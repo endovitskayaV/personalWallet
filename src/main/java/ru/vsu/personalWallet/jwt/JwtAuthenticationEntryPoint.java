@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.config;
+package ru.vsu.personalWallet.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

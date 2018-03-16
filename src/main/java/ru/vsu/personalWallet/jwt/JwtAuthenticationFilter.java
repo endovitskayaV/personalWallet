@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.config;
+package ru.vsu.personalWallet.jwt;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
