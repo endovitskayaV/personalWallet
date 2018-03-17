@@ -4,8 +4,10 @@ package ru.vsu.personalWallet.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.entity.UserEntity;
 import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.service.UserService;
@@ -14,7 +16,9 @@ import ru.vsu.personalWallet.util.HttpResponse;
 import java.time.Instant;
 import java.util.List;
 
-//@CrossOrigin(origins = "*", maxAge = 3600)
+import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
+
+
 @RestController
 public class UserController {
 
@@ -26,20 +30,75 @@ public class UserController {
     }
 
 
-    @RequestMapping(value="/users", method = RequestMethod.GET)
-    public List<UserDto> findAll(){
-        return userService.findAll();
-    }
-
 //    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
 //    public UserDto findById(@PathVariable(value = "id") Long id){
 //        return userService.findById(id);
 //    }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET, params = {"id"})
-    public UserDto findById(long id){
-        return userService.findById(id);
+
+    @RequestMapping(value = "/users/edit", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity edit(@RequestBody UserDto userDto, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (userId!=userDto.getId()){
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(403)
+                            .setError("Forbidden")
+                            .setMessage("Forbidden access for user id=" + userDto.getId())
+                            .setPath("/users/edit"),
+                    httpHeader,
+                    HttpStatus.FORBIDDEN);
+        }
+        else {
+            if (userService.edit(userDto) return ResponseEntity.ok().build();
+            else getAimDtoOrCode404(userDto.getId())
+        }
     }
+
+    private ResponseEntity getAimDtoOrCode404(long id) {
+        if (aimService.findByIdAndUserId(id) == null) {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Aim with id=" + id + " not found")
+                            .setPath("/aims"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<>(aimService.findByIdAndUserId(id, userId),
+                HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET, params = {"id"})
+    public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        return getAimDtoOrCode404(id, userId);
+    }
+
+    @RequestMapping(value = "/users/edit", method = RequestMethod.GET)
+    public ResponseEntity edit(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (userId==id) return getAimDtoOrCode404(id, userId);
+        else {
+            HttpHeaders httpHeader = new HttpHeaders();
+        httpHeader.setConnection("close");
+        return new ResponseEntity<>(
+                new HttpResponse()
+                        .setTimestamp(Instant.now().getEpochSecond())
+                        .setStatus(403)
+                        .setError("Forbidden")
+                        .setMessage("Forbidden access for user id=" + id)
+                        .setPath("/users/edit"),
+                httpHeader,
+                HttpStatus.FORBIDDEN);
+        }
+    }
+
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody UserDto userDto){

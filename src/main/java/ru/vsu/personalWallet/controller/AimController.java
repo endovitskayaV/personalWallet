@@ -29,7 +29,7 @@ public class AimController {
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
     public ResponseEntity delete(long id, @RequestHeader(USER_ID_HEADER) long userId) {
-        if (aimService.delete(id, userId)) return ResponseEntity.ok().build();
+        if (aimService.delete(id, userId)) return ResponseEntity.noContent().build();
         else {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
