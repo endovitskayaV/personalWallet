@@ -52,12 +52,12 @@ public class UserController {
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(400)
                             .setError("Bad request")
-                            .setMessage("User with email=" + userDto.getEmail() + "already exists")
+                            .setMessage("User with email=" + userDto.getEmail() + " already exists")
                             .setPath("/signup"),
                     httpHeader,
                     HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userDto,HttpStatus.OK);
+        return new ResponseEntity<>(userDtoFromDb,HttpStatus.OK);
     }
 }
 
