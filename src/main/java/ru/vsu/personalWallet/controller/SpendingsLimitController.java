@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vsu.personalWallet.HttpResponse.HttpResponse;
 import ru.vsu.personalWallet.domain.dto.SpendingsLimitDto;
 import ru.vsu.personalWallet.service.SpendingsLimitService;
+import ru.vsu.personalWallet.util.HttpResponse;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -28,7 +28,7 @@ public class SpendingsLimitController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(String id) {
+    public boolean delete(long id) {
         return spendingsLimitService.delete(id);
     }
 
@@ -44,7 +44,7 @@ public class SpendingsLimitController {
         return spendingsLimitService.edit(spendingsLimitDto);
     }
 
-    private ResponseEntity getAimDtoOrCode404(String id) {
+    private ResponseEntity getAimDtoOrCode404(long id) {
         if (spendingsLimitService.findById(id) == null) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
@@ -62,12 +62,12 @@ public class SpendingsLimitController {
 
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(String id) {
+    public ResponseEntity getById(long id) {
         return getAimDtoOrCode404(id);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public ResponseEntity edit(String id) {
+    public ResponseEntity edit(long id) {
         return getAimDtoOrCode404(id);
     }
 

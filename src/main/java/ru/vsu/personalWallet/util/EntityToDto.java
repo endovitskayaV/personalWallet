@@ -1,5 +1,8 @@
 package ru.vsu.personalWallet.util;
 
+import ru.vsu.personalWallet.domain.dto.*;
+import ru.vsu.personalWallet.domain.entity.*;
+
 public class EntityToDto {
     public static AimDto toDto(AimEntity aimEntity){
         if (aimEntity!=null){

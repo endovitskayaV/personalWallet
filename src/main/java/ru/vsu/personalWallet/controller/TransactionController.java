@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ru.vsu.personalWallet.HttpResponse.HttpResponse;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.service.TransactionService;
+import ru.vsu.personalWallet.util.HttpResponse;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -29,7 +29,7 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(String id) {
+    public boolean delete(long id) {
         return transactionService.delete(id);
     }
 
@@ -45,7 +45,7 @@ public class TransactionController {
         return transactionService.edit(transactionDto);
     }
 
-    private ResponseEntity getTransactionDtoOrCode404(String id) {
+    private ResponseEntity getTransactionDtoOrCode404(long id) {
         if (transactionService.findById(id) == null) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
@@ -63,12 +63,12 @@ public class TransactionController {
 
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(String id) {
+    public ResponseEntity getById(long id) {
         return getTransactionDtoOrCode404(id);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public ResponseEntity edit(String id) {
+    public ResponseEntity edit(long id) {
         return getTransactionDtoOrCode404(id);
     }
 
@@ -98,8 +98,8 @@ public class TransactionController {
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"categoryId"})
-    public List<TransactionDto> getByCategoryId(String categoryName) {
-        return transactionService.findByCategoryId(categoryName);
+    public List<TransactionDto> getByCategoryId(long categoryId) {
+        return transactionService.findByCategoryId(categoryId);
     }
 }
 

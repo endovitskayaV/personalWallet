@@ -3,7 +3,7 @@ package ru.vsu.personalWallet.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.domain.entity.User;
+import ru.vsu.personalWallet.domain.entity.UserEntity;
 import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.service.UserService;
 
@@ -22,23 +22,27 @@ public class UserController {
 
 
     @RequestMapping(value="/users", method = RequestMethod.GET)
-    public List<User> listUser(){
+    public List<UserDto> findAll(){
         return userService.findAll();
     }
 
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-    public User getOne(@PathVariable(value = "id") Long id){
+//    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+//    public UserDto findById(@PathVariable(value = "id") Long id){
+//        return userService.findById(id);
+//    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET, params = {"id"})
+    public UserDto findById(long id){
         return userService.findById(id);
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public User saveUser(@RequestBody UserDto user){
-        return userService.save(user);
+    public UserDto add(@RequestBody UserDto user){
+        return userService.add(user);
     }
-
-
-
 }
+
+
 /*package ru.vsu.personalWallet.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -90,7 +94,7 @@ public class UserController {
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(404)
                             .setError("Not found")
-                            .setMessage("User with id=" + id + " not found")
+                            .setMessage("UserEntity with id=" + id + " not found")
                             .setPath("/users"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);

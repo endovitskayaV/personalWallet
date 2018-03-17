@@ -7,7 +7,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import ru.vsu.personalWallet.domain.entity.User;
+import ru.vsu.personalWallet.domain.dto.UserDto;
+import ru.vsu.personalWallet.domain.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -18,15 +19,16 @@ import java.util.function.Function;
 public class JwtTokenUtil implements Serializable {
     private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60*60;
     private static final String SIGNING_KEY = "evv98V";
+
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
-    public Date getExpirationDateFromToken(String token) {
+    private Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
-    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
@@ -43,8 +45,8 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(User user) {
-        return doGenerateToken(user.getUsername());
+    public String generateToken(UserDto userDto) {
+        return doGenerateToken(userDto.getEmail());
     }
 
     private String doGenerateToken(String subject) {
