@@ -19,18 +19,15 @@ import ru.vsu.personalWallet.jwt.JwtAuthenticationFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    private UserDetailsService userDetailsService;
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
     WebSecurityConfig(UserDetailsService userDetailsService, JwtAuthenticationEntryPoint
-            unauthorizedHandler ){
-        this.userDetailsService=userDetailsService;
-        this.unauthorizedHandler=unauthorizedHandler;
+            unauthorizedHandler) {
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
     }
-  //  @Resource(name = "userService")
-    private UserDetailsService userDetailsService;
-
-   // @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Override
     @Bean
@@ -41,7 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
-               // .passwordEncoder(encoder());
     }
 
     @Bean

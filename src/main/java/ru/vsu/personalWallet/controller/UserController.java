@@ -2,11 +2,16 @@ package ru.vsu.personalWallet.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.domain.entity.UserEntity;
 import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.service.UserService;
+import ru.vsu.personalWallet.util.HttpResponse;
 
+import java.time.Instant;
 import java.util.List;
 
 //@CrossOrigin(origins = "*", maxAge = 3600)
@@ -37,8 +42,22 @@ public class UserController {
     }
 
     @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public UserDto add(@RequestBody UserDto user){
-        return userService.add(user);
+    public ResponseEntity add(@RequestBody UserDto userDto){
+        UserDto userDtoFromDb= userService.add(userDto);
+        if (userDtoFromDb==null) {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(400)
+                            .setError("Bad request")
+                            .setMessage("User with email=" + userDto.getEmail() + "already exists")
+                            .setPath("/signup"),
+                    httpHeader,
+                    HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(userDto,HttpStatus.OK);
     }
 }
 

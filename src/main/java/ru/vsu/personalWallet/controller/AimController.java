@@ -28,21 +28,47 @@ public class AimController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(long id, @RequestHeader(USER_ID_HEADER) long userId) {
-        return aimService.delete(id, userId);
+    public ResponseEntity delete(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (aimService.delete(id, userId)) return ResponseEntity.ok().build();
+        else {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Aim with id=" + id + " not found")
+                            .setPath("/aims"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public AimDto add(@RequestBody AimDto aimDto, @RequestHeader(USER_ID_HEADER) long userId) {
+    public ResponseEntity add(@RequestBody AimDto aimDto, @RequestHeader(USER_ID_HEADER) long userId) {
         aimDto.setUserId(userId);
-        return aimService.add(aimDto);
+        return new ResponseEntity<>(aimService.add(aimDto),HttpStatus.OK);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean edit(@RequestBody AimDto aimDto, @RequestHeader(USER_ID_HEADER) long userId) {
-        return aimService.edit(aimDto, userId);
+    public ResponseEntity edit(@RequestBody AimDto aimDto, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (aimService.edit(aimDto, userId)) return ResponseEntity.ok().build();
+        else {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Aim with id=" + aimDto.getId() + " not found")
+                            .setPath("/aims"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        }
     }
 
     private ResponseEntity getAimDtoOrCode404(long id, long userId) {
@@ -64,7 +90,7 @@ public class AimController {
 
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(long id,@RequestHeader(USER_ID_HEADER) long userId) {
+    public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
         return getAimDtoOrCode404(id, userId);
     }
 
@@ -75,24 +101,36 @@ public class AimController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<AimDto> getAll(@RequestHeader(USER_ID_HEADER) long userId) {
-        return aimService.findAllByUserId(userId);
+    public ResponseEntity getAll(@RequestHeader(USER_ID_HEADER) long userId) {
+        List<AimDto> aimDtoList = aimService.findAllByUserId(userId);
+        if (aimDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(aimDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})
-    public List<AimDto> getByName(String name, @RequestHeader(USER_ID_HEADER) long userId) {
-        return aimService.findByNameAndUserId(name, userId);
+    public ResponseEntity getByName(String name, @RequestHeader(USER_ID_HEADER) long userId) {
+        List<AimDto> aimDtoList = aimService.findByNameAndUserId(name, userId);
+        if (aimDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(aimDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"operationType"})
-    public List<AimDto> getByOperationType(OperationType operationType,
-                                           @RequestHeader(USER_ID_HEADER) long userId) {
-        return aimService.findByOperationTypeAndUserId(operationType, userId);
+    public ResponseEntity getByOperationType(OperationType operationType,
+                                             @RequestHeader(USER_ID_HEADER) long userId) {
+        List<AimDto> aimDtoList = aimService.findByOperationTypeAndUserId(operationType, userId);
+        if (aimDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(aimDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"moneyValue"})
-    public List<AimDto> getByMoneyValue(long moneyValue,
-                                        @RequestHeader(USER_ID_HEADER) long userId) {
-        return aimService.findByMoneyValueAndUserId(moneyValue,userId);
+    public ResponseEntity getByMoneyValue(long moneyValue,
+                                          @RequestHeader(USER_ID_HEADER) long userId) {
+        List<AimDto> aimDtoList = aimService.findByMoneyValueAndUserId(moneyValue, userId);
+        if (aimDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(aimDtoList, HttpStatus.OK);
     }
 }

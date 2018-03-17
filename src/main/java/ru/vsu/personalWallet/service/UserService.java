@@ -46,6 +46,8 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto add(UserDto userDto) {
+       if (userRepository.findUserEntityByEmail(userDto.getEmail())!=null)//exists, cannot add
+           return null;
         return EntityToDto.toDto
                 (userRepository.save(toEntity(userDto)));
     }
