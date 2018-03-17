@@ -33,6 +33,7 @@ public class AimService {
     }
 
     public AimDto add(AimDto aimDto) {
+        //always can add
         return EntityToDto.toDto(aimRepository.save(toEntity(aimDto)));
 
     }

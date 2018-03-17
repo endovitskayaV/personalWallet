@@ -70,7 +70,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String usernameFromIdToken = userEntity.getEmail();
                 if (!username.equals(usernameFromIdToken))
                     res.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden access for user id="+userIdToken);
-            } else res.sendError(HttpServletResponse.SC_NOT_FOUND, "User with id="+userIdToken+"not Found");
+            } else res.sendError(HttpServletResponse.SC_NOT_FOUND, "User with id="+userIdToken+" not found");
         }
     }
 }

@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@Service//(value = "userService")
+@Service
 public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
@@ -48,8 +48,9 @@ public class UserService implements UserDetailsService {
     public UserDto add(UserDto userDto) {
        if (userRepository.findUserEntityByEmail(userDto.getEmail())!=null)//exists, cannot add
            return null;
+        userRepository.save(toEntity(userDto));
         return EntityToDto.toDto
-                (userRepository.save(toEntity(userDto)));
+                (userRepository.findUserEntityByEmail(userDto.getEmail()));
     }
 
     public boolean edit(UserDto userDto) {
