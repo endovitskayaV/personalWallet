@@ -7,14 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.domain.dto.AimDto;
-import ru.vsu.personalWallet.domain.entity.UserEntity;
 import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.service.UserService;
 import ru.vsu.personalWallet.util.HttpResponse;
 
 import java.time.Instant;
-import java.util.List;
 
 import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 
@@ -25,21 +22,14 @@ public class UserController {
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService){
-        this.userService=userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
-
-
-//    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
-//    public UserDto findById(@PathVariable(value = "id") Long id){
-//        return userService.findById(id);
-//    }
-
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity edit(@RequestBody UserDto userDto, @RequestHeader(USER_ID_HEADER) long userId) {
-        if (userId!=userDto.getId()){
+        if (userId != userDto.getId()) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
@@ -51,15 +41,26 @@ public class UserController {
                             .setPath("/users/edit"),
                     httpHeader,
                     HttpStatus.FORBIDDEN);
-        }
-        else {
-            if (userService.edit(userDto) return ResponseEntity.ok().build();
-            else getAimDtoOrCode404(userDto.getId())
+        } else {
+            if (userService.edit(userDto)) return ResponseEntity.noContent().build();
+            else {
+                HttpHeaders httpHeader = new HttpHeaders();
+                httpHeader.setConnection("close");
+                return new ResponseEntity<>(
+                        new HttpResponse()
+                                .setTimestamp(Instant.now().getEpochSecond())
+                                .setStatus(404)
+                                .setError("Not found")
+                                .setMessage("User with id=" + userDto.getId() + " not found")
+                                .setPath("/users/edit"),
+                        httpHeader,
+                        HttpStatus.NOT_FOUND);
+            }
         }
     }
 
     private ResponseEntity getAimDtoOrCode404(long id) {
-        if (aimService.findByIdAndUserId(id) == null) {
+        if (userService.findById(id) == null) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
@@ -67,43 +68,22 @@ public class UserController {
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(404)
                             .setError("Not found")
-                            .setMessage("Aim with id=" + id + " not found")
-                            .setPath("/aims"),
+                            .setMessage("User with id=" + id + " not found")
+                            .setPath("/users/edit"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(aimService.findByIdAndUserId(id, userId),
-                HttpStatus.OK);
-    }
-
-
-    @RequestMapping(value = "/users", method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
-        return getAimDtoOrCode404(id, userId);
+        } else return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/edit", method = RequestMethod.GET)
-    public ResponseEntity edit(long id, @RequestHeader(USER_ID_HEADER) long userId) {
-        if (userId==id) return getAimDtoOrCode404(id, userId);
-        else {
-            HttpHeaders httpHeader = new HttpHeaders();
-        httpHeader.setConnection("close");
-        return new ResponseEntity<>(
-                new HttpResponse()
-                        .setTimestamp(Instant.now().getEpochSecond())
-                        .setStatus(403)
-                        .setError("Forbidden")
-                        .setMessage("Forbidden access for user id=" + id)
-                        .setPath("/users/edit"),
-                httpHeader,
-                HttpStatus.FORBIDDEN);
-        }
+    public ResponseEntity edit(@RequestHeader(USER_ID_HEADER) long userId) {
+        return getAimDtoOrCode404(userId);
     }
 
-
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody UserDto userDto){
-        UserDto userDtoFromDb= userService.add(userDto);
-        if (userDtoFromDb==null) {
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public ResponseEntity add(@RequestBody UserDto userDto) {
+        UserDto userDtoFromDb = userService.add(userDto);
+        if (userDtoFromDb == null) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
@@ -116,81 +96,6 @@ public class UserController {
                     httpHeader,
                     HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userDtoFromDb,HttpStatus.OK);
+        return new ResponseEntity<>(userDtoFromDb, HttpStatus.OK);
     }
 }
-
-
-/*package ru.vsu.personalWallet.controller;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.HttpResponse.HttpResponse;
-import ru.vsu.personalWallet.domain.dto.UserDto;
-import ru.vsu.personalWallet.service.UserService;
-
-import java.time.Instant;
-import java.util.List;
-
-@RequestMapping("/users")
-@RestController
-public class UserController {
-    private UserService userService;
-
-    @Autowired
-    UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(String id) {
-        return userService.delete(id);
-    }
-
-
-    @RequestMapping(value = "add", method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean add(@RequestBody UserDto userDto) {
-        return userService.add(userDto);
-    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean edit(@RequestBody UserDto userDto) {
-        return userService.edit(userDto);
-    }
-
-    private ResponseEntity getUserDtoOrCode404(String id) {
-        if (userService.findById(id) == null) {
-            HttpHeaders httpHeader = new HttpHeaders();
-            httpHeader.setConnection("close");
-            return new ResponseEntity<>(
-                    new HttpResponse()
-                            .setTimestamp(Instant.now().getEpochSecond())
-                            .setStatus(404)
-                            .setError("Not found")
-                            .setMessage("UserEntity with id=" + id + " not found")
-                            .setPath("/users"),
-                    httpHeader,
-                    HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
-    }
-
-//    @RequestMapping(method = RequestMethod.GET, params = {"id"})
-//    public ResponseEntity getById(String id) {
-//        return getUserDtoOrCode404(id);
-//    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public ResponseEntity edit(String id) {
-        return getUserDtoOrCode404(id);
-    }
-
-//    @RequestMapping(method = RequestMethod.GET)
-//    public List<UserDto> getAll() {
-//        return userService.findAll();
-//    }
-}*/

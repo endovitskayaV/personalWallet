@@ -40,11 +40,6 @@ public class UserService implements UserDetailsService {
         return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
-    public boolean delete(long id) {
-        userRepository.delete(id);
-        return true;
-    }
-
     public UserDto add(UserDto userDto) {
        if (userRepository.findUserEntityByEmail(userDto.getEmail())!=null)//exists, cannot add
            return null;
@@ -62,12 +57,6 @@ public class UserService implements UserDetailsService {
 
     public UserDto findById(long id) {
         return EntityToDto.toDto(userRepository.findOne(id));
-    }
-
-    public List<UserDto> findAll() {
-        List<UserDto> userDtoList = new ArrayList<>();
-        userRepository.findAll().forEach(x -> userDtoList.add(EntityToDto.toDto(x)));
-        return userDtoList;
     }
 
     public UserDto findByEmail(String email) {
