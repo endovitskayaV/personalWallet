@@ -6,16 +6,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.domain.dto.CategoryDto;
 import ru.vsu.personalWallet.service.CategoryService;
 import ru.vsu.personalWallet.util.HttpResponse;
 
 import java.time.Instant;
 import java.util.List;
+
+import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 
 @RestController
 @RequestMapping("/categories")
@@ -28,24 +27,9 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(long id) {
-        return categoryService.delete(id);
-    }
-
-    @RequestMapping(value = "add", method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean add(@RequestBody CategoryDto categoryDto) {
-        return categoryService.add(categoryDto);
-    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean edit(@RequestBody CategoryDto categoryDto) {
-        return categoryService.edit(categoryDto);
-    }
-
-    private ResponseEntity getCategoryDtoOrCode404(long id) {
-        if (categoryService.findById(id) == null) {
+    public ResponseEntity delete(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (categoryService.delete(id, userId)) return ResponseEntity.noContent().build();
+        else {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
@@ -54,30 +38,77 @@ public class CategoryController {
                             .setStatus(404)
                             .setError("Not found")
                             .setMessage("Category with id=" + id + " not found")
-                            .setPath("/categories"),
+                            .setPath("/categories/delete"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(categoryService.findById(id), HttpStatus.OK);
+        }
     }
 
+    @RequestMapping(value = "add", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity add(@RequestBody CategoryDto categoryDto, @RequestHeader(USER_ID_HEADER) long userId) {
+        categoryDto.setUserId(userId);
+        return new ResponseEntity<>(categoryService.add(categoryDto),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity edit(@RequestBody CategoryDto categoryDto, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (categoryService.edit(categoryDto, userId)) return ResponseEntity.noContent().build();
+        else {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Category with id=" + categoryDto.getId() + " not found")
+                            .setPath("/categories/edit"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    private ResponseEntity getCategoryDtoOrCode404(long id, long userId, String path) {
+        if (categoryService.findByIdAndUserId(id, userId) == null) {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Category with id=" + id + " not found")
+                            .setPath("/categories"+path),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<>(categoryService.findByIdAndUserId(id, userId), HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(long id) {
-        return getCategoryDtoOrCode404(id);
+    public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        return getCategoryDtoOrCode404(id, userId, "");
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public ResponseEntity edit(long id) {
-        return getCategoryDtoOrCode404(id);
+    public ResponseEntity edit(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        return getCategoryDtoOrCode404(id, userId, "/edit");
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<CategoryDto> getAll() {
-        return categoryService.findAll();
+    public ResponseEntity getAll(@RequestHeader(USER_ID_HEADER) long userId) {
+        List<CategoryDto> categoryDtoList =categoryService.findAllByUserId(userId);
+        if (categoryDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(categoryDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"name"})
-    public List<CategoryDto> getByName(String name) {
-        return categoryService.findByName(name);
+    public ResponseEntity getByName(String name, @RequestHeader(USER_ID_HEADER) long userId) {
+        List<CategoryDto> categoryDtoList = categoryService.findByNameAndUserId(name, userId);
+        if (categoryDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(categoryDtoList, HttpStatus.OK);
     }
 }

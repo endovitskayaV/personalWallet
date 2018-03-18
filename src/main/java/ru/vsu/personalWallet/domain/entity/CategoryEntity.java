@@ -20,7 +20,7 @@ public class CategoryEntity {
         return id;
     }
 
-   @ManyToOne
+    @ManyToOne
     public UserEntity getUser() {
         return user;
     }

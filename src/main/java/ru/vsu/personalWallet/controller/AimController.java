@@ -39,7 +39,7 @@ public class AimController {
                             .setStatus(404)
                             .setError("Not found")
                             .setMessage("Aim with id=" + id + " not found")
-                            .setPath("/aims"),
+                            .setPath("/aims/delete"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
         }
@@ -65,13 +65,13 @@ public class AimController {
                             .setStatus(404)
                             .setError("Not found")
                             .setMessage("Aim with id=" + aimDto.getId() + " not found")
-                            .setPath("/aims"),
+                            .setPath("/aims/edit"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
         }
     }
 
-    private ResponseEntity getAimDtoOrCode404(long id, long userId) {
+    private ResponseEntity getAimDtoOrCode404(long id, long userId, String path) {
         if (aimService.findByIdAndUserId(id, userId) == null) {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
@@ -81,7 +81,7 @@ public class AimController {
                             .setStatus(404)
                             .setError("Not found")
                             .setMessage("Aim with id=" + id + " not found")
-                            .setPath("/aims"),
+                            .setPath("/aims"+path),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
         } else return new ResponseEntity<>(aimService.findByIdAndUserId(id, userId),
@@ -90,12 +90,12 @@ public class AimController {
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
     public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
-        return getAimDtoOrCode404(id, userId);
+        return getAimDtoOrCode404(id, userId, "");
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
     public ResponseEntity edit(long id, @RequestHeader(USER_ID_HEADER) long userId) {
-        return getAimDtoOrCode404(id, userId);
+        return getAimDtoOrCode404(id, userId, "/edit");
     }
 
 

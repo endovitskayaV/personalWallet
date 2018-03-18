@@ -48,7 +48,7 @@ public class AimService {
 
 
     public AimDto findByIdAndUserId(long id, long userId) {
-        return EntityToDto.toDto(aimRepository.findOne(id));
+        return EntityToDto.toDto(aimRepository.findAimEntityByIdAndUserId(id, userId));
     }
 
     public List<AimDto> findAllByUserId(long userId) {
