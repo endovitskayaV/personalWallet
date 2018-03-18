@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import ru.vsu.personalWallet.domain.dto.UserDto;
-import ru.vsu.personalWallet.domain.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.Arrays;

@@ -2,15 +2,12 @@ package ru.vsu.personalWallet.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.repository.AimRepository;
 import ru.vsu.personalWallet.domain.repository.UserRepository;
 import ru.vsu.personalWallet.util.EntityToDto;
 
-import javax.swing.text.html.parser.Entity;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 

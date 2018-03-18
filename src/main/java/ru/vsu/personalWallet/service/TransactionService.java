@@ -3,16 +3,13 @@ package ru.vsu.personalWallet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
-import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.dto.TransactionDto;
-import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.entity.TransactionEntity;
 import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.repository.TransactionRepository;
 import ru.vsu.personalWallet.domain.repository.UserRepository;
 import ru.vsu.personalWallet.util.EntityToDto;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,22 +87,20 @@ public class TransactionService {
 
     private TransactionEntity toEntity(TransactionDto transactionDto) {
         if (transactionDto != null) {
-            TransactionEntity transactionEntity=
-                    new TransactionEntity()
-                    .setId(transactionDto.getId())
-                            //cannot use here transactionRepository
-                            //will have NullPointException while adding
-                            //cannot get entity from db before it is added
-                    .setUser(userRepository.findOne(transactionDto.getUserId()))
-                    .setOperationType(transactionDto.getOperationType())
-                    .setCategory(categoryRepository
-                            .findCategoryEntityByIdAndUserId(
-                                    transactionDto.getCategoryId(),
-                                    transactionDto.getUserId()))
-                    .setCreationDate(transactionDto.getCreationDate())
-                    .setMoneyValue(transactionDto.getMoneyValue())
-                    .setComment(transactionDto.getComment());
-            return transactionEntity;
+            return new TransactionEntity()
+            .setId(transactionDto.getId())
+                    //cannot use here transactionRepository
+                    //will have NullPointException while adding
+                    //cannot get entity from db before it is added
+            .setUser(userRepository.findOne(transactionDto.getUserId()))
+            .setOperationType(transactionDto.getOperationType())
+            .setCategory(categoryRepository
+                    .findCategoryEntityByIdAndUserId(
+                            transactionDto.getCategoryId(),
+                            transactionDto.getUserId()))
+            .setCreationDate(transactionDto.getCreationDate())
+            .setMoneyValue(transactionDto.getMoneyValue())
+            .setComment(transactionDto.getComment());
         } else return null;
     }
 }

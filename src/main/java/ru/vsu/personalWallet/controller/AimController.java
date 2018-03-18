@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.AimDto;
-import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.service.AimService;
 import ru.vsu.personalWallet.util.HttpResponse;
 

@@ -1,7 +1,6 @@
 package ru.vsu.personalWallet.service;
 
 import org.springframework.stereotype.Service;
-import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.dto.ChequeDto;
 import ru.vsu.personalWallet.domain.entity.ChequeEntity;
 import ru.vsu.personalWallet.domain.repository.ChequeRepository;

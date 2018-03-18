@@ -11,7 +11,6 @@ import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.service.TransactionService;
 import ru.vsu.personalWallet.util.HttpResponse;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 

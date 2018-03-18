@@ -1,7 +1,6 @@
 package ru.vsu.personalWallet.domain.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.entity.ChequeEntity;
 
 import java.sql.Timestamp;

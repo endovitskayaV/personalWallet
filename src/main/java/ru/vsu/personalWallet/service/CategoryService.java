@@ -2,9 +2,7 @@ package ru.vsu.personalWallet.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.dto.CategoryDto;
-import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.entity.CategoryEntity;
 import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.repository.UserRepository;

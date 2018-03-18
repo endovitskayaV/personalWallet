@@ -1,7 +1,6 @@
 package ru.vsu.personalWallet.domain.entity;
 
 import lombok.EqualsAndHashCode;
-import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -4,7 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.entity.TransactionEntity;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {

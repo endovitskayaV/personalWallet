@@ -13,7 +13,6 @@ import ru.vsu.personalWallet.domain.dto.UserDto;
 import ru.vsu.personalWallet.domain.repository.UserRepository;
 import ru.vsu.personalWallet.util.EntityToDto;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
