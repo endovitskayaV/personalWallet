@@ -80,6 +80,11 @@ public class UserController {
         return getAimDtoOrCode404(userId);
     }
 
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public ResponseEntity findById(@RequestHeader(USER_ID_HEADER) long userId) {
+        return getAimDtoOrCode404(userId);
+    }
+
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ResponseEntity add(@RequestBody UserDto userDto) {
         UserDto userDtoFromDb = userService.add(userDto);
