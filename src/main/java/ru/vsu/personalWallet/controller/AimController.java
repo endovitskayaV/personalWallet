@@ -88,7 +88,6 @@ public class AimController {
                 HttpStatus.OK);
     }
 
-
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
     public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
         return getAimDtoOrCode404(id, userId);
