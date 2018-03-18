@@ -18,7 +18,7 @@ public class CategoryDto {
         return this;
     }
 
-    @JsonIgnore
+
     public long getUserId() {
         return userId;
     }
