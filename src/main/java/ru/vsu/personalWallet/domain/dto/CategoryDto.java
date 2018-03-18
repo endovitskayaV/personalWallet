@@ -8,7 +8,7 @@ public class CategoryDto {
     private long userId;
     private String name;
 
-    @JsonIgnore
+    @JsonValue
     public long getId() {
         return id;
     }
