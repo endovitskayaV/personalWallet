@@ -8,10 +8,10 @@ public class EntityToDto {
         if (aimEntity!=null){
             return new AimDto()
                     .setId(aimEntity.getId())
+                    .setUserId(aimEntity.getUser().getId())
                     .setName(aimEntity.getName())
                     .setMoneyValue(aimEntity.getMoneyValue())
                     .setPeriod(aimEntity.getPeriod())
-                    .setOperationType(aimEntity.getOperationType())
                     .setDescription(aimEntity.getDescription())
                     .setReminderSec(aimEntity.getReminderSec())
                     .setCreationDate(aimEntity.getCreationDate());
@@ -23,6 +23,7 @@ public class EntityToDto {
         if (categoryEntity!=null){
             return new CategoryDto()
                     .setId(categoryEntity.getId())
+                    .setUserId(categoryEntity.getUser().getId())
                     .setName(categoryEntity.getName());
         }
         else return null;
@@ -32,6 +33,7 @@ public class EntityToDto {
         if (chequeEntity!=null){
             return new ChequeDto()
                     .setId(chequeEntity.getId())
+                    .setUserId(chequeEntity.getUser().getId())
                     .setName(chequeEntity.getName())
                     .setContent(chequeEntity.getContent())
                     .setComment(chequeEntity.getComment())
@@ -44,6 +46,7 @@ public class EntityToDto {
         if (spendingsLimitEntity!=null){
             return new SpendingsLimitDto()
                     .setId(spendingsLimitEntity.getId())
+                    .setUserId(spendingsLimitEntity.getUser().getId())
                     .setComment(spendingsLimitEntity.getComment())
                     .setCreationDate(spendingsLimitEntity.getCreationDate())
                     .setMaxSum(spendingsLimitEntity.getMaxSum());
@@ -55,6 +58,7 @@ public class EntityToDto {
         if (transactionEntity!=null){
             return new TransactionDto()
                     .setId(transactionEntity.getId())
+                    .setUserId(transactionEntity.getUser().getId())
                     .setOperationType(transactionEntity.getOperationType())
                     .setCategoryId(transactionEntity.getCategory().getId())
                     .setCreationDate(transactionEntity.getCreationDate())

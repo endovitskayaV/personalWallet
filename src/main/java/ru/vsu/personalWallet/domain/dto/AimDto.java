@@ -14,7 +14,6 @@ public class AimDto {
     private String name;
     private long moneyValue;
     private Timestamp period;
-    private OperationType operationType;
     private String description;
     private long reminderSec;
     private Timestamp creationDate;
@@ -62,15 +61,6 @@ public class AimDto {
 
     public AimDto setPeriod(Timestamp period) {
         this.period = period;
-        return this;
-    }
-
-    public OperationType getOperationType() {
-        return operationType;
-    }
-
-    public AimDto setOperationType(OperationType operationType) {
-        this.operationType = operationType;
         return this;
     }
 

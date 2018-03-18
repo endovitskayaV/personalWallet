@@ -1,5 +1,6 @@
 package ru.vsu.personalWallet.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class CategoryDto {
@@ -7,7 +8,7 @@ public class CategoryDto {
     private long userId;
     private String name;
 
-    @JsonValue
+    @JsonIgnore
     public long getId() {
         return id;
     }
@@ -17,6 +18,7 @@ public class CategoryDto {
         return this;
     }
 
+    @JsonIgnore
     public long getUserId() {
         return userId;
     }

@@ -115,15 +115,6 @@ public class AimController {
         return new ResponseEntity<>(aimDtoList, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, params = {"operationType"})
-    public ResponseEntity getByOperationType(OperationType operationType,
-                                             @RequestHeader(USER_ID_HEADER) long userId) {
-        List<AimDto> aimDtoList = aimService.findByOperationTypeAndUserId(operationType, userId);
-        if (aimDtoList.size() == 0)
-            return ResponseEntity.noContent().build();
-        return new ResponseEntity<>(aimDtoList, HttpStatus.OK);
-    }
-
     @RequestMapping(method = RequestMethod.GET, params = {"moneyValue"})
     public ResponseEntity getByMoneyValue(long moneyValue,
                                           @RequestHeader(USER_ID_HEADER) long userId) {

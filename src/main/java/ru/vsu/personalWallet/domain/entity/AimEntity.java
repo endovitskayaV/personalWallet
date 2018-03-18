@@ -15,7 +15,6 @@ public class AimEntity {
     private String name;
     private long moneyValue;
     private Timestamp period;
-    private OperationType operationType;
     private String description;
     private long reminderSec;
     private Timestamp creationDate;
@@ -46,12 +45,6 @@ public class AimEntity {
     @Column(name = "period")
     public Timestamp getPeriod() {
         return period;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "operation_type", nullable = false)
-    public OperationType getOperationType() {
-        return operationType;
     }
 
     @Column(name = "description")
@@ -92,11 +85,6 @@ public class AimEntity {
 
     public AimEntity setPeriod(Timestamp period) {
         this.period = period;
-        return this;
-    }
-
-    public AimEntity setOperationType(OperationType operationType) {
-        this.operationType = operationType;
         return this;
     }
 

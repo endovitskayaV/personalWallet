@@ -65,13 +65,6 @@ public class AimService {
         return aimDtoList;
     }
 
-    public List<AimDto> findByOperationTypeAndUserId(OperationType operationType, long userId) {
-        List<AimDto> aimDtoList = new ArrayList<>();
-        aimRepository.findAimEntitiesByOperationTypeAndUserId(operationType, userId)
-                .forEach(x -> aimDtoList.add(EntityToDto.toDto(x)));
-        return aimDtoList;
-    }
-
     public List<AimDto> findByMoneyValueAndUserId(long moneyValue, long userId) {
         List<AimDto> aimDtoList = new ArrayList<>();
         aimRepository.findAimEntitiesByMoneyValueAndUserId(moneyValue, userId)
@@ -87,7 +80,6 @@ public class AimService {
                     .setName(aimDto.getName())
                     .setMoneyValue(aimDto.getMoneyValue())
                     .setPeriod(aimDto.getPeriod())
-                    .setOperationType(aimDto.getOperationType())
                     .setDescription(aimDto.getDescription())
                     .setReminderSec(aimDto.getReminderSec())
                     .setCreationDate(aimDto.getCreationDate());

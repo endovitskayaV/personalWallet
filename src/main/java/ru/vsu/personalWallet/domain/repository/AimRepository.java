@@ -17,6 +17,4 @@ public interface AimRepository extends CrudRepository<AimEntity, Long> {
 
     List<AimEntity> findAimEntitiesByMoneyValueAndUserId(long moneyValue, long userId);
 
-    List<AimEntity> findAimEntitiesByOperationTypeAndUserId(OperationType operationType, long userId);
-
 }
