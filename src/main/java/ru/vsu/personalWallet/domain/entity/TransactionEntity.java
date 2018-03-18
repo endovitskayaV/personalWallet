@@ -38,7 +38,7 @@ public class TransactionEntity {
     }
 
 
-    //TODO: make it not null
+    //TODO: make it not nul
     @ManyToOne
     public CategoryEntity getCategory() {
         return category;

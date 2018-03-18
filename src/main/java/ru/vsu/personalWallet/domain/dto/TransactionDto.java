@@ -1,5 +1,6 @@
 package ru.vsu.personalWallet.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import java.sql.Timestamp;
@@ -23,6 +24,7 @@ public class TransactionDto {
         return this;
     }
 
+    @JsonIgnore
    public long getUserId() {
         return userId;
     }

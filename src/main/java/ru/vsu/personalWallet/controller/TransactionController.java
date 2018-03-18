@@ -5,10 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.domain.OperationType;
 import ru.vsu.personalWallet.domain.dto.TransactionDto;
 import ru.vsu.personalWallet.service.TransactionService;
@@ -17,6 +14,8 @@ import ru.vsu.personalWallet.util.HttpResponse;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+
+import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 
 @RequestMapping("/transactions")
 @RestController
@@ -29,24 +28,9 @@ public class TransactionController {
     }
 
     @RequestMapping(value = "delete", method = RequestMethod.DELETE)
-    public boolean delete(long id) {
-        return transactionService.delete(id);
-    }
-
-    @RequestMapping(value = "add", method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean add(@RequestBody TransactionDto transactionDto) {
-        return transactionService.add(transactionDto);
-    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.POST,
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public boolean edit(@RequestBody TransactionDto transactionDto) {
-        return transactionService.edit(transactionDto);
-    }
-
-    private ResponseEntity getTransactionDtoOrCode404(long id) {
-        if (transactionService.findById(id) == null) {
+    public ResponseEntity delete(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        if (transactionService.delete(id, userId)) return ResponseEntity.noContent().build();
+        else {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
@@ -55,51 +39,103 @@ public class TransactionController {
                             .setStatus(404)
                             .setError("Not found")
                             .setMessage("Transaction with id=" + id + " not found")
-                            .setPath("/transactions"),
+                            .setPath("/transactions/delete"),
                     httpHeader,
                     HttpStatus.NOT_FOUND);
-        } else return new ResponseEntity<>(transactionService.findById(id), HttpStatus.OK);
+        }
     }
 
+    @RequestMapping(value = "add", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity add(@RequestBody TransactionDto transactionDto,
+                              @RequestHeader(USER_ID_HEADER) long userId) {
+        transactionDto.setUserId(userId);
+        return new ResponseEntity<>(transactionService.add(transactionDto),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity edit(@RequestBody TransactionDto transactionDto,
+                               @RequestHeader(USER_ID_HEADER) long userId) {
+        if (transactionService.edit(transactionDto, userId)) return ResponseEntity.noContent().build();
+        else {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Transaction with id=" + transactionDto.getId() + " not found")
+                            .setPath("/transactions/edit"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
+    private ResponseEntity getTransactionDtoOrCode404(long id, long userId, String path) {
+        if (transactionService.findByIdAndUserId(id, userId) == null) {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Transaction with id=" + id + " not found")
+                            .setPath("/transactions"+path),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+        } else return new ResponseEntity<>(transactionService.findByIdAndUserId(id, userId),
+                HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.GET, params = {"id"})
-    public ResponseEntity getById(long id) {
-        return getTransactionDtoOrCode404(id);
+    public ResponseEntity getById(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        return getTransactionDtoOrCode404(id, userId, "");
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.GET)
-    public ResponseEntity edit(long id) {
-        return getTransactionDtoOrCode404(id);
+    public ResponseEntity edit(long id, @RequestHeader(USER_ID_HEADER) long userId) {
+        return getTransactionDtoOrCode404(id, userId, "/edit");
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<TransactionDto> getAll() {
-        return transactionService.findAll();
+    public ResponseEntity getAll(@RequestHeader(USER_ID_HEADER) long userId) {
+        List<TransactionDto> transactionDtoList = transactionService.findAllByUserId(userId);
+        if (transactionDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(transactionDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"operationType"})
-    public List<TransactionDto> getByOperationType(OperationType operationType) {
-        return transactionService.findByOperationType(operationType);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = {"creationDate"})
-    public List<TransactionDto> getByCreationDate(Timestamp creationDate) {
-        return transactionService.findByCreationDate(creationDate);
+    public ResponseEntity getByMoneyValue(OperationType operationType,
+                                          @RequestHeader(USER_ID_HEADER) long userId) {
+        List<TransactionDto> transactionDtoList = transactionService
+                .findByOperationTypeAndUserId(operationType, userId);
+        if (transactionDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(transactionDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"moneyValue"})
-    public List<TransactionDto> getByMoneyValue(long moneyValue) {
-        return transactionService.findByMoneyValue(moneyValue);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = {"comment"})
-    public List<TransactionDto> getByComment(String comment) {
-        return transactionService.findByComment(comment);
+    public ResponseEntity getByMoneyValue(long moneyValue,
+                                          @RequestHeader(USER_ID_HEADER) long userId) {
+        List<TransactionDto> transactionDtoList = transactionService
+                .findByMoneyValueAndUserId(moneyValue, userId);
+        if (transactionDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(transactionDtoList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, params = {"categoryId"})
-    public List<TransactionDto> getByCategoryId(long categoryId) {
-        return transactionService.findByCategoryId(categoryId);
+    public ResponseEntity getByCategoryId(long categoryId,
+                                          @RequestHeader(USER_ID_HEADER) long userId) {
+        List<TransactionDto> transactionDtoList = transactionService
+                .findByCategoryIdAndUserId(categoryId, userId);
+        if (transactionDtoList.size() == 0)
+            return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(transactionDtoList, HttpStatus.OK);
     }
 }
 

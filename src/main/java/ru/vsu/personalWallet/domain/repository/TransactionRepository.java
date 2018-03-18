@@ -8,13 +8,14 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public interface TransactionRepository extends CrudRepository<TransactionEntity, Long> {
-    List<TransactionEntity> findTransactionEntityByOperationType(OperationType operationType);
+    TransactionEntity findTransactionEntityByIdAndUserId(long id, long userId);
 
-    List<TransactionEntity> findTransactionEntityByCreationDate(Timestamp creationDate);
+    List<TransactionEntity> findTransactionEntitiesByUserId(long userId);
 
-    List<TransactionEntity> findTransactionEntityByMoneyValue(long moneyValue);
+    List<TransactionEntity> findTransactionEntityByOperationTypeAndUserId
+            (OperationType operationType, long userId);
 
-    List<TransactionEntity> findTransactionEntityByComment(String comment);
+    List<TransactionEntity> findTransactionEntityByMoneyValueAndUserId(long moneyValue, long userId);
 
-    List<TransactionEntity> findTransactionEntityByCategoryId(long id);
+    List<TransactionEntity> findTransactionEntityByCategoryIdAndUserId(long id, long userId);
 }

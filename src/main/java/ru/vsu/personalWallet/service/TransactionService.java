@@ -3,10 +3,13 @@ package ru.vsu.personalWallet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
+import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.dto.TransactionDto;
+import ru.vsu.personalWallet.domain.entity.AimEntity;
 import ru.vsu.personalWallet.domain.entity.TransactionEntity;
 import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.repository.TransactionRepository;
+import ru.vsu.personalWallet.domain.repository.UserRepository;
 import ru.vsu.personalWallet.util.EntityToDto;
 
 import java.sql.Timestamp;
@@ -17,79 +20,68 @@ import java.util.List;
 public class TransactionService {
     private TransactionRepository transactionRepository;
     private CategoryRepository categoryRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public TransactionService(TransactionRepository transactionRepository,
-                              CategoryRepository categoryRepository) {
+                              CategoryRepository categoryRepository,
+                              UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.categoryRepository=categoryRepository;
+        this.userRepository=userRepository;
 
     }
 
-    public boolean delete(long id) {
-        TransactionEntity transactionEntity = transactionRepository.findOne(id);
-        if (transactionEntity == null) return false;
+    public boolean delete(long id, long userId) {
+        TransactionEntity transactionEntity =
+                transactionRepository.findTransactionEntityByIdAndUserId(id, userId);
+        if (transactionEntity == null) return false; //no such entity, cannot delete
         else transactionRepository.delete(transactionEntity);
         return true;
     }
+    public TransactionDto add(TransactionDto transactionDto) {
+        //always can add
+        return EntityToDto.toDto(transactionRepository.save(toEntity(transactionDto)));
+    }
 
-    public boolean add(TransactionDto transactionDto) {
-        if (transactionRepository.findOne(transactionDto.getId()) != null)
+    public boolean edit(TransactionDto transactionDto, long userId) {
+        long id = transactionDto.getId();
+        if (transactionRepository.findTransactionEntityByIdAndUserId(id, userId) == null)
             return false;
         else transactionRepository.save(toEntity(transactionDto));
         return true;
-    }
-
-    public boolean edit(TransactionDto transactionDto) {
-        if (transactionRepository.findOne(transactionDto.getId()) == null)
-            return false;
-        else transactionRepository.save(toEntity(transactionDto));
-        return true;
 
     }
 
-    public List<TransactionDto> findAll() {
+    public List<TransactionDto> findAllByUserId(long userId) {
         List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findAll().forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
-        return transactionDtoList;
-    }
-
-    public TransactionDto findById(long id) {
-        return EntityToDto.toDto(transactionRepository.findOne(id));
-    }
-
-
-    public List<TransactionDto> findByOperationType(OperationType operationType) {
-        List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findTransactionEntityByOperationType(operationType)
+        transactionRepository.findTransactionEntitiesByUserId(userId)
                 .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
     }
 
-    public List<TransactionDto> findByCreationDate(Timestamp creationDate) {
+    public TransactionDto findByIdAndUserId(long id, long userId) {
+        return EntityToDto.toDto(transactionRepository.findTransactionEntityByIdAndUserId(id, userId));
+    }
+
+
+    public List<TransactionDto> findByOperationTypeAndUserId(OperationType operationType, long userId) {
         List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findTransactionEntityByCreationDate(creationDate)
+        transactionRepository.findTransactionEntityByOperationTypeAndUserId(operationType, userId)
                 .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
     }
 
-    public List<TransactionDto> findByMoneyValue(long moneyValue) {
+    public List<TransactionDto> findByMoneyValueAndUserId(long moneyValue, long userId) {
         List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findTransactionEntityByMoneyValue(moneyValue)
+        transactionRepository.findTransactionEntityByMoneyValueAndUserId(moneyValue, userId)
                 .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
     }
 
-    public List<TransactionDto> findByComment(String comment) {
+    public List<TransactionDto> findByCategoryIdAndUserId(long categoryId, long userId) {
         List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findTransactionEntityByComment(comment)
-                .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
-        return transactionDtoList;
-    }
-
-    public List<TransactionDto> findByCategoryId(long categoryId) {
-        List<TransactionDto> transactionDtoList = new ArrayList<>();
-        transactionRepository.findTransactionEntityByCategoryId(categoryId)
+        transactionRepository.findTransactionEntityByCategoryIdAndUserId(categoryId, userId)
                 .forEach(x -> transactionDtoList.add(EntityToDto.toDto(x)));
         return transactionDtoList;
     }
@@ -98,7 +90,7 @@ public class TransactionService {
         if (transactionDto != null) {
             return new TransactionEntity()
                     .setId(transactionDto.getId())
-                    .setUser(transactionRepository.findOne(transactionDto.getId()).getUser())
+                    .setUser(userRepository.findOne(transactionDto.getUserId()))
                     .setOperationType(transactionDto.getOperationType())
                     .setCategory(categoryRepository.findOne(transactionDto.getCategoryId()))
                     .setCreationDate(transactionDto.getCreationDate())
