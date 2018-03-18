@@ -8,7 +8,7 @@ public class CategoryDto {
     private long userId;
     private String name;
 
-    @JsonValue
+
     public long getId() {
         return id;
     }
@@ -19,6 +19,7 @@ public class CategoryDto {
     }
 
 
+    @JsonIgnore
     public long getUserId() {
         return userId;
     }
