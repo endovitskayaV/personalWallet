@@ -4,6 +4,7 @@ package ru.vsu.personalWallet.domain.entity;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -17,13 +18,14 @@ public class SpendingsLimitEntity {
     private Timestamp creationDate;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
 
     @ManyToOne
+    @NotNull
     public UserEntity getUser() {
         return user;
     }

@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
@@ -28,7 +29,7 @@ public class AimEntity {
     }
 
     @ManyToOne
-    @Column(nullable = false)
+    @NotNull
     public UserEntity getUser() {
         return user;
     }

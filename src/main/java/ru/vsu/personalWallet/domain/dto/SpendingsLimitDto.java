@@ -1,5 +1,6 @@
 package ru.vsu.personalWallet.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 
 import java.sql.Timestamp;
@@ -21,6 +22,7 @@ public class SpendingsLimitDto {
         return this;
     }
 
+    @JsonIgnore
     public long getUserId() {
         return userId;
     }

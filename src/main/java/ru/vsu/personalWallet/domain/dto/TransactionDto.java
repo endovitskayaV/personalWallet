@@ -1,11 +1,12 @@
 package ru.vsu.personalWallet.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import java.sql.Timestamp;
 
-
+@EqualsAndHashCode
 public class TransactionDto {
     private long id;
     private long userId;
@@ -25,7 +26,7 @@ public class TransactionDto {
     }
 
     @JsonIgnore
-   public long getUserId() {
+    public long getUserId() {
         return userId;
     }
 

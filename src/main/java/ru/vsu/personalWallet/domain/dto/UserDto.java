@@ -1,5 +1,8 @@
 package ru.vsu.personalWallet.domain.dto;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class UserDto {
     private long id;
     private String email;

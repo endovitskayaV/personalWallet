@@ -1,7 +1,9 @@
 package ru.vsu.personalWallet.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class CategoryDto {
     private long id;
     private long userId;

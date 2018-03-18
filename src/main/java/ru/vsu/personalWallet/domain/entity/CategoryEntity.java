@@ -4,6 +4,7 @@ package ru.vsu.personalWallet.domain.entity;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @EqualsAndHashCode
@@ -21,7 +22,7 @@ public class CategoryEntity {
     }
 
     @ManyToOne
-    @Column(nullable = false)
+    @NotNull
     public UserEntity getUser() {
         return user;
     }

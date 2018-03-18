@@ -4,11 +4,12 @@ import lombok.EqualsAndHashCode;
 import ru.vsu.personalWallet.domain.OperationType;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
 @EqualsAndHashCode
-@Table(name="transaction")
+@Table(name = "transaction")
 public class TransactionEntity {
     private long id;
     private UserEntity user;
@@ -27,7 +28,7 @@ public class TransactionEntity {
     }
 
     @ManyToOne
-    @Column(nullable = false)
+    @NotNull
     public UserEntity getUser() {
         return user;
     }
@@ -69,6 +70,7 @@ public class TransactionEntity {
         this.user = user;
         return this;
     }
+
     public TransactionEntity setOperationType(OperationType operationType) {
         this.operationType = operationType;
         return this;

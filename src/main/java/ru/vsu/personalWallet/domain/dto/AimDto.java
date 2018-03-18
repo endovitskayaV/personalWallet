@@ -3,8 +3,6 @@ package ru.vsu.personalWallet.domain.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 
-import ru.vsu.personalWallet.domain.OperationType;
-
 import java.sql.Timestamp;
 
 @EqualsAndHashCode
