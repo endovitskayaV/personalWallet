@@ -1,7 +1,6 @@
 package ru.vsu.personalWallet.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public class CategoryDto {
     private long id;
