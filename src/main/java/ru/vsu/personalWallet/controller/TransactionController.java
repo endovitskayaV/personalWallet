@@ -57,7 +57,8 @@ public class TransactionController {
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity edit(@RequestBody TransactionDto transactionDto,
                                @RequestHeader(USER_ID_HEADER) long userId) {
-        if (transactionService.edit(transactionDto, userId)) return ResponseEntity.noContent().build();
+        transactionDto.setUserId(userId);
+        if (transactionService.edit(transactionDto)) return ResponseEntity.noContent().build();
         else {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");

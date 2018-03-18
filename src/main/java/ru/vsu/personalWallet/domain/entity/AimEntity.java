@@ -21,13 +21,14 @@ public class AimEntity {
 
 
     @Id
-    @Column(name = "id", unique = true)
+    @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
 
     @ManyToOne
+    @Column(nullable = false)
     public UserEntity getUser() {
         return user;
     }
@@ -37,12 +38,12 @@ public class AimEntity {
         return name;
     }
 
-    @Column(name = "money_value")
+    @Column(name = "money_value", nullable = false)
     public long getMoneyValue() {
         return moneyValue;
     }
 
-    @Column(name = "period")
+    @Column(name = "period", nullable = false)
     public Timestamp getPeriod() {
         return period;
     }

@@ -27,6 +27,7 @@ public class TransactionEntity {
     }
 
     @ManyToOne
+    @Column(nullable = false)
     public UserEntity getUser() {
         return user;
     }
@@ -38,7 +39,6 @@ public class TransactionEntity {
     }
 
 
-    //TODO: make it not nul
     @ManyToOne
     public CategoryEntity getCategory() {
         return category;

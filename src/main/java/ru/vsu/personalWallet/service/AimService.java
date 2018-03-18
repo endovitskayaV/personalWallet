@@ -37,9 +37,8 @@ public class AimService {
         return EntityToDto.toDto(aimRepository.save(toEntity(aimDto)));
     }
 
-    public boolean edit(AimDto aimDto, long userId) {
-        long id = aimDto.getId();
-        if (aimRepository.findAimEntityByIdAndUserId(id, userId) == null)
+    public boolean edit(AimDto aimDto) {
+        if (aimRepository.findAimEntityByIdAndUserId(aimDto.getId(), aimDto.getUserId()) == null)
             return false; //no such entity, cannot edit
         else aimRepository.save(toEntity(aimDto));
         return true;

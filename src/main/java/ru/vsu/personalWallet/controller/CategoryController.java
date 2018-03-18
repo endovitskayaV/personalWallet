@@ -54,7 +54,8 @@ public class CategoryController {
     @RequestMapping(value = "edit", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity edit(@RequestBody CategoryDto categoryDto, @RequestHeader(USER_ID_HEADER) long userId) {
-        if (categoryService.edit(categoryDto, userId)) return ResponseEntity.noContent().build();
+        categoryDto.setUserId(userId);
+        if (categoryService.edit(categoryDto)) return ResponseEntity.noContent().build();
         else {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");

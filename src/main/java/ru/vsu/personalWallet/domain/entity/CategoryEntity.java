@@ -14,19 +14,20 @@ public class CategoryEntity {
     private String name;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
 
     @ManyToOne
+    @Column(nullable = false)
     public UserEntity getUser() {
         return user;
     }
 
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     public String getName() {
         return name;
     }

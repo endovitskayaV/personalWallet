@@ -36,9 +36,9 @@ public class CategoryService {
        return EntityToDto.toDto(categoryRepository.save(toEntity(categoryDto)));
     }
 
-    public boolean edit(CategoryDto categoryDto, long userId) {
-        long id = categoryDto.getId();
-        if (categoryRepository.findCategoryEntityByIdAndUserId(id, userId)== null)
+    public boolean edit(CategoryDto categoryDto) {
+        if (categoryRepository.findCategoryEntityByIdAndUserId
+                (categoryDto.getId(), categoryDto.getUserId())== null)
             return false;//no such entity, cannot edit
         else categoryRepository.save(toEntity(categoryDto));
         return true;

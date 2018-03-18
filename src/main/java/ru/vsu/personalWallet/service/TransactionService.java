@@ -44,9 +44,9 @@ public class TransactionService {
         return EntityToDto.toDto(transactionRepository.save(toEntity(transactionDto)));
     }
 
-    public boolean edit(TransactionDto transactionDto, long userId) {
-        long id = transactionDto.getId();
-        if (transactionRepository.findTransactionEntityByIdAndUserId(id, userId) == null)
+    public boolean edit(TransactionDto transactionDto) {
+        if (transactionRepository.findTransactionEntityByIdAndUserId
+                (transactionDto.getId(), transactionDto.getUserId()) == null)
             return false;
         else transactionRepository.save(toEntity(transactionDto));
         return true;

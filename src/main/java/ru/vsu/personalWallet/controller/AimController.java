@@ -55,7 +55,8 @@ public class AimController {
     @RequestMapping(value = "edit", method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity edit(@RequestBody AimDto aimDto, @RequestHeader(USER_ID_HEADER) long userId) {
-        if (aimService.edit(aimDto, userId)) return ResponseEntity.noContent().build();
+        aimDto.setUserId(userId);
+        if (aimService.edit(aimDto)) return ResponseEntity.noContent().build();
         else {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
