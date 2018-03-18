@@ -40,8 +40,10 @@ public class TransactionService {
         return true;
     }
     public TransactionDto add(TransactionDto transactionDto) {
-        //always can add
-        return EntityToDto.toDto(transactionRepository.save(toEntity(transactionDto)));
+        if (categoryRepository.findCategoryEntityByIdAndUserId(
+                transactionDto.getCategoryId(), transactionDto.getUserId())==null)
+            return null; //cannot add if there is no category
+        else return EntityToDto.toDto(transactionRepository.save(toEntity(transactionDto)));
     }
 
     public boolean edit(TransactionDto transactionDto) {
@@ -88,14 +90,22 @@ public class TransactionService {
 
     private TransactionEntity toEntity(TransactionDto transactionDto) {
         if (transactionDto != null) {
-            return new TransactionEntity()
+            TransactionEntity transactionEntity=
+                    new TransactionEntity()
                     .setId(transactionDto.getId())
+                            //cannot use here transactionRepository
+                            //will have NullPointException while adding
+                            //cannot get entity from db before it is added
                     .setUser(userRepository.findOne(transactionDto.getUserId()))
                     .setOperationType(transactionDto.getOperationType())
-                    .setCategory(categoryRepository.findOne(transactionDto.getCategoryId()))
+                    .setCategory(categoryRepository
+                            .findCategoryEntityByIdAndUserId(
+                                    transactionDto.getCategoryId(),
+                                    transactionDto.getUserId()))
                     .setCreationDate(transactionDto.getCreationDate())
                     .setMoneyValue(transactionDto.getMoneyValue())
                     .setComment(transactionDto.getComment());
+            return transactionEntity;
         } else return null;
     }
 }

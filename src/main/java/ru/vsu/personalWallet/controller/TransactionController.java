@@ -50,7 +50,23 @@ public class TransactionController {
     public ResponseEntity add(@RequestBody TransactionDto transactionDto,
                               @RequestHeader(USER_ID_HEADER) long userId) {
         transactionDto.setUserId(userId);
-        return new ResponseEntity<>(transactionService.add(transactionDto),HttpStatus.OK);
+        TransactionDto transactionDtoFromDb=transactionService.add(transactionDto);
+        if (transactionDtoFromDb==null){
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponse()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("Category with id=" + transactionDto.getCategoryId()
+                                    + " not found. Cannot add transaction")
+                            .setPath("/transactions/add"),
+                    httpHeader,
+                    HttpStatus.NOT_FOUND);
+
+        }
+       else return new ResponseEntity<>(transactionDtoFromDb,HttpStatus.OK);
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST,

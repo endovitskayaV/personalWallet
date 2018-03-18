@@ -44,7 +44,6 @@ public class AimService {
         return true;
     }
 
-
     public AimDto findByIdAndUserId(long id, long userId) {
         return EntityToDto.toDto(aimRepository.findAimEntityByIdAndUserId(id, userId));
     }
@@ -74,6 +73,9 @@ public class AimService {
         if (aimDto != null) {
             return new AimEntity()
                     .setId(aimDto.getId())
+                    //cannot use here aimRepository
+                    //will have NullPointException while adding
+                    //cannot get entity from db before it is added
                     .setUser(userRepository.findOne(aimDto.getUserId()))
                     .setName(aimDto.getName())
                     .setMoneyValue(aimDto.getMoneyValue())

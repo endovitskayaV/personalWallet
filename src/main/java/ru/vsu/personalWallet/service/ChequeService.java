@@ -1,9 +1,11 @@
 package ru.vsu.personalWallet.service;
 
 import org.springframework.stereotype.Service;
+import ru.vsu.personalWallet.domain.dto.AimDto;
 import ru.vsu.personalWallet.domain.dto.ChequeDto;
 import ru.vsu.personalWallet.domain.entity.ChequeEntity;
 import ru.vsu.personalWallet.domain.repository.ChequeRepository;
+import ru.vsu.personalWallet.domain.repository.UserRepository;
 import ru.vsu.personalWallet.util.EntityToDto;
 
 import java.sql.Timestamp;
@@ -13,50 +15,54 @@ import java.util.List;
 @Service
 public class ChequeService {
     private ChequeRepository chequeRepository;
+    private UserRepository userRepository;
 
-    ChequeService(ChequeRepository chequeRepository) {
+    ChequeService(ChequeRepository chequeRepository, UserRepository userRepository) {
         this.chequeRepository = chequeRepository;
+        this.userRepository=userRepository;
     }
 
-    public boolean delete(long id) {
-        ChequeEntity chequeEntity = chequeRepository.findOne(id);
-        if (chequeEntity == null) return false;
+    public boolean delete(long id, long userId) {
+        ChequeEntity chequeEntity = chequeRepository.findChequeEntityByIdAndUserId(id, userId);
+        if (chequeEntity == null) return false;//no such entity, cannot delete
         else chequeRepository.delete(chequeEntity);
         return true;
     }
 
-    public boolean add(ChequeDto chequeDto) {
-        if (chequeRepository.findOne(chequeDto.getId()) != null) return false;
-        else chequeRepository.save(toEntity(chequeDto));
-        return true;
+    public ChequeDto add(ChequeDto chequeDto) {
+        //always can add
+        return EntityToDto.toDto(chequeRepository.save(toEntity(chequeDto)));
     }
 
     public boolean edit(ChequeDto chequeDto) {
-        if (chequeRepository.findOne(chequeDto.getId()) == null) return false;
+        if (chequeRepository.findChequeEntityByIdAndUserId
+                (chequeDto.getId(), chequeDto.getUserId()) == null)
+            return false;//no such entity, cannot edit
         else chequeRepository.save(toEntity(chequeDto));
         return true;
     }
 
-    public ChequeDto findById(long id) {
-        return EntityToDto.toDto(chequeRepository.findOne(id));
+    public ChequeDto findByIdAndUserId(long id, long userId) {
+        return EntityToDto.toDto(chequeRepository.findChequeEntityByIdAndUserId(id, userId));
     }
 
-    public List<ChequeDto> findAll() {
+    public List<ChequeDto> findAllByUserId(long userId) {
         List<ChequeDto> chequeDtoList = new ArrayList<>();
-        chequeRepository.findAll().forEach(x -> chequeDtoList.add(EntityToDto.toDto(x)));
+        chequeRepository.findChequeEntitiesByUserId(userId)
+                .forEach(x -> chequeDtoList.add(EntityToDto.toDto(x)));
         return chequeDtoList;
     }
 
-    public List<ChequeDto> findByName(String name) {
+    public List<ChequeDto> findByNameAndUserId(String name, long userId) {
         List<ChequeDto> categoryDtoList = new ArrayList<>();
-        chequeRepository.findChequeEntitiesByName(name)
+        chequeRepository.findChequeEntitiesByNameAndUserId(name, userId)
                 .forEach(x -> categoryDtoList.add(EntityToDto.toDto(x)));
         return categoryDtoList;
     }
 
-    public List<ChequeDto> findByCreationDate(Timestamp creationDate) {
+    public List<ChequeDto> findByCreationDateAndUserId(Timestamp creationDate, long userId) {
         List<ChequeDto> categoryDtoList = new ArrayList<>();
-        chequeRepository.findChequeEntitiesByCreationDate(creationDate)
+        chequeRepository.findChequeEntitiesByCreationDateAndUserId(creationDate, userId)
                 .forEach(x -> categoryDtoList.add(EntityToDto.toDto(x)));
         return categoryDtoList;
     }
@@ -65,7 +71,10 @@ public class ChequeService {
         if (chequeDto != null) {
             return new ChequeEntity()
                     .setId(chequeDto.getId())
-                    .setUser(chequeRepository.findOne(chequeDto.getId()).getUser())
+                    //cannot use here chequeRepository
+                    //will have NullPointException while adding
+                    //cannot get entity from db before it is added
+                    .setUser(userRepository.findOne(chequeDto.getUserId()))
                     .setName(chequeDto.getName())
                     .setContent(chequeDto.getContent())
                     .setComment(chequeDto.getComment())

@@ -66,6 +66,9 @@ public class CategoryService {
         if (categoryDto != null) {
             return new CategoryEntity()
                     .setId(categoryDto.getId())
+                    //cannot use here categoryRepository
+                    //will have NullPointException while adding
+                    //cannot get entity from db before it is added
                     .setUser(userRepository.findOne(categoryDto.getUserId()))
                     .setName(categoryDto.getName());
         } else return null;
