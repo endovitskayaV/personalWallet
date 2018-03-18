@@ -3,6 +3,7 @@ package ru.vsu.personalWallet.util;
 
 import lombok.EqualsAndHashCode;
 
+//TODO: mark as @Data and solve problem with constructor and builder
 @EqualsAndHashCode
 public class HttpResponse {
    private long timestamp;

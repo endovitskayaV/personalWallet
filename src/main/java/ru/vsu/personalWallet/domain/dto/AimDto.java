@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import java.sql.Timestamp;
 
+//TODO: if it is possible, get rid of userId field
 @EqualsAndHashCode
 public class AimDto {
     private long id;
