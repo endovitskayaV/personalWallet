@@ -1,6 +1,6 @@
 package ru.vsu.personalWallet.util;
 
-import ru.vsu.personalWallet.domain.dto.*;
+import ru.vsu.personalWallet.dto.*;
 import ru.vsu.personalWallet.domain.entity.*;
 
 public class EntityToDto {

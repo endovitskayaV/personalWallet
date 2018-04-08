@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.entity.UserEntity;
-import ru.vsu.personalWallet.domain.dto.UserDto;
+import ru.vsu.personalWallet.dto.UserDto;
 import ru.vsu.personalWallet.domain.repository.UserRepository;
 import ru.vsu.personalWallet.util.EntityToDto;
 

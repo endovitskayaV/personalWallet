@@ -1,11 +1,11 @@
-package ru.vsu.personalWallet.util;
+package ru.vsu.personalWallet.dto;
 
 
 import lombok.EqualsAndHashCode;
 
 //TODO: mark as @Data and solve problem with constructor and builder
 @EqualsAndHashCode
-public class HttpResponse {
+public class HttpResponseDto {
    private long timestamp;
    private int status;
    private String error;
@@ -16,7 +16,7 @@ public class HttpResponse {
       return timestamp;
    }
 
-   public HttpResponse setTimestamp(long timestamp) {
+   public HttpResponseDto setTimestamp(long timestamp) {
       this.timestamp = timestamp;
       return this;
    }
@@ -25,7 +25,7 @@ public class HttpResponse {
       return status;
    }
 
-   public HttpResponse setStatus(int status) {
+   public HttpResponseDto setStatus(int status) {
       this.status = status;
       return this;
    }
@@ -34,7 +34,7 @@ public class HttpResponse {
       return error;
    }
 
-   public HttpResponse setError(String error) {
+   public HttpResponseDto setError(String error) {
       this.error = error;
       return this;
    }
@@ -43,7 +43,7 @@ public class HttpResponse {
       return message;
    }
 
-   public HttpResponse setMessage(String message) {
+   public HttpResponseDto setMessage(String message) {
       this.message = message;
       return this;
    }
@@ -52,7 +52,7 @@ public class HttpResponse {
       return path;
    }
 
-   public HttpResponse setPath(String path) {
+   public HttpResponseDto setPath(String path) {
       this.path = path;
       return this;
    }

@@ -1,7 +1,7 @@
 package ru.vsu.personalWallet.service;
 
 import org.springframework.stereotype.Service;
-import ru.vsu.personalWallet.domain.dto.SpendingsLimitDto;
+import ru.vsu.personalWallet.dto.SpendingsLimitDto;
 import ru.vsu.personalWallet.domain.entity.SpendingsLimitEntity;
 import ru.vsu.personalWallet.domain.repository.SpendingsLimitRepository;
 import ru.vsu.personalWallet.domain.repository.UserRepository;

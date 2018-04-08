@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.domain.dto;
+package ru.vsu.personalWallet.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
@@ -6,18 +6,19 @@ import lombok.EqualsAndHashCode;
 import java.sql.Timestamp;
 
 @EqualsAndHashCode
-public class SpendingsLimitDto {
+public class ChequeDto {
     private long id;
     private long userId;
+    private String name;
+    private String content;
     private String comment;
-    private long maxSum;
     private Timestamp creationDate;
 
     public long getId() {
         return id;
     }
 
-    public SpendingsLimitDto setId(long id) {
+    public ChequeDto setId(long id) {
         this.id = id;
         return this;
     }
@@ -27,27 +28,35 @@ public class SpendingsLimitDto {
         return userId;
     }
 
-    public SpendingsLimitDto setUserId(long userId) {
+    public ChequeDto setUserId(long userId) {
         this.userId = userId;
         return this;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public ChequeDto setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public ChequeDto setContent(String content) {
+        this.content = content;
+        return this;
+    }
 
     public String getComment() {
         return comment;
     }
 
-    public SpendingsLimitDto setComment(String comment) {
+    public ChequeDto setComment(String comment) {
         this.comment = comment;
-        return this;
-    }
-
-    public long getMaxSum() {
-        return maxSum;
-    }
-
-    public SpendingsLimitDto setMaxSum(long maxSum) {
-        this.maxSum = maxSum;
         return this;
     }
 
@@ -55,7 +64,7 @@ public class SpendingsLimitDto {
         return creationDate;
     }
 
-    public SpendingsLimitDto setCreationDate(Timestamp creationDate) {
+    public ChequeDto setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
         return this;
     }

@@ -3,7 +3,7 @@ package ru.vsu.personalWallet.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vsu.personalWallet.domain.OperationType;
-import ru.vsu.personalWallet.domain.dto.TransactionDto;
+import ru.vsu.personalWallet.dto.TransactionDto;
 import ru.vsu.personalWallet.domain.entity.TransactionEntity;
 import ru.vsu.personalWallet.domain.repository.CategoryRepository;
 import ru.vsu.personalWallet.domain.repository.TransactionRepository;

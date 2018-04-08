@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.domain.dto.UserDto;
+import ru.vsu.personalWallet.dto.UserDto;
 import ru.vsu.personalWallet.service.UserService;
-import ru.vsu.personalWallet.util.HttpResponse;
+import ru.vsu.personalWallet.dto.HttpResponseDto;
 
 import java.time.Instant;
 
@@ -33,7 +33,7 @@ public class UserController {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
-                    new HttpResponse()
+                    new HttpResponseDto()
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(403)
                             .setError("Forbidden")
@@ -47,7 +47,7 @@ public class UserController {
                 HttpHeaders httpHeader = new HttpHeaders();
                 httpHeader.setConnection("close");
                 return new ResponseEntity<>(
-                        new HttpResponse()
+                        new HttpResponseDto()
                                 .setTimestamp(Instant.now().getEpochSecond())
                                 .setStatus(404)
                                 .setError("Not found")
@@ -64,7 +64,7 @@ public class UserController {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
-                    new HttpResponse()
+                    new HttpResponseDto()
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(404)
                             .setError("Not found")
@@ -92,7 +92,7 @@ public class UserController {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
-                    new HttpResponse()
+                    new HttpResponseDto()
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(400)
                             .setError("Bad request")

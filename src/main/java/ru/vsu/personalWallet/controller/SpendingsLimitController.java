@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vsu.personalWallet.domain.dto.SpendingsLimitDto;
+import ru.vsu.personalWallet.dto.SpendingsLimitDto;
 import ru.vsu.personalWallet.service.SpendingsLimitService;
-import ru.vsu.personalWallet.util.HttpResponse;
+import ru.vsu.personalWallet.dto.HttpResponseDto;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -33,7 +33,7 @@ public class SpendingsLimitController {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
-                    new HttpResponse()
+                    new HttpResponseDto()
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(404)
                             .setError("Not found")
@@ -63,7 +63,7 @@ public class SpendingsLimitController {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
-                    new HttpResponse()
+                    new HttpResponseDto()
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(404)
                             .setError("Not found")
@@ -80,7 +80,7 @@ public class SpendingsLimitController {
             HttpHeaders httpHeader = new HttpHeaders();
             httpHeader.setConnection("close");
             return new ResponseEntity<>(
-                    new HttpResponse()
+                    new HttpResponseDto()
                             .setTimestamp(Instant.now().getEpochSecond())
                             .setStatus(404)
                             .setError("Not found")

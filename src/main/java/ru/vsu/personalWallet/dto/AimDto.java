@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.domain.dto;
+package ru.vsu.personalWallet.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
