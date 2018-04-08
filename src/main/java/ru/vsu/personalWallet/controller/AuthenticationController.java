@@ -1,4 +1,4 @@
-package ru.vsu.personalWallet.jwt;
+package ru.vsu.personalWallet.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

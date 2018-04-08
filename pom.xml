@@ -61,12 +61,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>6.0.6</version>
-    </dependency>
+
     <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
@@ -74,56 +69,10 @@
     </dependency>
 </dependencies>
 
-       <profiles>
-            <profile>
-                <id>prod</id>
-                <properties>
-                    <activatedProperties>prod</activatedProperties>
-                </properties>
-            </profile>
-           <profile>
-               <id>dev</id>
-               <properties>
-                   <activatedProperties>dev</activatedProperties>
-               </properties>
-               <activation>
-               <activeByDefault>true</activeByDefault>
-               </activation>
-           </profile>
-        </profiles>
 
 
 <build>
-   <resources>
-        <resource>
-            <directory>src/main/resources</directory>
-            <filtering>true</filtering>
-        </resource>
-    </resources>
     <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>3.0.0</version>
-            <configuration>
-                <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                </descriptorRefs>
-                <archive>
-                    <manifest>
-                        <mainClass>ru.vsu.personalWallet.PersonalWalletApplication</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
         <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
