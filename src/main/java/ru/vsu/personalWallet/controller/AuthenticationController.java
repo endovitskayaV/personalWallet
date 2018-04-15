@@ -81,8 +81,21 @@ public class AuthenticationController {
         }
 
         UserDto userDto = userService.findById(userId);
-        if (!jwtTokenUtil.validateRefreshToken(refreshToken, userDetails) ||
-                (!userDto.getEmail().equals(userDetails.getUsername()))) {
+        if (!jwtTokenUtil.validateRefreshToken(refreshToken, userDetails)) {
+            return generateUnauthorizedAnswer("Refresh token expired");
+        } else if (userDto == null) {
+            HttpHeaders httpHeader = new HttpHeaders();
+            httpHeader.setConnection("close");
+            return new ResponseEntity<>(
+                    new HttpResponseDto()
+                            .setTimestamp(Instant.now().getEpochSecond())
+                            .setStatus(404)
+                            .setError("Not found")
+                            .setMessage("User with id=" + userId + " not found")
+                            .setPath("tokens/refresh"),
+                    httpHeader,
+                    HttpStatus.UNAUTHORIZED);
+        } else if (!userDto.getEmail().equals(userDetails.getUsername())) {
             return generateUnauthorizedAnswer("Invalid refresh token");
         } else {
             return ResponseEntity.ok(jwtTokenUtil.refresh(userDto));
@@ -98,7 +111,7 @@ public class AuthenticationController {
                         .setStatus(403)
                         .setError("Bad request")
                         .setMessage(message)
-                        .setPath("tokens/refresh1"),
+                        .setPath("tokens/refresh"),
                 httpHeader,
                 HttpStatus.UNAUTHORIZED);
     }
