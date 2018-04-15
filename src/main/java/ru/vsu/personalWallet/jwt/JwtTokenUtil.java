@@ -17,12 +17,18 @@ import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil implements Serializable {
-    private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5*60;//*60*60;
-    private static final long REFRESH_TOKEN_VALIDITY_SECONDS =10*60;//*60*60;
+    private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60;//*60*60;
+    private static final long REFRESH_TOKEN_VALIDITY_SECONDS = 10 * 60;//*60*60;
     private static final String SIGNING_KEY = "evv98V";
+    private static final String ISSUER_AUTH_TOKEN = "evv_authToken";
+    private static final String ISSUER_REFRESH_TOKEN = "evv_refreshToken";
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    private String getIssuerFromToken(String token) {
+        return getClaimFromToken(token, Claims::getIssuer);
     }
 
     private Date getExpirationDateFromToken(String token) {
@@ -61,9 +67,9 @@ public class JwtTokenUtil implements Serializable {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("evv")
+                .setIssuer(ISSUER_AUTH_TOKEN)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
                 .compact();
     }
@@ -75,9 +81,9 @@ public class JwtTokenUtil implements Serializable {
 
         return Jwts.builder()
                 .setClaims(claims)
-                .setIssuer("evv")
+                .setIssuer(ISSUER_REFRESH_TOKEN)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_VALIDITY_SECONDS*1000))
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_VALIDITY_SECONDS * 1000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
                 .compact();
     }
@@ -85,18 +91,20 @@ public class JwtTokenUtil implements Serializable {
     public Boolean validateAuthToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (
-              username.equals(userDetails.getUsername())
-                    && !isTokenExpired(token));
+                getIssuerFromToken(token).equals(ISSUER_AUTH_TOKEN) &&
+                        username.equals(userDetails.getUsername())
+                        && !isTokenExpired(token));
     }
 
     public Boolean validateRefreshToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (
-                username.equals(userDetails.getUsername())
+                getIssuerFromToken(token).equals(ISSUER_REFRESH_TOKEN) &&
+                        username.equals(userDetails.getUsername())
                         && !isTokenExpired(token));
     }
 
-    public TokenDto refresh(UserDto userDto){
+    public TokenDto refresh(UserDto userDto) {
         return new TokenDto()
                 .setAuthorizationToken(generateAuthToken(userDto))
                 .setRefreshToken(generateRefreshToken(userDto));

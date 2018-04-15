@@ -1,6 +1,9 @@
 package ru.vsu.personalWallet.controller;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.dto.HttpResponseDto;
 import ru.vsu.personalWallet.dto.TokenDto;
@@ -23,7 +27,9 @@ import ru.vsu.personalWallet.dto.LoginUserDto;
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
+import static ru.vsu.personalWallet.util.Constant.AUTHORIZATION_HEADER;
 import static ru.vsu.personalWallet.util.Constant.REFRESH_TOKEN_HEADER;
+import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 
 @RestController
 public class AuthenticationController {
@@ -63,21 +69,22 @@ public class AuthenticationController {
                 HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/refresh", method = RequestMethod.GET)
-    public ResponseEntity<?> refresh(HttpServletRequest req) {
+    @RequestMapping(value = "tokens/refresh", method = RequestMethod.GET)
+    public ResponseEntity<?> refresh(@RequestHeader(USER_ID_HEADER) long userId,
+                                     @RequestHeader(REFRESH_TOKEN_HEADER) String refreshToken) {
 
-        String refreshToken = req.getHeader(REFRESH_TOKEN_HEADER);
         UserDetails userDetails = null;
         try {
             userDetails = userDetailsService.loadUserByUsername(jwtTokenUtil.getUsernameFromToken(refreshToken));
-        } catch (ExpiredJwtException e) {
-            return generateUnauthorizedAnswer("Refresh token expired");
+        } catch (Exception e) {
+            return generateUnauthorizedAnswer("Invalid refresh token");
         }
 
-        if (!jwtTokenUtil.validateRefreshToken(refreshToken, userDetails)) {
-            return generateUnauthorizedAnswer("Refresh token expired");
+        UserDto userDto = userService.findById(userId);
+        if (!jwtTokenUtil.validateRefreshToken(refreshToken, userDetails) ||
+                (!userDto.getEmail().equals(userDetails.getUsername()))) {
+            return generateUnauthorizedAnswer("Invalid refresh token");
         } else {
-            UserDto userDto = userService.findByEmail(userDetails.getUsername());
             return ResponseEntity.ok(jwtTokenUtil.refresh(userDto));
         }
     }
@@ -88,13 +95,16 @@ public class AuthenticationController {
         return new ResponseEntity<>(
                 new HttpResponseDto()
                         .setTimestamp(Instant.now().getEpochSecond())
-                        .setStatus(401)
-                        .setError("Unauthorized")
+                        .setStatus(403)
+                        .setError("Bad request")
                         .setMessage(message)
-                        .setPath("/refresh"),
+                        .setPath("tokens/refresh1"),
                 httpHeader,
                 HttpStatus.UNAUTHORIZED);
     }
 
-
+    @RequestMapping(value = "/tokens/auth/validate", method = RequestMethod.GET)
+    public ResponseEntity validateAuthToken() {
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static ru.vsu.personalWallet.util.Constant.AUTHORIZATION_HEADER;
 import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private static final String AUTHORIZATION_HEADER = "Authorization";
     @Autowired
     private UserDetailsService userDetailsService;
 
