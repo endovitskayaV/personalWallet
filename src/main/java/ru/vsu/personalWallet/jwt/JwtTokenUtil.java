@@ -107,6 +107,7 @@ public class JwtTokenUtil implements Serializable {
     public TokenDto refresh(UserDto userDto) {
         return new TokenDto()
                 .setAuthorizationToken(generateAuthToken(userDto))
-                .setRefreshToken(generateRefreshToken(userDto));
+                .setRefreshToken(generateRefreshToken(userDto))
+                .setUserId(userDto.getId());
     }
 }
