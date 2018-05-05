@@ -14,7 +14,8 @@ public class EntityToDto {
                     .setPeriod(aimEntity.getPeriod())
                     .setDescription(aimEntity.getDescription())
                     .setReminderSec(aimEntity.getReminderSec())
-                    .setCreationDate(aimEntity.getCreationDate());
+                    .setCreationDate(aimEntity.getCreationDate())
+                    .setSavedMoneyValue(aimEntity.getSavedMoneyValue());
         }
         else return null;
     }

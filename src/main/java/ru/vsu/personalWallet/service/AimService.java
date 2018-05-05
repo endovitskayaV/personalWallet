@@ -79,7 +79,8 @@ public class AimService {
                     .setPeriod(aimDto.getPeriod())
                     .setDescription(aimDto.getDescription())
                     .setReminderSec(aimDto.getReminderSec())
-                    .setCreationDate(aimDto.getCreationDate());
+                    .setCreationDate(aimDto.getCreationDate())
+                    .setSavedMoneyValue(aimDto.getSavedMoneyValue());
         } else return null;
     }
 }

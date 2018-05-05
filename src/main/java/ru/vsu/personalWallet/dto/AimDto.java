@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import java.sql.Timestamp;
 
-//TODO: if it is fpossible, get rid of userId field
+//TODO: if it is possible, get rid of userId field
 @EqualsAndHashCode
 public class AimDto {
     private long id;
@@ -16,6 +16,7 @@ public class AimDto {
     private String description;
     private long reminderSec;
     private Timestamp creationDate;
+    private long savedMoneyValue;
 
     public long getId() {
         return id;
@@ -46,6 +47,10 @@ public class AimDto {
 
     public Timestamp getPeriod() {
         return period;
+    }
+
+    public long getSavedMoneyValue() {
+        return savedMoneyValue;
     }
 
     public AimDto setName(String name) {
@@ -87,6 +92,11 @@ public class AimDto {
 
     public AimDto setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
+        return this;
+    }
+
+    public AimDto setSavedMoneyValue(long savedMoneyValue) {
+        this.savedMoneyValue=savedMoneyValue;
         return this;
     }
 

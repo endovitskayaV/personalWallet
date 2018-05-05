@@ -18,6 +18,7 @@ public class AimEntity {
     private String description;
     private long reminderSec;
     private Timestamp creationDate;
+    private long savedMoneyValue;
 
 
     @Id
@@ -64,6 +65,11 @@ public class AimEntity {
     }
 
 
+    @Column(name = "saved_money_value", nullable = false)
+    public long getSavedMoneyValue() {
+        return savedMoneyValue;
+    }
+
     public AimEntity setId(long id) {
         this.id = id;
         return this;
@@ -101,6 +107,11 @@ public class AimEntity {
 
     public AimEntity setCreationDate(Timestamp creationDate) {
         this.creationDate = creationDate;
+        return this;
+    }
+
+    public AimEntity setSavedMoneyValue(long savedMoneyValue) {
+        this.savedMoneyValue = savedMoneyValue;
         return this;
     }
 }
