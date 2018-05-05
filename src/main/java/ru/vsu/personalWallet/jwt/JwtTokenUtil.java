@@ -17,8 +17,8 @@ import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil implements Serializable {
-    private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60;//*60*60;
-    private static final long REFRESH_TOKEN_VALIDITY_SECONDS = 10 * 60;//*60*60;
+    private static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60*60;//5 hours
+    private static final long REFRESH_TOKEN_VALIDITY_SECONDS = 12 * 60*60;//12 hours
     private static final String SIGNING_KEY = "evv98V";
     private static final String ISSUER_AUTH_TOKEN = "evv_authToken";
     private static final String ISSUER_REFRESH_TOKEN = "evv_refreshToken";
@@ -107,6 +107,7 @@ public class JwtTokenUtil implements Serializable {
     public TokenDto refresh(UserDto userDto) {
         return new TokenDto()
                 .setAuthorizationToken(generateAuthToken(userDto))
-                .setRefreshToken(generateRefreshToken(userDto));
+                .setRefreshToken(generateRefreshToken(userDto))
+                .setUserId(userDto.getId());
     }
 }

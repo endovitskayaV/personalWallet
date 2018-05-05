@@ -1,9 +1,5 @@
 package ru.vsu.personalWallet.controller;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,19 +11,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import ru.vsu.personalWallet.dto.HttpResponseDto;
+import ru.vsu.personalWallet.dto.LoginUserDto;
 import ru.vsu.personalWallet.dto.TokenDto;
 import ru.vsu.personalWallet.dto.UserDto;
 import ru.vsu.personalWallet.jwt.JwtTokenUtil;
 import ru.vsu.personalWallet.service.UserService;
-import ru.vsu.personalWallet.dto.LoginUserDto;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 
-import static ru.vsu.personalWallet.util.Constant.AUTHORIZATION_HEADER;
 import static ru.vsu.personalWallet.util.Constant.REFRESH_TOKEN_HEADER;
 import static ru.vsu.personalWallet.util.Constant.USER_ID_HEADER;
 
@@ -65,7 +58,8 @@ public class AuthenticationController {
         return new ResponseEntity<>(
                 new TokenDto()
                         .setAuthorizationToken(authToken)
-                        .setRefreshToken(refreshToken),
+                        .setRefreshToken(refreshToken)
+                        .setUserId(userDto.getId()),
                 HttpStatus.OK);
     }
 

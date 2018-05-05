@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 public class TokenDto {
     private String authorizationToken;
     private String refreshToken;
+    private long userId;
     public TokenDto(){
 
     }
@@ -16,6 +17,15 @@ public class TokenDto {
 
     public TokenDto setAuthorizationToken(String authorizationToken) {
         this.authorizationToken = authorizationToken;
+        return this;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public TokenDto setUserId(long userId) {
+        this.userId = userId;
         return this;
     }
 
